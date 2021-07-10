@@ -16,7 +16,7 @@ const style = theme => ({
     padding: 10,
   },
   input: {
-    width: 400,
+    width: 660,
     paddingLeft: '15px'
   },
   divider: {
@@ -105,7 +105,7 @@ class SearchBar extends Component {
                 <Divider className={classes.divider} /> */}
                 <InputBase
                   className={classes.input}
-                  placeholder="搜索技术..."
+                  placeholder="搜索足球资讯..."
                   value = {input}
                   onChange={this.handleChange("input")}
                   inputProps={{

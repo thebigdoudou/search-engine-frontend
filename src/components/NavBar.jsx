@@ -11,9 +11,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const style = theme => ({
   navBar: {
-    backgroundColor: '#724de4',
+    backgroundColor: '#ffffff',
     // boxShadow: '0 0 0 0',
     color: '#2D2D2D',
+    hight:'100px'
     // paddingTop: '20px'
   },
   toolBar: {
@@ -62,13 +63,13 @@ class NavBar extends Component {
             </Tooltip>
             
             {/* <Button color="inherit" className={classes.linkItem}>
-              使用手册 
+              使用手册
             </Button>
-            <Button color="inherit" className={classes.linkItem}> 
-              项目实战 
+            <Button color="inherit" className={classes.linkItem}>
+              项目实战
             </Button>
-            <Button color="inherit" className={classes.linkItem}> 
-              技术问答 
+            <Button color="inherit" className={classes.linkItem}>
+              技术问答
             </Button> */}
           </div>
         </Toolbar>

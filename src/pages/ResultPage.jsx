@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import Grid from '@material-ui/core/Grid';
 import Filter from "../components/Filter";
 import SideBar from "../components/SideBar";
+import SimpleTabs from "../components/TablePanel"
 import SearchResult from "../components/SearchResult";
 import { Switch, Route } from 'react-router-dom';
 import TagList from '../components/TagList';
@@ -27,11 +28,11 @@ const style = theme => ({
   navBar: {
     backgroundColor: 'transparent',
     boxShadow: '0 0 0 0',
-    padding: '20px'
+    padding: '20px',
   },
   content: {
     padding: '0 20px',
-    minHeight: 560
+    minHeight: 600
   },
   sider: {
 
@@ -91,11 +92,12 @@ class ResultPage extends Component {
 
     return (
       <div className={classes.main}>
-        <NavBar className={classes.NavBar} />
+        <NavBar className={classes.navBar} />
         <div className={classes.wrapper}>
+          <SimpleTabs style={{marginTop:"100px"}}/>
           <Grid container spacing={4} className={classes.content}>
             <Grid item xs={12} sm={3} md={2} className={classes.sider}>
-              <SideBar input={input} changeCatalog={this.changeCatalog} />
+              {/*<SideBar input={input} changeCatalog={this.changeCatalog} />*/}
             </Grid>
             <Grid item xs={12} sm={6} md={7}>
               <Switch>
