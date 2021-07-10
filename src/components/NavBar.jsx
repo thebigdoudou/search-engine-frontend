@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchBar from './SearchBar';
-import logo from '../assets/images/logo-white.png';
+import logo from '../assets/images/logo4.png';
 import github from '../assets/images/GitHubIcon.png';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const style = theme => ({
   navBar: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000000',
     // boxShadow: '0 0 0 0',
     color: '#2D2D2D',
     hight:'100px'

@@ -55,7 +55,7 @@ const style = theme => ({
     alignItems: 'center',
     width: '100%',
     color: '#ffffff',
-    position: 'absolute',
+    position: 'fixed',
     bottom: 20
   },
   loveIcon: {
@@ -92,7 +92,7 @@ class HomePage extends React.Component {
           </div>
           <footer className={classes.footer} >
             <Typography variant="body2" component="p">
-              made by Group-7 @ZJU &emsp;
+              Copyright © <a href={'https://github.com/Cheungki/KnowABall'} style={{color: 'white'}}>G07</a> @Zhejiang University. All Rights Reserved.
               <InfoCircleOutlined />
             </Typography>
           </footer>
