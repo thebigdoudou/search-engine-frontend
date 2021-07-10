@@ -16,7 +16,7 @@ const style = theme => ({
     padding: 10,
   },
   input: {
-    width: 250,
+    width: 400,
     paddingLeft: '15px'
   },
   divider: {

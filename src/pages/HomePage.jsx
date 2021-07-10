@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { FindInPage, Favorite } from '@material-ui/icons';
 import backgroundImg from '../assets/images/background2.jpg';
 import SearchBar from '../components/SearchBar';
-import logo from '../assets/images/logo-white.png';
+import logo from '../assets/images/logo2.png';
+import soccer from '../assets/images/soccer.svg'
 
 
 const style = theme => ({
@@ -26,8 +27,11 @@ const style = theme => ({
     position: 'fixed'
   },
   title: {
-    margin: '15px',
-    color: '#ffffff'
+    marginLeft: '15px',
+    marginTop: '110px',
+    color: '#ffffff',
+    display: 'flex',
+    alignItems: 'center'
   },
   // iconButton: {
   //   padding: 10,
@@ -55,13 +59,16 @@ const style = theme => ({
     height: '90%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'left',
-    alignItems: 'left',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   footer: {
     textAlign: 'center',
+    alignItems: 'center',
+    width: '100%',
     color: '#ffffff',
-    marginTop: '20px'
+    position: 'absolute',
+    bottom: 20
   },
   loveIcon: {
     fontSize: '1rem',
@@ -81,11 +88,9 @@ class HomePage extends React.Component {
         <div className={classes.wrapper}>
           <AppBar position="absolute" className={classes.navBar}>
             <Toolbar>
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
-                <FindInPage />
-              </IconButton>
+              <img src={soccer} style={{width: 25,fill:'rgb(245,245,245)'}}/>
               <Typography variant="subtitle1" >
-                技术知识，一搜便知
+               超全球员数据，海量比赛资讯
               </Typography>
               {/* <div className={classes.navLinks}>
                 <Button color="inherit" className={classes.linkItem}> 
@@ -100,17 +105,18 @@ class HomePage extends React.Component {
               </div> */}
             </Toolbar>
           </AppBar>
-          <div className={classes.content}>
+          <div>
             <div className={classes.title}>
               <img src={logo} alt="techhub logo" style={{width: 350}}/>
+              <SearchBar />
             </div>
-            <SearchBar />
+
           </div>
-          <footer className={classes.footer}> 
+          <footer className={classes.footer} >
             <Typography variant="body2" component="p">
               made with 
               <Favorite className={classes.loveIcon}/>
-              by Group-8 @ZJU
+              by Group-7 @ZJU
             </Typography>
           </footer>
         </div>
