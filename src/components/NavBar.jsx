@@ -3,15 +3,19 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchBar from './SearchBar';
-import logo from '../assets/images/logo4.png';
+import logo from '../assets/images/logo.png';
 import github from '../assets/images/GitHubIcon.png';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import backgroundImg from "../assets/images/background3.png";
 
 const style = theme => ({
   navBar: {
-    backgroundColor: '#000000',
+    background: `url(${backgroundImg}) no-repeat center`,
+    backgroundSize: 'cover',
+    position: 'fixed',
+
     // boxShadow: '0 0 0 0',
     color: '#2D2D2D',
     hight:'100px'
@@ -34,8 +38,8 @@ const style = theme => ({
     padding: '0 50px'
   },
   logo: {
-    width: '13rem',
-    margin: '5px 45px 5px 15px'
+    width: '14rem',
+    margin: '16px 45px 5px 15px'
   },
   github: {
     width: '35px'
@@ -49,15 +53,12 @@ class NavBar extends Component {
       <AppBar position="fixed" className={classes.navBar}>
         <Toolbar className={classes.toolBar}>
           <Link to='/'>
-            <img src={logo} alt="techhub logo" className={classes.logo}/>
+            <img src={logo} alt="logo" className={classes.logo}/>
           </Link>
-          {/* <Typography variant="h5" style={{ marginRight: '20px'}}>
-            TechHub
-          </Typography> */}
           <SearchBar />
           <div className={classes.navLinks}>
             <Tooltip title="GitHub" aria-label="GitHub">
-              <IconButton aria-label="Github" href='https://github.com/MySuperSoul/SearchEngine' target='_blank'>
+              <IconButton aria-label="Github" href='https://github.com/thebigdoudou/search-engine-frontend' target='_blank'>
                 <img src={github} alt="github link" className={classes.github} />
               </IconButton>
             </Tooltip>

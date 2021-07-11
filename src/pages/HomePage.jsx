@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { FindInPage, Favorite } from '@material-ui/icons';
 import backgroundImg from '../assets/images/background2.jpg';
 import SearchBar from '../components/SearchBar';
-import logo from '../assets/images/logo4.png';
+import logo from '../assets/images/logo.png';
 import soccer from '../assets/images/soccer.svg'
 
 

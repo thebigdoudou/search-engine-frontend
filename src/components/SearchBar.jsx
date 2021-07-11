@@ -16,7 +16,7 @@ const style = theme => ({
     padding: 10,
   },
   input: {
-    width: 660,
+    width: "660px",
     paddingLeft: '15px'
   },
   divider: {
@@ -88,7 +88,7 @@ class SearchBar extends Component {
     const { classes } = this.props;
     const { input, showMsg, msg} = this.state;
     return (
-      <div>
+      <div >
         {showMsg && <MessageBar show={showMsg} msg={msg} handleClose={this.handleClose} />}
         <form onSubmit={this.handleSearch}>
             <Paper className={classes.searchBar}>
