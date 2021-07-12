@@ -1,0 +1,185 @@
+import React, {Component} from 'react';
+import {withStyles} from "@material-ui/core/styles";
+import NavBar from "../components/NavBar";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import SearchResultItem from "../components/SearchResultItem";
+import Divider from "@material-ui/core/Divider";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Box from "@material-ui/core/Box";
+import Avatar from '@material-ui/core/Avatar';
+import { Row, Column, Item } from '@mui-treasury/components/flex';
+import {
+    Info,
+    InfoTitle,
+    InfoSubtitle,
+    InfoCaption,
+} from '@mui-treasury/components/info';
+import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
+import { useD01InfoStyles } from '@mui-treasury/styles/info/d01';
+
+const style = theme => ({
+    main: {
+        backgroundColor: '#ffffff',
+        minHeight: '100%',
+        position: 'absolute',
+        width: '100%',
+        left: 0,
+        top: 0
+    },
+    navBar: {
+        backgroundColor: 'transparent',
+        boxShadow: '0 0 0 0',
+        padding: '20px',
+    },
+    wrapper: {
+        padding: '100px 35px 35px 35px',
+        [theme.breakpoints.down("xs")]: {
+            padding: "10px 10px"
+        },
+        margin: '25px 25px'
+    },
+    footer: {
+        textAlign: 'center',
+        alignItems: 'center',
+        width: '100%',
+        color: '#000000',
+        height: '30px',
+        backgroundColor: '#FFFFFF',
+        position: 'fixed',
+        bottom: 0
+    },
+    infoCard: {
+        padding: theme.spacing(5),
+        backgroundColor: '#F6F6F6',
+        height: '150px',
+        marginRight: '40px',
+        marginLeft: '40px',
+        marginTop: '40px',
+        marginBottom: '20px'
+    },
+    statisticCard: {
+        padding: theme.spacing(5),
+        backgroundColor: '#F6F6F6',
+        height: '150px',
+        margin: '20px 40px'
+    },
+})
+
+function DarkRapListItem() {
+    const avatarStyles = useDynamicAvatarStyles({ size: 70 });
+    return (
+        <Column gap={2}>
+            <Row>
+                <Item>
+                    <Avatar
+                        variant={'rounded'}
+                        classes={avatarStyles}
+                        src={
+                            'https://shopage.s3.amazonaws.com/media/f855/580321926366_PEnByxR6Xdn7soyNMiGPG4ZPMng1N4CN4D4XvB7j.jpg'
+                        }
+                    />
+                </Item>
+                <Info useStyles={useD01InfoStyles}>
+                    <InfoCaption>3d • #triphop #rap</InfoCaption>
+                    <InfoTitle>Humility (feat. George Benson)</InfoTitle>
+                    <InfoSubtitle>Gorillaz</InfoSubtitle>
+                </Info>
+            </Row>
+            <Row mt={2}>
+                <Item>
+                    <Avatar
+                        variant={'rounded'}
+                        classes={avatarStyles}
+                        src={
+                            'https://music-artwork.com/wp-content/uploads/2018/04/dec110.jpg'
+                        }
+                    />
+                </Item>
+                <Info useStyles={useD01InfoStyles}>
+                    <InfoCaption>28d • #hiphop #rap</InfoCaption>
+                    <InfoTitle>Old Town Road</InfoTitle>
+                    <InfoSubtitle>Unknown</InfoSubtitle>
+                </Info>
+            </Row>
+        </Column>
+    );
+}
+
+class PlayerPage extends Component {
+    state = {
+        input: this.props.match.params.input,
+        loading: true,
+        catalog: -1,
+        time: 0
+    }
+
+    componentDidMount() {
+        // console.log(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.match.params.input &&
+            (this.props.match.params.input !== nextProps.match.params.input)) {
+            this.setState({
+                input: nextProps.match.params.input
+            })
+        }
+    }
+
+    render() {
+        const {classes} = this.props;
+        const { input, catalog, time } = this.state;
+
+        return (
+            <div className={classes.main}>
+                <NavBar className={classes.navBar} />
+                <div className={classes.wrapper}>
+                    <Grid container spacing={10}>
+                        <Grid container xs={8}>
+                            <Grid container xs={12}>
+                                <Grid item xs>
+                                    <div className={classes.infoCard}>
+                                        <SearchResultItem/>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                            <Grid container xs={12}>
+                                <Grid item xs>
+                                    <div className={classes.statisticCard}>
+                                        <SearchResultItem/>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs>
+                            <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
+                                <CardContent >
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px"}}>
+                                        {input}的能力六方图
+                                    </Typography>
+                                    <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
+
+                                    </Box>
+                                    <Divider/>
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        {input}的最新资讯
+                                    </Typography>
+                                    <DarkRapListItem/>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </div>
+                <footer className={classes.footer} >
+                    <Typography variant="body2" component="p" style={{marginTop: 5}}>
+                        Copyright © <a href={'https://github.com/Cheungki/KnowABall'} style={{color: 'black'}}>G07</a> @Zhejiang University. All Rights Reserved.
+                    </Typography>
+                </footer>
+            </div>
+        )
+    }
+}
+
+export default withStyles(style)(PlayerPage);

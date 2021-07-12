@@ -3,6 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import ResultPage from './pages/ResultPage';
+import PlayerPage from './pages/PlayerPage';
+import TeamPage from './pages/TeamPage';
 import {  MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // const font = "'Lato', sans-serif";
@@ -47,6 +49,8 @@ function App() {
           path={["/search/query/:input", "/search/tags/all", "/search/tags/:tag"]} 
           component={ResultPage} 
         />
+        <Route path="/player/:input" component={PlayerPage}/>
+        <Route path="/team/:input" component={TeamPage}/>
       </Switch>
     </Router>
     </MuiThemeProvider>
