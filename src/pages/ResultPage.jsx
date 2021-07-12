@@ -21,14 +21,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { Column,Row, Item } from '@mui-treasury/components/flex';
+import { Column, Item, Row } from '@mui-treasury/components/flex';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import Filter1Icon from '@material-ui/icons/Filter1';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const style = theme => ({
   main: {
@@ -38,6 +38,19 @@ const style = theme => ({
     width: '100%',
     left: 0,
     top: 0
+  },
+  root: {
+    maxWidth: 304,
+    margin: 'auto',
+    boxShadow: 'none',
+    borderRadius: 0,
+  },
+  cardContent: {
+    padding: 24,
+  },
+  cta: {
+    marginTop: 24,
+    textTransform: 'initial',
   },
   wrapper: {
     padding: '100px 35px 35px 35px',
@@ -70,6 +83,9 @@ const style = theme => ({
     marginLeft: '40px',
     marginTop: '40px',
     marginBottom: '20px'
+  },
+  inline: {
+    display: 'inline',
   },
   line: {
     paddingLeft: theme.spacing(5),
@@ -117,12 +133,27 @@ const style = theme => ({
 const PersonItem = ({ src, name}) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 85});
   return (
-        <Item>
+        <div>
           <Avatar classes={avatarStyles} src={src} />
           <div  style={{marginTop:"8px",textAlign:'center'}}>{name.length>6?name.toString().substring(0,5)+"...":name}</div>
-        </Item>
+        </div>
   );
 }
+
+const data = [
+  {
+    title: 'Ant Design Title 1',
+  },
+  {
+    title: 'Ant Design Title 2',
+  },
+  {
+    title: 'Ant Design Title 3',
+  },
+  {
+    title: 'Ant Design Title 4',
+  },
+];
 
 class ResultPage extends Component {
   state = {
@@ -290,38 +321,23 @@ class ResultPage extends Component {
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                     最新资讯
                   </Typography>
-                  <Column>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>精
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>准
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>抓
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>住
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>一
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>个
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>很
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>痛
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>的
-                    </Row>
-                    <Row className={classes.columnRow}>
-                      <Filter1Icon style={{marginRight:'10px'}}/>点
-                    </Row>
-                  </Column>
+                  <List>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>痛</>}
+                      />
+                    </ListItem>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>点</>}
+                      />
+                    </ListItem>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>精</>}
+                      />
+                    </ListItem>
+                  </List>
                 </CardContent>
               </Card>
             </Grid>

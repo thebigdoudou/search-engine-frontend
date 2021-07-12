@@ -1,5 +1,4 @@
 import React from 'react';
-import { InfoCircleOutlined} from '@ant-design/icons';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -93,7 +92,7 @@ class HomePage extends React.Component {
           <footer className={classes.footer} >
             <Typography variant="body2" component="p">
               Copyright © <a href={'https://github.com/Cheungki/KnowABall'} style={{color: 'white'}}>G07</a> @Zhejiang University. All Rights Reserved.
-              <InfoCircleOutlined />
+              {/*<InfoCircleOutlined />*/}
             </Typography>
           </footer>
         </div>
