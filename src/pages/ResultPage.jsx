@@ -23,12 +23,22 @@ import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
 import { Column, Item, Row } from '@mui-treasury/components/flex';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Icon1 from '../assets/images/1.png'
+import Icon2 from '../assets/images/2.png'
+import Icon3 from '../assets/images/3.png'
+import Icon4 from '../assets/images/4.png'
+import Icon5 from '../assets/images/5.png'
+import Icon6 from '../assets/images/6.png'
+import Icon7 from '../assets/images/7.png'
+import Icon8 from '../assets/images/8.png'
+import Icon9 from '../assets/images/9.png'
 
 const style = theme => ({
   main: {
@@ -75,31 +85,17 @@ const style = theme => ({
     padding: theme.spacing(5),
     minHeight: '650px',
   },
-  firstCard: {
-    padding: theme.spacing(5),
-    backgroundColor: '#ffffff',
-    height: '150px',
-    marginRight: '40px',
-    marginLeft: '40px',
-    marginTop: '40px',
-    marginBottom: '20px'
-  },
   inline: {
     display: 'inline',
   },
   line: {
-    paddingLeft: theme.spacing(5),
+    paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(5),
   },
   card: {
-    padding: theme.spacing(5),
+    padding: theme.spacing(3),
     backgroundColor: '#ffffff',
     height: '150px',
-    margin: '20px 40px'
-  },
-  content: {
-    padding: '0 20px',
-    minHeight: 600
   },
   sider: {
 
@@ -126,34 +122,28 @@ const style = theme => ({
     padding: '2px 5px'
   },
   columnRow: {
-    margin:'0px 0px 10px 0px'
+    margin:'0px 0px 10px 0px',
+    alignItems: 'center'
+  },
+  rankIcon: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    marginRight:  theme.spacing(1),
+  },
+  textField:{
+    marginBottom: theme.spacing(3)
   }
 });
 
 const PersonItem = ({ src, name}) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 85});
   return (
-        <div>
+        <Item>
           <Avatar classes={avatarStyles} src={src} />
           <div  style={{marginTop:"8px",textAlign:'center'}}>{name.length>6?name.toString().substring(0,5)+"...":name}</div>
-        </div>
+        </Item>
   );
 }
-
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
 
 class ResultPage extends Component {
   state = {
@@ -224,17 +214,17 @@ class ResultPage extends Component {
               <SimpleTabs/>
             </Grid>
           </Grid>
-          <Grid container spacing={10}>
+          <Grid container spacing={5}>
             <Grid container xs={8}>
               <Grid container xs={12}>
                 <Grid item xs>
-                  <div className={classes.firstCard}>
+                  <div className={classes.card} style={{marginTop:'20px'}}>
                     <SearchResultItem/>
                   </div>
                 </Grid>
               </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
+              <Grid container xs={12} style={{height:'10px'}}>
+                <Grid xs >
                   <div className={classes.line}>
                     <Divider />
                   </div>
@@ -321,23 +311,51 @@ class ResultPage extends Component {
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                     最新资讯
                   </Typography>
-                  <List>
-                    <ListItem alignItems="flex-start">
-                      <ListItemText
-                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>痛</>}
-                      />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                      <ListItemText
-                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>点</>}
-                      />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                      <ListItemText
-                          primary={<><Filter1Icon style={{marginRight:'10px'}}/>精</>}
-                      />
-                    </ListItem>
-                  </List>
+                  <Column>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon1} className={classes.rankIcon} />精
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon2} className={classes.rankIcon} />准
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon3} className={classes.rankIcon} />抓
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon4} className={classes.rankIcon} />住
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon5} className={classes.rankIcon} />一
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon6} className={classes.rankIcon} />个
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon7} className={classes.rankIcon} />很
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon8} className={classes.rankIcon} />痛
+                    </Row>
+                    <Row className={classes.columnRow}>
+                      <Avatar src={Icon9} className={classes.rankIcon} />点
+                    </Row>
+                  </Column>
+                  <Divider style={{marginTop:'20px',marginBottom:'20px'}}/>
+                  <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>智能问答</Typography>
+                  <TextField
+                      className={classes.textField}
+                      label="你问"
+                      variant="outlined"
+                      fullWidth={true}
+                      id="mui-theme-provider-outlined-input"
+                  />
+                  <TextField
+                      className={classes.textField}
+                      label="我答"
+                      variant="outlined"
+                      fullWidth={true}
+                      id="mui-theme-provider-outlined-input"
+                  />
                 </CardContent>
               </Card>
             </Grid>
