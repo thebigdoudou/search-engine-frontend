@@ -93,7 +93,7 @@ const ReviewCard2Demo = React.memo(function(info) {
                     />
                 </Box>
                 <Row >
-                    <Column className={styles.body} style={{marginRight:'13%'}}>
+                    <Column className={styles.body} style={{width:'30%'}}>
                         <Item className={styles.textItem}>
                             俱乐部：{data.club}
                         </Item>
@@ -104,9 +104,9 @@ const ReviewCard2Demo = React.memo(function(info) {
                             身高：{data.height}
                         </Item>
                     </Column>
-                    <Column className={styles.body} style={{marginRight:'15%'}}>
+                    <Column className={styles.body} style={{marginRight:'20%'}}>
                         <Item className={styles.textItem}>
-                            位置：{data.position}
+                            位置：{data.role}
                         </Item>
                         <Item className={styles.textItem}>
                             年龄：{data.age}
@@ -123,7 +123,7 @@ const ReviewCard2Demo = React.memo(function(info) {
                             生日：{data.birthday}
                         </Item>
                         <Item className={styles.textItem}>
-                            惯用脚：{data.foot}
+                            惯用脚：{data.foot?"左脚":"右脚"}
                         </Item>
                     </Column>
                 </Row>

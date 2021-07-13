@@ -39,8 +39,11 @@ import Icon6 from '../assets/images/6.png'
 import Icon7 from '../assets/images/7.png'
 import Icon8 from '../assets/images/8.png'
 import Icon9 from '../assets/images/9.png'
+import data from "../components/data";
 import NationalResultCard from "../components/NationalResultCard";
 import InfoResultCard from "../components/InfoResultCard";
+import Pagination from "_material-ui-flat-pagination@3.2.1@material-ui-flat-pagination";
+import ItemCard from "../components/ItemCard";
 
 const style = theme => ({
   main: {
@@ -107,7 +110,9 @@ const style = theme => ({
   //   width: '50%'
   // },
   pagination: {
-    margin: '20px auto'
+    marginLeft: theme.spacing(6),
+    margin: '20px auto',
+    display: 'center'
   },
   footer: {
     textAlign: 'center',
@@ -115,8 +120,7 @@ const style = theme => ({
     width: '100%',
     color: '#000000',
     height: '30px',
-    backgroundColor: '#F9F7F7',
-    position: 'fixed',
+    backgroundColor: '#FFFFFF',
     bottom: 0
   },
   loveIcon: {
@@ -134,7 +138,7 @@ const style = theme => ({
   },
   textField:{
     marginBottom: theme.spacing(3)
-  }
+  },
 });
 
 const playerInfo = {
@@ -231,6 +235,24 @@ class ResultPage extends Component {
           </Grid>
           <Grid container spacing={5}>
             <Grid container xs={8}>
+              { data.map((item, index) => (
+                  <Grid container xs={12}>
+                    <Grid container xs={12}>
+                      <Grid item xs>
+                        <div className={classes.card} style={{marginBottom:'20px'}}>
+                          <SearchResultItem key={index} data={item}/>
+                        </div>
+                      </Grid>
+                    </Grid>
+                    <Grid container xs={12} style={{height:'10px'}}>
+                      <Grid xs >
+                        <div className={classes.line}>
+                          <Divider />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+              ))}
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card} style={{marginTop:'20px'}}>
@@ -375,6 +397,16 @@ class ResultPage extends Component {
               </Card>
             </Grid>
           </Grid>
+        </div>
+        <div className={classes.pagination}>
+          <Pagination
+              limit={10}
+              offset={0}
+              total={56}
+              // onClick={(event, offset) => this.changePage(offset)}
+              otherPageColor="default"
+              currentPageColor="secondary"
+          />
         </div>
         <footer className={classes.footer} >
           <Typography variant="body2" component="p" style={{marginTop: 5}}>

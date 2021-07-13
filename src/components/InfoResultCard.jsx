@@ -61,7 +61,8 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         verticalAlign: 'bottom',
     },
     textItem:{
-        marginBottom:'10px'
+        marginBottom:'5px',
+        lineHeight:'22px'
     }
 }));
 const ReviewCard2Demo = React.memo(function(info) {
@@ -84,37 +85,12 @@ const ReviewCard2Demo = React.memo(function(info) {
                     <h3 className={styles.heading}>温家宝谈U23亚洲杯预选赛：印尼很有实力；这次重新证明自己</h3>
                 </Box>
                 <Row >
-                    <Column className={styles.body} style={{marginRight:'13%'}}>
+                    <Column className={styles.body} >
                         <Item className={styles.textItem}>
-                            俱乐部：{data.club}
+                            时间：{data.birthday}
                         </Item>
                         <Item  className={styles.textItem}>
-                            国籍：{data.country}
-                        </Item>
-                        <Item  className={styles.textItem}>
-                            身高：{data.height}
-                        </Item>
-                    </Column>
-                    <Column className={styles.body} style={{marginRight:'15%'}}>
-                        <Item className={styles.textItem}>
-                            位置：{data.position}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            年龄：{data.age}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            体重：{data.weight}
-                        </Item>
-                    </Column>
-                    <Column className={styles.body}>
-                        <Item className={styles.textItem}>
-                            号码：{data.number}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            生日：{data.birthday}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            惯用脚：{data.foot}
+                            简介：北京时间7月9日，2022年U23亚洲杯预选赛抽签仪式结束，最终中国U23与澳大利亚、印度尼西亚和文莱同在G组，中国队将前往赛地印度尼西亚比赛。对此，小将温家宝在接受《体坛周报》采访时，也发表了自己的看法。
                         </Item>
                     </Column>
                 </Row>
