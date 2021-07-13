@@ -194,7 +194,7 @@ class PlayerPage extends Component {
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.infoCard}>
-                                        <PlayerCard data={playerInfo}/>
+                                        <SearchResultItem data={playerInfo}/>
                                     </div>
                                 </Grid>
                             </Grid>

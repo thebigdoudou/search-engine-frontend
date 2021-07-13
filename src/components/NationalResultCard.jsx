@@ -4,7 +4,6 @@ import cx from 'clsx';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import Link1 from '@material-ui/core/Link';
-import {Link} from 'react-router-dom';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
@@ -35,7 +34,10 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         marginRight:'40px'
     },
     rating: {
-        verticalAlign: 'text-top',
+        fontSize: 17,
+        display: 'inline-block',
+        marginBottom: 5,
+        color: palette.grey[700],
     },
     content: {
         padding: spacing(0, 2, 0, 0),
@@ -45,8 +47,8 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         fontSize: 17,
         fontWeight: 'bold',
         letterSpacing: '0.5px',
-        marginBottom: 5,
-        marginRight: spacing(1.5),
+        marginBottom: 0,
+        marginRight: spacing(2),
         display: 'inline-block',
     },
     body: {
@@ -67,63 +69,54 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         marginBottom:'10px'
     }
 }));
-const ReviewCard2Demo = React.memo(function(info) {
+const ReviewCard2Demo = React.memo(function() {
     const styles = useStyles();
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
-    const data = info.info;
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
                 className={styles.media}
                 component="img"
                 image={
-                    'https://img1.dongqiudi.com/fastdfs6/M00/08/A4/rBUCgGCBVxeAK_tOAAAeajgrIY0335.jpg'
+                    'https://img1.dongqiudi.com/fastdfs5/M00/6A/80/rB8BO2AbmgCAYbglAABlcqHyDWc494.png'
                 }
             />
             <CardContent className={styles.content}>
                 <Box mb={1}>
-                    <Chip  size="small" label="球员" style={{marginRight:'8px'}}/>
-                    <h3 className={styles.heading}>{data.name} </h3>
-                    <Rating
-                        name={'rating'}
-                        value={2}
-                        className={styles.rating}
-                        size={'small'}
-                    />
+                    <Chip  size="small" label="球队"  style={{marginRight:'8px'}}/>
+                    <h3 className={styles.heading}>上海海港</h3>
+                    <h3 className={styles.rating}>Shanghai Port</h3>
                 </Box>
-                <Row >
-                    <Column className={styles.body} style={{marginRight:'13%'}}>
+                <Row>
+                    <Column className={styles.body} style={{marginRight:'1%'}}>
                         <Item className={styles.textItem}>
-                            俱乐部：{data.club}
+                            成立：2005
                         </Item>
                         <Item  className={styles.textItem}>
-                            国籍：{data.country}
+                            主场：上海虹口足球场
                         </Item>
                         <Item  className={styles.textItem}>
-                            身高：{data.height}
+                            地址：浦东新区沪南公路260..
                         </Item>
                     </Column>
-                    <Column className={styles.body} style={{marginRight:'15%'}}>
+                    <Column className={styles.body} style={{marginRight:'0%'}}>
                         <Item className={styles.textItem}>
-                            位置：{data.position}
+                            国家：中国
                         </Item>
                         <Item className={styles.textItem}>
-                            年龄：{data.age}
+                            容纳：33060人
                         </Item>
                         <Item className={styles.textItem}>
-                            体重：{data.weight}
+                            邮箱：shenhuaj@shenhuaf..
                         </Item>
                     </Column>
-                    <Column className={styles.body}>
+                    <Column className={styles.body} style={{marginRight:'0'}}>
                         <Item className={styles.textItem}>
-                            号码：{data.number}
+                            城市：上海
                         </Item>
                         <Item className={styles.textItem}>
-                            生日：{data.birthday}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            惯用脚：{data.foot}
+                            电话：+86 (21) 5812 8877
                         </Item>
                     </Column>
                 </Row>
@@ -154,13 +147,13 @@ const ReviewCard2Demo = React.memo(function(info) {
         </Card>
     );
 });
-class SearchResultItem extends Component {
+class NationalResultCard extends Component {
 
     render() {
         return (
-            <ReviewCard2Demo info={this.props.data}/>
+            <ReviewCard2Demo/>
         )
     }
 }
 
-export default SearchResultItem;
+export default NationalResultCard;

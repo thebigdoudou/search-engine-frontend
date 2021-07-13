@@ -39,6 +39,8 @@ import Icon6 from '../assets/images/6.png'
 import Icon7 from '../assets/images/7.png'
 import Icon8 from '../assets/images/8.png'
 import Icon9 from '../assets/images/9.png'
+import NationalResultCard from "../components/NationalResultCard";
+import InfoResultCard from "../components/InfoResultCard";
 
 const style = theme => ({
   main: {
@@ -135,6 +137,19 @@ const style = theme => ({
   }
 });
 
+const playerInfo = {
+  name: '张溢弛',
+  club: '上海上港',
+  country: '奥地利',
+  height: '192厘米',
+  position: '前锋',
+  age: '32岁',
+  weight: '82KG',
+  number: '7号',
+  birthday: '1989-04-19',
+  foot: '左右脚'
+}
+
 const PersonItem = ({ src, name}) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 85});
   return (
@@ -150,7 +165,7 @@ class ResultPage extends Component {
     input: this.props.match.params.input,
     loading: true,
     catalog: -1,
-    time: 0
+    time: 220
   }
 
   componentDidMount() {
@@ -219,7 +234,7 @@ class ResultPage extends Component {
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card} style={{marginTop:'20px'}}>
-                    <SearchResultItem/>
+                    <SearchResultItem data={playerInfo}/>
                   </div>
                 </Grid>
               </Grid>
@@ -233,7 +248,7 @@ class ResultPage extends Component {
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card}>
-                    <SearchResultItem/>
+                    <InfoResultCard data={playerInfo}/>
                   </div>
                 </Grid>
               </Grid>
@@ -247,7 +262,7 @@ class ResultPage extends Component {
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card}>
-                    <SearchResultItem/>
+                    <NationalResultCard/>
                   </div>
                 </Grid>
               </Grid>
@@ -261,7 +276,7 @@ class ResultPage extends Component {
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card}>
-                    <SearchResultItem/>
+                    <SearchResultItem data={playerInfo}/>
                   </div>
                 </Grid>
               </Grid>
@@ -275,7 +290,7 @@ class ResultPage extends Component {
               <Grid container xs={12}>
                 <Grid item xs>
                   <div className={classes.card}>
-                    <SearchResultItem/>
+                    <SearchResultItem data={playerInfo}/>
                   </div>
                 </Grid>
               </Grid>

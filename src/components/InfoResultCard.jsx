@@ -25,7 +25,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         borderRadius: 16,
     },
     media: {
-        width:'auto',
+        width:'160px',
         height:'160px',
         display: 'block',
         flexShrink: 0,
@@ -33,9 +33,6 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         borderRadius: 12,
         boxShadow: '0 2px 8px 0 #c1c9d7, 0 -2px 8px 0 #cce1e9',
         marginRight:'40px'
-    },
-    rating: {
-        verticalAlign: 'text-top',
     },
     content: {
         padding: spacing(0, 2, 0, 0),
@@ -78,19 +75,13 @@ const ReviewCard2Demo = React.memo(function(info) {
                 className={styles.media}
                 component="img"
                 image={
-                    'https://img1.dongqiudi.com/fastdfs6/M00/08/A4/rBUCgGCBVxeAK_tOAAAeajgrIY0335.jpg'
+                    'https://xyimg1.qunliao.info/fastdfs6/M00/27/9B/280x210/crop/-/rBUCgGDrrKaAVjWxAAF-oGEfJBg275.jpg'
                 }
             />
             <CardContent className={styles.content}>
                 <Box mb={1}>
-                    <Chip  size="small" label="球员" style={{marginRight:'8px'}}/>
-                    <h3 className={styles.heading}>{data.name} </h3>
-                    <Rating
-                        name={'rating'}
-                        value={2}
-                        className={styles.rating}
-                        size={'small'}
-                    />
+                    <Chip  size="small" label="资讯" style={{marginRight:'8px'}}/>
+                    <h3 className={styles.heading}>温家宝谈U23亚洲杯预选赛：印尼很有实力；这次重新证明自己</h3>
                 </Box>
                 <Row >
                     <Column className={styles.body} style={{marginRight:'13%'}}>
@@ -154,7 +145,7 @@ const ReviewCard2Demo = React.memo(function(info) {
         </Card>
     );
 });
-class SearchResultItem extends Component {
+class InfoResultCard extends Component {
 
     render() {
         return (
@@ -163,4 +154,4 @@ class SearchResultItem extends Component {
     }
 }
 
-export default SearchResultItem;
+export default InfoResultCard;
