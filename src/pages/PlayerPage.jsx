@@ -7,7 +7,7 @@ import SearchResultItem from "../components/SearchResultItem";
 import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
+import PlayerCard from "../components/PlayerCard";
 import Avatar from '@material-ui/core/Avatar';
 import { Row, Column, Item } from '@mui-treasury/components/flex';
 import {
@@ -17,7 +17,8 @@ import {
     InfoCaption,
 } from '@mui-treasury/components/info';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
-import { useD01InfoStyles } from '@mui-treasury/styles/info/d01';
+import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
+import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 const style = theme => ({
     main: {
@@ -66,6 +67,58 @@ const style = theme => ({
         margin: '20px 40px'
     },
 })
+
+const data = [
+    {
+        subject: '速度',
+        A: 120,
+        B: 110,
+        fullMark: 150,
+    },
+    {
+        subject: '射门',
+        A: 98,
+        B: 130,
+        fullMark: 150,
+    },
+    {
+        subject: '传球',
+        A: 86,
+        B: 130,
+        fullMark: 150,
+    },
+    {
+        subject: '盘带',
+        A: 99,
+        B: 100,
+        fullMark: 150,
+    },
+    {
+        subject: '防守',
+        A: 85,
+        B: 90,
+        fullMark: 150,
+    },
+    {
+        subject: '力量',
+        A: 65,
+        B: 85,
+        fullMark: 150,
+    },
+];
+
+const playerInfo = {
+    name: '张溢弛',
+    club: '上海上港',
+    country: '奥地利',
+    height: '192厘米',
+    position: '前锋',
+    age: '32岁',
+    weight: '82KG',
+    number: '7号',
+    birthday: '1989-04-19',
+    foot: '左右脚'
+}
 
 function DarkRapListItem() {
     const avatarStyles = useDynamicAvatarStyles({ size: 70 });
@@ -141,14 +194,14 @@ class PlayerPage extends Component {
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.infoCard}>
-                                        <SearchResultItem/>
+                                        <PlayerCard data={playerInfo}/>
                                     </div>
                                 </Grid>
                             </Grid>
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.statisticCard}>
-                                        <SearchResultItem/>
+                                        <div/>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -159,12 +212,21 @@ class PlayerPage extends Component {
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px"}}>
                                         {input}的能力六方图
                                     </Typography>
-                                    <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
-
-                                    </Box>
+                                    <div style={{width: '335px', height: '335px', marginBottom: '30px'}}>
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                                                <PolarGrid />
+                                                <PolarAngleAxis dataKey="subject" />
+                                                <PolarRadiusAxis angle={30} domain={[0, 150]} />
+                                                <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                                                <Radar name="Lily" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+                                                <Legend />
+                                            </RadarChart>
+                                        </ResponsiveContainer>
+                                    </div>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
-                                        {input}的最新资讯
+                                        {input}的最新动态
                                     </Typography>
                                     <DarkRapListItem/>
                                 </CardContent>
