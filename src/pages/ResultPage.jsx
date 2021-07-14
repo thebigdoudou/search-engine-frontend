@@ -26,7 +26,6 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import { Column, Item, Row } from '@mui-treasury/components/flex';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
-import Filter1Icon from '@material-ui/icons/Filter1';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -141,19 +140,6 @@ const style = theme => ({
   },
 });
 
-const playerInfo = {
-  name: '张溢弛',
-  club: '上海上港',
-  country: '奥地利',
-  height: '192厘米',
-  position: '前锋',
-  age: '32岁',
-  weight: '82KG',
-  number: '7号',
-  birthday: '1989-04-19',
-  foot: '左右脚'
-}
-
 const PersonItem = ({ src, name}) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 85});
   return (
@@ -166,23 +152,69 @@ const PersonItem = ({ src, name}) => {
 
 class ResultPage extends Component {
   state = {
-    input: this.props.match.params.input,
-    loading: true,
-    catalog: -1,
-    time: 220
+    query:{
+      input: this.props.match.params.input,
+      loading: true,
+      catalog: -1,
+    },
+    time: 220,
+    page: 1,
+    data: [],
+    offset: 0,
+    total: 0
   }
 
   componentDidMount() {
-    // console.log(this.props);
+    // if(this.state.query)
+    //   this.fetchData(this.state.query, 1);
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.input &&
     (this.props.match.params.input !== nextProps.match.params.input)) {
       this.setState({
-        input: nextProps.match.params.input
+        input: nextProps.match.params.input,
+        page: 1,
+        offset: 0,
+        loading: true
+      }, () => {
+        // this.fetchData(nextProps.query, 1);
       })
     }
+  }
+
+  // fetchData = (query, page=1) => {
+  //   const input = query.input;
+  //   const catalog = query.catalog || -1;
+  //   const time = query.time || 0;
+  //   const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
+  //
+  //   if(input) {
+  //     fetch(url)
+  //         .then(res => res.json())
+  //         .then((json) => {
+  //           if(json.code === 200) {
+  //             this.setState({
+  //               data: json.data.result,
+  //               total: json.data.total,
+  //               loading: false
+  //             })
+  //           }
+  //         })
+  //   }
+  //   setTimeout(() => {
+  //     window.scrollTo(0, 0);
+  //   }, 1000);
+  // }
+
+  changePage = (offset) => {
+    const page = 1 + offset / 10;
+    this.setState({
+      offset: offset,
+      page: page,
+      loading: true
+    });
+    // this.fetchData(this.state.query, page);
   }
 
   changeCatalog = (catalog) => {
@@ -198,12 +230,11 @@ class ResultPage extends Component {
   render() {
     const {classes} = this.props;
     const { input, catalog, time } = this.state;
-
     return (
+
       <div className={classes.main}>
         <NavBar className={classes.navBar} />
         <div className={classes.wrapper}>
-          {/*<SimpleTabs style={{marginTop:"100px"}}/>*/}
           {/*<Grid container spacing={4} className={classes.content}>*/}
           {/*  <Grid item xs={12} sm={3} md={2} className={classes.sider}>*/}
           {/*    /!*<SideBar input={input} changeCatalog={this.changeCatalog} />*!/*/}
@@ -239,7 +270,7 @@ class ResultPage extends Component {
                   <Grid container xs={12}>
                     <Grid container xs={12}>
                       <Grid item xs>
-                        <div className={classes.card} style={{marginBottom:'20px'}}>
+                        <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
                           <SearchResultItem key={index} data={item}/>
                         </div>
                       </Grid>
@@ -253,69 +284,27 @@ class ResultPage extends Component {
                     </Grid>
                   </Grid>
               ))}
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.card} style={{marginTop:'20px'}}>
-                    <SearchResultItem data={playerInfo}/>
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12} style={{height:'10px'}}>
-                <Grid xs >
-                  <div className={classes.line}>
-                    <Divider />
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.card}>
-                    <InfoResultCard data={playerInfo}/>
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.line}>
-                    <Divider />
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.card}>
-                    <NationalResultCard/>
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.line}>
-                    <Divider />
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.card}>
-                    <SearchResultItem data={playerInfo}/>
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.line}>
-                    <Divider />
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container xs={12}>
-                <Grid item xs>
-                  <div className={classes.card}>
-                    <SearchResultItem data={playerInfo}/>
-                  </div>
-                </Grid>
-              </Grid>
+              {/*<Grid container xs={12}>*/}
+              {/*  <Grid item xs>*/}
+              {/*    <div className={classes.card}>*/}
+              {/*      <InfoResultCard />*/}
+              {/*    </div>*/}
+              {/*  </Grid>*/}
+              {/*</Grid>*/}
+              {/*<Grid container xs={12}>*/}
+              {/*  <Grid item xs>*/}
+              {/*    <div className={classes.line}>*/}
+              {/*      <Divider />*/}
+              {/*    </div>*/}
+              {/*  </Grid>*/}
+              {/*</Grid>*/}
+              {/*<Grid container xs={12}>*/}
+              {/*  <Grid item xs>*/}
+              {/*    <div className={classes.card}>*/}
+              {/*      <NationalResultCard/>*/}
+              {/*    </div>*/}
+              {/*  </Grid>*/}
+              {/*</Grid>*/}
             </Grid>
             <Grid item xs>
               <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
@@ -401,9 +390,9 @@ class ResultPage extends Component {
         <div className={classes.pagination}>
           <Pagination
               limit={10}
-              offset={0}
-              total={56}
-              // onClick={(event, offset) => this.changePage(offset)}
+              offset={this.state.offset}
+              total={this.state.total}
+              onClick={(event, offset) => this.changePage(offset)}
               otherPageColor="default"
               currentPageColor="secondary"
           />
