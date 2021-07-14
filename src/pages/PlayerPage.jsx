@@ -196,20 +196,16 @@ class PlayerPage extends Component {
                                     <div className={classes.infoCard} style={{marginBottom:'20px'}}>
                                         <SearchResultItem data={playerInfo}/>
                                     </div>
-                                </Grid>
-                            </Grid>
-                            <Grid container xs={12} style={{height:'10px'}}>
-                                <Grid item xs>
                                     <div className={classes.line}>
                                         <Divider />
                                     </div>
-                                </Grid>
-                            </Grid>
-                            <Grid container xs={12}>
-                                <Grid item xs>
-                                    <div className={classes.statisticCard} style={{marginBottom:'20px'}}>
+                                    <Grid container xs={12}>
+                                        <Grid item xs>
+                                            <div className={classes.statisticCard} style={{marginBottom:'20px', marginTop:'20px'}}>
 
-                                    </div>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
