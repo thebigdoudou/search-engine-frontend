@@ -19,7 +19,7 @@ import {
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
 import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import SimpleTabs from "../components/TablePanel";
+import PlayerTable from "../components/PlayerTable";
 
 const style = theme => ({
     main: {
@@ -52,9 +52,12 @@ const style = theme => ({
         position: 'fixed',
         bottom: 0
     },
+    table: {
+
+    },
     line: {
         paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(5),
+        paddingRight: theme.spacing(3),
     },
     infoCard: {
         padding: theme.spacing(3),
@@ -62,9 +65,7 @@ const style = theme => ({
         height: '150px',
     },
     statisticCard: {
-        padding: theme.spacing(3),
-        backgroundColor: '#f6f6f6',
-        height: '150px',
+        padding: theme.spacing(3)
     },
 })
 
@@ -129,9 +130,6 @@ function DarkRapListItem() {
                     <Avatar
                         variant={'rounded'}
                         classes={avatarStyles}
-                        src={
-                            'https://shopage.s3.amazonaws.com/media/f855/580321926366_PEnByxR6Xdn7soyNMiGPG4ZPMng1N4CN4D4XvB7j.jpg'
-                        }
                     />
                 </Item>
                 <Info useStyles={useD01InfoStyles}>
@@ -145,9 +143,6 @@ function DarkRapListItem() {
                     <Avatar
                         variant={'rounded'}
                         classes={avatarStyles}
-                        src={
-                            'https://music-artwork.com/wp-content/uploads/2018/04/dec110.jpg'
-                        }
                     />
                 </Item>
                 <Info useStyles={useD01InfoStyles}>
@@ -193,19 +188,16 @@ class PlayerPage extends Component {
                         <Grid container xs={8}>
                             <Grid container xs={12}>
                                 <Grid item xs>
-                                    <div className={classes.infoCard} style={{marginBottom:'20px'}}>
+                                    <div className={classes.infoCard}>
                                         <SearchResultItem data={playerInfo}/>
                                     </div>
-                                    <div className={classes.line}>
-                                        <Divider />
+                                    <div className={classes.statisticCard}>
+                                        <Divider orientation="vertical" flexItem/>
+                                        <Typography variant="h6" component="h5">
+                                            比赛数据
+                                        </Typography>
+                                        <PlayerTable/>
                                     </div>
-                                    <Grid container xs={12}>
-                                        <Grid item xs>
-                                            <div className={classes.statisticCard} style={{marginBottom:'20px', marginTop:'20px'}}>
-
-                                            </div>
-                                        </Grid>
-                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
