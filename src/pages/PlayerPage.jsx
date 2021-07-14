@@ -19,6 +19,7 @@ import {
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
 import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import SimpleTabs from "../components/TablePanel";
 
 const style = theme => ({
     main: {
@@ -51,20 +52,19 @@ const style = theme => ({
         position: 'fixed',
         bottom: 0
     },
+    line: {
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(5),
+    },
     infoCard: {
-        padding: theme.spacing(5),
-        backgroundColor: '#F6F6F6',
+        padding: theme.spacing(3),
+        backgroundColor: '#ffffff',
         height: '150px',
-        marginRight: '40px',
-        marginLeft: '40px',
-        marginTop: '40px',
-        marginBottom: '20px'
     },
     statisticCard: {
-        padding: theme.spacing(5),
-        backgroundColor: '#F6F6F6',
+        padding: theme.spacing(3),
+        backgroundColor: '#f6f6f6',
         height: '150px',
-        margin: '20px 40px'
     },
 })
 
@@ -165,7 +165,7 @@ class PlayerPage extends Component {
         input: this.props.match.params.input,
         loading: true,
         catalog: -1,
-        time: 0
+        time: 220
     }
 
     componentDidMount() {
@@ -189,19 +189,26 @@ class PlayerPage extends Component {
             <div className={classes.main}>
                 <NavBar className={classes.navBar} />
                 <div className={classes.wrapper}>
-                    <Grid container spacing={10}>
+                    <Grid container spacing={5}>
                         <Grid container xs={8}>
                             <Grid container xs={12}>
                                 <Grid item xs>
-                                    <div className={classes.infoCard}>
+                                    <div className={classes.infoCard} style={{marginBottom:'20px'}}>
                                         <SearchResultItem data={playerInfo}/>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                            <Grid container xs={12} style={{height:'10px'}}>
+                                <Grid item xs>
+                                    <div className={classes.line}>
+                                        <Divider />
                                     </div>
                                 </Grid>
                             </Grid>
                             <Grid container xs={12}>
                                 <Grid item xs>
-                                    <div className={classes.statisticCard}>
-                                        <div/>
+                                    <div className={classes.statisticCard} style={{marginBottom:'20px'}}>
+
                                     </div>
                                 </Grid>
                             </Grid>
