@@ -67,19 +67,19 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         marginBottom:'10px'
     }
 }));
-const ReviewCard2Demo = React.memo(function(info) {
+const ReviewCard2Demo = React.memo(function(prams) {
     const styles = useStyles();
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
-    const data = info.info;
+    console.log(prams)
+    const data = prams['info']['info'];
+    const imgURL = prams['info']['imgURL'];
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
                 className={styles.media}
                 component="img"
-                image={
-                    'https://img1.dongqiudi.com/fastdfs6/M00/08/A4/rBUCgGCBVxeAK_tOAAAeajgrIY0335.jpg'
-                }
+                image={imgURL}
             />
             <CardContent className={styles.content}>
                 <Box mb={1}>

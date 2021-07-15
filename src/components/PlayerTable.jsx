@@ -46,8 +46,7 @@ export default function PlayerTable(info) {
 
     const tabsStyles = twitterTabsStylesHook.useTabs();
     const tabItemStyles = twitterTabsStylesHook.useTabItem();
-
-    let rows = info.matchData
+    let rows = info.data
     return (
         <TabContext value={value}>
             <Tabs

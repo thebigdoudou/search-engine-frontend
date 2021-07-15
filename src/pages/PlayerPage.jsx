@@ -124,6 +124,7 @@ class PlayerPage extends Component {
         input: this.props.match.params.input,
         info: {},
         data: [],
+        imgURL: "",
         matchData: [],
         loading: true,
         catalog: -1,
@@ -133,17 +134,18 @@ class PlayerPage extends Component {
     //test/find/梅西/0
     async componentWillMount() {
         const that = this
-        await axios.get('/test/player/' + that.state.input)
+        await axios.get('/player/getAll/' + that.state.input)
             .then(function (response) {
                 let data = []
                 for(let i = 0; i < 6; i++) {
-                    data.push({item: items1[i], value: response.data[items2[i]], fullMark: 100})
+                    data.push({item: items1[i], value: response.data['playerBaseInfo'][items2[i]], fullMark: 100})
                 }
                 that.setState({
-                    info: response.data,
-                    data: data
+                    info: response.data['playerBaseInfo'],
+                    data: data,
+                    imgURL: response.data['imgURL']
                 })
-                console.log(response.data)
+                console.log(response.data['playerMatchDataList'])
             })
             .catch(function (error) {
                 console.log(error);
@@ -171,7 +173,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, data, matchData } = this.state;
+        const { info, data, matchData, imgURL } = this.state;
 
         return (
             <div className={classes.main}>
@@ -182,14 +184,14 @@ class PlayerPage extends Component {
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.infoCard}>
-                                        <SearchResultItem data={info}/>
+                                        <SearchResultItem data={{info: info, imgURL: imgURL}}/>
                                     </div>
                                     <div className={classes.statisticCard}>
                                         <Divider orientation="vertical" flexItem/>
                                         <Typography variant="h6" component="h5">
                                             比赛数据
                                         </Typography>
-                                        <PlayerTable matchData={matchData}/>
+                                        <PlayerTable data={matchData}/>
                                     </div>
                                 </Grid>
                             </Grid>
