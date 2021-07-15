@@ -39,7 +39,7 @@ const style = theme => ({
 
 class SearchBar extends Component {
   state = {
-    input: "",
+    input: this.props.match.params.input || "",
     catalog: 0, //catalog index, first is 0
     showMsg: false,
     msg: "",
