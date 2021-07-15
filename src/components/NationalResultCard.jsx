@@ -69,10 +69,11 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         marginBottom:'10px'
     }
 }));
-const ReviewCard2Demo = React.memo(function() {
+const ReviewCard2Demo = React.memo(function(info)  {
     const styles = useStyles();
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
+    const data = info.info;
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
@@ -85,40 +86,42 @@ const ReviewCard2Demo = React.memo(function() {
             <CardContent className={styles.content}>
                 <Box mb={1}>
                     <Chip  size="small" label="球队"  style={{marginRight:'8px'}}/>
-                    <h3 className={styles.heading}>上海海港</h3>
-                    <h3 className={styles.rating}>Shanghai Port</h3>
+                    <h3 className={styles.heading}>{data.name}</h3>
+                    <h3 className={styles.rating}>{data.englishName}</h3>
                 </Box>
                 <Row>
-                    <Column className={styles.body} style={{marginRight:'1%'}}>
+                    <Column className={styles.body} style={{width:'30%'}}>
                         <Item className={styles.textItem}>
-                            成立：2005
+                            成立：{data.birthYear}
                         </Item>
                         <Item  className={styles.textItem}>
-                            主场：上海虹口足球场
-                        </Item>
-                        <Item  className={styles.textItem}>
-                            地址：浦东新区沪南公路260..
+                            主场：{data.stadium}
                         </Item>
                     </Column>
-                    <Column className={styles.body} style={{marginRight:'0%'}}>
+                    <Column className={styles.body} style={{width:'30%'}}>
                         <Item className={styles.textItem}>
-                            国家：中国
+                            国家：{data.country}
                         </Item>
                         <Item className={styles.textItem}>
-                            容纳：33060人
-                        </Item>
-                        <Item className={styles.textItem}>
-                            邮箱：shenhuaj@shenhuaf..
+                            容纳：{data.audience}人
                         </Item>
                     </Column>
                     <Column className={styles.body} style={{marginRight:'0'}}>
                         <Item className={styles.textItem}>
-                            城市：上海
+                            城市：{data.city}
                         </Item>
                         <Item className={styles.textItem}>
-                            电话：+86 (21) 5812 8877
+                            电话：{data.phone}
                         </Item>
                     </Column>
+                </Row>
+                <Row className={styles.body}>
+                    <Item  className={styles.textItem} style={{width:"60%"}}>
+                        地址：{data.address}
+                    </Item>
+                    <Item className={styles.textItem}>
+                        邮箱：{data.email}
+                    </Item>
                 </Row>
                 <div className={flexStyles.parent}>
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -151,7 +154,7 @@ class NationalResultCard extends Component {
 
     render() {
         return (
-            <ReviewCard2Demo/>
+            <ReviewCard2Demo info={this.props.data}/>
         )
     }
 }

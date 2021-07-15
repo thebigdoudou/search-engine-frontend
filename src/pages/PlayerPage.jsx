@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core/styles";
 import axios from "axios";
-import NavBar from "../components/NavBar";
+import NavBar1 from "../components/NavBar1";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import SearchResultItem from "../components/SearchResultItem";
@@ -175,7 +175,7 @@ class PlayerPage extends Component {
 
         return (
             <div className={classes.main}>
-                <NavBar className={classes.navBar} />
+                <NavBar1 className={classes.navBar} />
                 <div className={classes.wrapper}>
                     <Grid container spacing={5}>
                         <Grid container xs={8}>

@@ -12,6 +12,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { twitterTabsStylesHook } from '@mui-treasury/styles/tabs';
 
 
 function TabPanel(props) {
@@ -110,6 +111,8 @@ export default function SimpleTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [selectValue, setSelectValue] = React.useState('female');
+    const tabsStyles = twitterTabsStylesHook.useTabs();
+    const tabItemStyles = twitterTabsStylesHook.useTabItem();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -121,9 +124,9 @@ export default function SimpleTabs() {
     return (
         <div className={classes.root}>
             <AppBar position="static" style={{backgroundColor:"rgb(255,255,255)",color:"rgb(0,0,0)"}}>
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="搜索结果" {...a11yProps(0)} />
-                    <Tab label="高级筛选" {...a11yProps(1)} />
+                <Tabs value={value} classes={tabsStyles} onChange={handleChange} aria-label="simple tabs example">
+                    <Tab style={{width:'15%'}} classes={tabItemStyles} label="搜索结果" {...a11yProps(0)} />
+                    <Tab style={{width:'15%'}} classes={tabItemStyles} label="高级筛选" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
             <AppBar position="static" style={{backgroundColor:"rgb(255,255,255)",color:"rgb(0,0,0)"}}>

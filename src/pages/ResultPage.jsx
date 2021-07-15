@@ -150,6 +150,7 @@ const PersonItem = ({ src, name}) => {
   );
 }
 
+// const data1=[{"id":50001756,"url":"https://dongqiudi.com/team/50001756.html","birthYear":1899,"country":"西班牙","city":"巴塞罗那","stadium":"诺坎普球场","audience":99787,"phone":"+34 (902) 189900","email":"oab@club.fcbarcelona.com","name":"巴塞罗那","englishName":"Barcelona","address":"Avenida de Arístides Maillol"}]
 class ResultPage extends Component {
   state = {
     query:{
@@ -191,22 +192,19 @@ class ResultPage extends Component {
     const input = query.input;
     const catalog = query.catalog || -1;
     const time = query.time || 0;
-    const url ='http://192.168.43.146:8080/testTeam/name/'+input;
+    const url ='http://10.180.95.244:8080/testTeam/name/'+input;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
 
     if(input) {
-      console.log(url);
       fetch(url)
           .then(res => res.json())
           .then((json) => {
             console.log(json);
-            // if(json.code === 200) {
-            //   this.setState({
-            //     data: json.data.result,
-            //     total: json.data.total,
-            //     loading: false
-            //   })
-            // }
+              this.setState({
+                data: json,
+                total: json.length,
+                loading: false
+              })
           })
     }
     setTimeout(() => {
@@ -233,11 +231,9 @@ class ResultPage extends Component {
     this.setState({time});
     // console.log("time", time);
   }
-
   render() {
     const {classes} = this.props;
     const { input, catalog, time } = this.state;
-    console.log(this.state)
     return (
 
       <div className={classes.main}>
@@ -274,12 +270,13 @@ class ResultPage extends Component {
           </Grid>
           <Grid container spacing={5}>
             <Grid container xs={8}>
-              { data.map((item, index) => (
+              { this.state.data.map((item, index) => (
                   <Grid container xs={12}>
                     <Grid container xs={12}>
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                          <SearchResultItem key={index} data={item}/>
+                          <NationalResultCard key={index} data={item}/>
+                          {/*<SearchResultItem key={index} data={item}/>*/}
                         </div>
                       </Grid>
                     </Grid>
@@ -309,7 +306,7 @@ class ResultPage extends Component {
               {/*<Grid container xs={12}>*/}
               {/*  <Grid item xs>*/}
               {/*    <div className={classes.card}>*/}
-              {/*      <NationalResultCard/>*/}
+              {/*      <NationalResultCard data={data1[0]}/>*/}
               {/*    </div>*/}
               {/*  </Grid>*/}
               {/*</Grid>*/}
@@ -318,7 +315,7 @@ class ResultPage extends Component {
               <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
                 <CardContent >
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px"}}>
-                    相关球员
+                     其他人还搜
                   </Typography>
                   <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
                     <Box>
