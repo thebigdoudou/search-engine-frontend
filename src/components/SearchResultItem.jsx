@@ -131,7 +131,7 @@ const ReviewCard2Demo = React.memo(function(info) {
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <Link1
                         className={cx(labelStyles.primaryLink, styles.textFooter)}
-                        href={"/player/4"}
+                        href={"/player/"+data.id}
                     >
                         Read more <ArrowForwardIos className={labelStyles.icon} />
                     </Link1>

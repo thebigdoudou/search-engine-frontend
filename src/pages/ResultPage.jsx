@@ -154,58 +154,65 @@ class ResultPage extends Component {
   state = {
     query:{
       input: this.props.match.params.input,
-      loading: true,
+      time: 0,
       catalog: -1,
     },
-    time: 220,
     page: 1,
     data: [],
     offset: 0,
-    total: 0
+    total: 0,
+    loading: true
   }
 
   componentDidMount() {
-    // if(this.state.query)
-    //   this.fetchData(this.state.query, 1);
+    if(this.state.query)
+      this.fetchData(this.state.query, 1);
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.input &&
     (this.props.match.params.input !== nextProps.match.params.input)) {
       this.setState({
-        input: nextProps.match.params.input,
+        query:{
+          input:nextProps.match.params.input,
+          time:this.state.time,
+          catalog:this.state.catalog
+        },
         page: 1,
         offset: 0,
         loading: true
       }, () => {
-        // this.fetchData(nextProps.query, 1);
+        this.fetchData(this.state.query, 1);
       })
     }
   }
 
-  // fetchData = (query, page=1) => {
-  //   const input = query.input;
-  //   const catalog = query.catalog || -1;
-  //   const time = query.time || 0;
-  //   const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
-  //
-  //   if(input) {
-  //     fetch(url)
-  //         .then(res => res.json())
-  //         .then((json) => {
-  //           if(json.code === 200) {
-  //             this.setState({
-  //               data: json.data.result,
-  //               total: json.data.total,
-  //               loading: false
-  //             })
-  //           }
-  //         })
-  //   }
-  //   setTimeout(() => {
-  //     window.scrollTo(0, 0);
-  //   }, 1000);
-  // }
+  fetchData = (query, page=1) => {
+    const input = query.input;
+    const catalog = query.catalog || -1;
+    const time = query.time || 0;
+    const url ='http://192.168.43.146:8080/testTeam/name/'+input;
+    // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
+
+    if(input) {
+      console.log(url);
+      fetch(url)
+          .then(res => res.json())
+          .then((json) => {
+            console.log(json);
+            // if(json.code === 200) {
+            //   this.setState({
+            //     data: json.data.result,
+            //     total: json.data.total,
+            //     loading: false
+            //   })
+            // }
+          })
+    }
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+  }
 
   changePage = (offset) => {
     const page = 1 + offset / 10;
@@ -230,6 +237,7 @@ class ResultPage extends Component {
   render() {
     const {classes} = this.props;
     const { input, catalog, time } = this.state;
+    console.log(this.state)
     return (
 
       <div className={classes.main}>

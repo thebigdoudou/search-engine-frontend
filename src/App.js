@@ -42,7 +42,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-    <Router basename="/knowaball">
+    <Router basename="/">
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route 
