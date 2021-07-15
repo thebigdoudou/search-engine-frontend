@@ -81,9 +81,6 @@ const style = theme => ({
 //     birthday: '1989-04-19',
 //     foot: '左右脚'
 // }
-let playerInfo = {
-
-}
 
 function DarkRapListItem() {
     const avatarStyles = useDynamicAvatarStyles({ size: 70 });
@@ -127,6 +124,7 @@ class PlayerPage extends Component {
         input: this.props.match.params.input,
         info: {},
         data: [],
+        matchData: [],
         loading: true,
         catalog: -1,
         time: 220
@@ -150,6 +148,16 @@ class PlayerPage extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        await axios.get('/test/player/match/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    matchData: response.data
+                })
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -163,7 +171,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, data } = this.state;
+        const { info, data, matchData } = this.state;
 
         return (
             <div className={classes.main}>
@@ -181,7 +189,7 @@ class PlayerPage extends Component {
                                         <Typography variant="h6" component="h5">
                                             比赛数据
                                         </Typography>
-                                        <PlayerTable/>
+                                        <PlayerTable matchData={matchData}/>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -203,6 +211,11 @@ class PlayerPage extends Component {
                                             </RadarChart>
                                         </ResponsiveContainer>
                                     </div>
+                                    <Divider/>
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        相关人物
+                                    </Typography>
+                                    <DarkRapListItem/>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态

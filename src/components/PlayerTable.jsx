@@ -37,16 +37,7 @@ function createData(season, team, onCourt, firstRound, score, assist, yellowCard
     return { season, team, onCourt, firstRound, score, assist, yellowCard, redCard };
 }
 
-const rows = [
-    createData('2021', '上海上港', 4, 4, 3, 0, 2, 0),
-    createData('2020', '上海上港', 20, 15, 8, 1, 2, 0),
-    createData('2021', '上海上港', 4, 4, 3, 0, 2, 0),
-    createData('2021', '上海上港', 4, 4, 3, 0, 2, 0),
-    createData('2021', '上海上港', 4, 4, 3, 0, 2, 0),
-    createData('2021', '上海上港', 4, 4, 3, 0, 2, 0),
-];
-
-export default function PlayerTable() {
+export default function PlayerTable(info) {
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
@@ -56,6 +47,7 @@ export default function PlayerTable() {
     const tabsStyles = twitterTabsStylesHook.useTabs();
     const tabItemStyles = twitterTabsStylesHook.useTabItem();
 
+    let rows = info.matchData
     return (
         <TabContext value={value}>
             <Tabs
@@ -90,10 +82,10 @@ export default function PlayerTable() {
                                     <StyledTableCell component="th" scope="row" align="center">
                                         {row.season}
                                     </StyledTableCell>
-                                    <StyledTableCell align="center">{row.team}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.onCourt}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.firstRound}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.score}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.club}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.play}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.start}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.goal}</StyledTableCell>
                                     <StyledTableCell align="center">{row.assist}</StyledTableCell>
                                     <StyledTableCell align="center">{row.yellowCard}</StyledTableCell>
                                     <StyledTableCell align="center">{row.redCard}</StyledTableCell>
