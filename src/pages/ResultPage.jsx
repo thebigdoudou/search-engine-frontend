@@ -192,7 +192,7 @@ class ResultPage extends Component {
     const input = query.input;
     const catalog = query.catalog || -1;
     const time = query.time || 0;
-    const url ='http://10.180.95.244:8080/testTeam/name/'+input;
+    const url ='http://10.180.95.244:8080/'+input;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
 
     if(input) {
@@ -275,8 +275,8 @@ class ResultPage extends Component {
                     <Grid container xs={12}>
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                          <NationalResultCard key={index} data={item}/>
-                          {/*<SearchResultItem key={index} data={item}/>*/}
+                          {/*<NationalResultCard key={index} data={item}/>*/}
+                          <SearchResultItem key={index} data={item}/>
                         </div>
                       </Grid>
                     </Grid>
