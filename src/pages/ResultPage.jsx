@@ -192,7 +192,7 @@ class ResultPage extends Component {
     const input = query.input;
     const catalog = query.catalog || -1;
     const time = query.time || 0;
-    const url =Api.searchPlayer+input;
+    const url =Api.searchTeam+input;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
 
     if(input) {
@@ -275,8 +275,8 @@ class ResultPage extends Component {
                     <Grid container xs={12}>
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                          {/*<NationalResultCard key={index} data={item}/>*/}
-                          <SearchResultItem data={{info: item, imgURL: item.imgURL}}/>
+                          <NationalResultCard key={index} data={{info: item, imgURL: item.imgURL,show:1}}/>
+                          {/*<SearchResultItem data={{info: item, imgURL: item.imgURL}}/>*/}
                           {/*<InfoResultCard key={index} data={item}/>*/}
                         </div>
                       </Grid>

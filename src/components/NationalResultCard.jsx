@@ -69,21 +69,24 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         marginBottom:'10px'
     }
 }));
-const ReviewCard2Demo = React.memo(function(info)  {
+const ReviewCard2Demo = React.memo(function(prams)  {
     const styles = useStyles();
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
-    const data = info.info;
+    const data = prams['info']['info'];
+    const imgURL = prams['info']['imgURL'];
+    const show = prams['info']['show'];
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
                 className={styles.media}
                 component="img"
-                image={data.imgURL}
+                image={imgURL}
             />
             <CardContent className={styles.content}>
                 <Box mb={1}>
-                    <Chip  size="small" label="球队"  style={{marginRight:'8px'}}/>
+                    {show?<Chip  size="small" label="球队" style={{marginRight:'8px'}}/>:
+                        <Chip  size="small" label="球队" style={{marginRight:'8px',marginBottom:'10px'}}/>}
                     <h3 className={styles.heading}>{data.name}</h3>
                     <h3 className={styles.rating}>{data.englishName}</h3>
                 </Box>
@@ -121,33 +124,18 @@ const ReviewCard2Demo = React.memo(function(info)  {
                         邮箱：{data.email}
                     </Item>
                 </Row>
-                <div className={flexStyles.parent}>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                {show?<div className={flexStyles.parent}>
                     <Link1
                         className={cx(labelStyles.primaryLink, styles.textFooter)}
-                        href={"/player/4"}
+                        href={"/team/"+data.id}
                     >
                         Read more <ArrowForwardIos className={labelStyles.icon} />
                     </Link1>
-                    {/*<div*/}
-                    {/*    className={cx(*/}
-                    {/*        flexStyles.rightChild,*/}
-                    {/*        flexStyles.parent,*/}
-                    {/*        gutterStyles.parent*/}
-                    {/*    )}*/}
-                    {/*>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <ModeComment className={labelStyles.icon} /> 135*/}
-                    {/*    </button>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <Favorite className={labelStyles.icon} /> 12*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
-                </div>
+                </div>:<div></div>}
             </CardContent>
         </Card>
     );
-});
+})
 class NationalResultCard extends Component {
 
     render() {
