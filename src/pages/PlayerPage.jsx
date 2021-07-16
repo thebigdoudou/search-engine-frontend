@@ -22,10 +22,10 @@ import { Radar, RadarChart, PolarGrid, Tooltip, PolarAngleAxis, PolarRadiusAxis,
 import PlayerTable from "../components/PlayerTable";
 import TransferTable from "../components/transferTable";
 import InjureTable from "../components/InjureTable";
-import wordCloud from "../components/wordCloud"
 import transferPic from "../assets/images/transfer.svg";
 import injurePic from "../assets/images/injure.svg";
 import statPic from "../assets/images/stat.svg";
+import ReactWordcloud from "react-wordcloud";
 
 const style = theme => ({
     main: {
@@ -75,18 +75,53 @@ const style = theme => ({
     },
 })
 
-// const playerInfo = {
-//     name: '张溢弛',
-//     club: '上海上港',
-//     country: '奥地利',
-//     height: '192厘米',
-//     position: '前锋',
-//     age: '32岁',
-//     weight: '82KG',
-//     number: '7号',
-//     birthday: '1989-04-19',
-//     foot: '左右脚'
+// function getCallback(callback) {
+//     return function (word, event) {
+//         const isActive = callback !== "onWordMouseOut";
+//         const element = event.target;
+//         const text = select(element);
+//         text
+//             // .on("click", () => {
+//             //     if (isActive) {
+//             //         window.open(`https://duckduckgo.com/?q=${word.text}`, "_blank");
+//             //     }
+//             // })
+//             .transition()
+//             .attr("background", "white")
+//             .attr("font-size", isActive ? "300%" : "100%")
+//             .attr("text-decoration", isActive ? "underline" : "none");
+//     };
 // }
+//
+// const callbacks = {
+//     getWordColor: (word) => (word.value > 50 ? "orange" : "purple"),
+//     getWordTooltip: (word) =>
+//         `The word "${word.text}" appears ${word.value} times.`,
+//     onWordClick: getCallback("onWordClick"),
+//     onWordMouseOut: getCallback("onWordMouseOut"),
+//     onWordMouseOver: getCallback("onWordMouseOver")
+// };
+
+const callbacks = {
+    onWordClick: console.log,
+    onWordMouseOver: console.log,
+    getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? "good" : "bad"}]`,
+}
+const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: true,
+    fontSizes: [30, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    rotations: 3,
+    rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000
+};
+const size = [500, 300];
+const words = [{"text":"欧洲杯","value":130},{"text":"金靴","value":50},{"text":"球员","value":50},{"text":"进球","value":30},{"text":"决赛","value":30},{"text":"本届","value":30},{"text":"凯恩","value":20},{"text":"历史","value":20},{"text":"金球奖","value":20},{"text":"赔率","value":20},{"text":"当选","value":20},{"text":"最佳","value":20},{"text":"希克","value":20},{"text":"出场","value":20},{"text":"美洲杯","value":20}]
 
 function DarkRapListItem() {
     const avatarStyles = useDynamicAvatarStyles({ size: 70 });
@@ -244,8 +279,13 @@ class PlayerPage extends Component {
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的实时关键词
                                     </Typography>
-                                    <div style={{height: '300px', width: '300px'}}>
-                                        <wordCloud/>
+                                    <div style={{height: '300px', width: '500px'}}>
+                                        <ReactWordcloud
+                                            callbacks={callbacks}
+                                            options={options}
+                                            size={size}
+                                            words={words}
+                                        />
                                     </div>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
