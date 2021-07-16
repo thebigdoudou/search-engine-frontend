@@ -79,9 +79,7 @@ const ReviewCard2Demo = React.memo(function(info)  {
             <CardMedia
                 className={styles.media}
                 component="img"
-                image={
-                    'https://img1.dongqiudi.com/fastdfs5/M00/6A/80/rB8BO2AbmgCAYbglAABlcqHyDWc494.png'
-                }
+                image={data.imgURL}
             />
             <CardContent className={styles.content}>
                 <Box mb={1}>

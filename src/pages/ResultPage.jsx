@@ -38,7 +38,7 @@ import Icon6 from '../assets/images/6.png'
 import Icon7 from '../assets/images/7.png'
 import Icon8 from '../assets/images/8.png'
 import Icon9 from '../assets/images/9.png'
-import data from "../components/data";
+import Api from "../components/Api";
 import NationalResultCard from "../components/NationalResultCard";
 import InfoResultCard from "../components/InfoResultCard";
 import Pagination from "_material-ui-flat-pagination@3.2.1@material-ui-flat-pagination";
@@ -192,7 +192,7 @@ class ResultPage extends Component {
     const input = query.input;
     const catalog = query.catalog || -1;
     const time = query.time || 0;
-    const url ='http://10.180.95.244:8080/search/player/name/'+input;
+    const url =Api.searchNews+input;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
 
     if(input) {
@@ -276,7 +276,8 @@ class ResultPage extends Component {
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
                           {/*<NationalResultCard key={index} data={item}/>*/}
-                          <SearchResultItem data={{info: item, imgURL: ''}}/>
+                          {/*<SearchResultItem data={{info: item, imgURL: item.imgURL}}/>*/}
+                          <InfoResultCard key={index} data={item}/>
                         </div>
                       </Grid>
                     </Grid>
@@ -289,27 +290,6 @@ class ResultPage extends Component {
                     </Grid>
                   </Grid>
               ))}
-              {/*<Grid container xs={12}>*/}
-              {/*  <Grid item xs>*/}
-              {/*    <div className={classes.card}>*/}
-              {/*      <InfoResultCard />*/}
-              {/*    </div>*/}
-              {/*  </Grid>*/}
-              {/*</Grid>*/}
-              {/*<Grid container xs={12}>*/}
-              {/*  <Grid item xs>*/}
-              {/*    <div className={classes.line}>*/}
-              {/*      <Divider />*/}
-              {/*    </div>*/}
-              {/*  </Grid>*/}
-              {/*</Grid>*/}
-              {/*<Grid container xs={12}>*/}
-              {/*  <Grid item xs>*/}
-              {/*    <div className={classes.card}>*/}
-              {/*      <NationalResultCard data={data1[0]}/>*/}
-              {/*    </div>*/}
-              {/*  </Grid>*/}
-              {/*</Grid>*/}
             </Grid>
             <Grid item xs>
               <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>

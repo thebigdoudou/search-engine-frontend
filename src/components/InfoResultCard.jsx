@@ -40,6 +40,8 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     },
     heading: {
         fontSize: 17,
+        textDecoration:'none',
+        Color:'black',
         fontWeight: 'bold',
         letterSpacing: '0.5px',
         marginBottom: 5,
@@ -62,7 +64,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     },
     textItem:{
         marginBottom:'5px',
-        lineHeight:'22px'
+        lineHeight:'25px'
     }
 }));
 const ReviewCard2Demo = React.memo(function(info) {
@@ -70,6 +72,8 @@ const ReviewCard2Demo = React.memo(function(info) {
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
     const data = info.info;
+    const tags = (data.tags.toString().split(','))
+    const tag = tags.length>4?tags[0]+','+tags[1]+','+tags[2]:data.tags;
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
@@ -82,41 +86,23 @@ const ReviewCard2Demo = React.memo(function(info) {
             <CardContent className={styles.content}>
                 <Box mb={1}>
                     <Chip  size="small" label="资讯" style={{marginRight:'8px'}}/>
-                    <h3 className={styles.heading}>温家宝谈U23亚洲杯预选赛：印尼很有实力；这次重新证明自己</h3>
+                    <a  href={data.url} className={styles.heading}>{data.title}</a>
                 </Box>
                 <Row >
                     <Column className={styles.body} >
-                        <Item className={styles.textItem}>
-                            时间：{data.birthday}
-                        </Item>
+                        <Row>
+                            <Item style={{width:'40%'}}>
+                                作者：{data.author}
+                            </Item>
+                            <Item className={styles.textItem}>
+                                标签：{tag}
+                            </Item>
+                        </Row>
                         <Item  className={styles.textItem}>
-                            简介：北京时间7月9日，2022年U23亚洲杯预选赛抽签仪式结束，最终中国U23与澳大利亚、印度尼西亚和文莱同在G组，中国队将前往赛地印度尼西亚比赛。对此，小将温家宝在接受《体坛周报》采访时，也发表了自己的看法。
+                            &emsp;&emsp;{data.content.length>123?data.content.substring(0,123)+'...':data.content}
                         </Item>
                     </Column>
                 </Row>
-                <div className={flexStyles.parent}>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <Link1
-                        className={cx(labelStyles.primaryLink, styles.textFooter)}
-                        href={"/player/4"}
-                    >
-                        Read more <ArrowForwardIos className={labelStyles.icon} />
-                    </Link1>
-                    {/*<div*/}
-                    {/*    className={cx(*/}
-                    {/*        flexStyles.rightChild,*/}
-                    {/*        flexStyles.parent,*/}
-                    {/*        gutterStyles.parent*/}
-                    {/*    )}*/}
-                    {/*>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <ModeComment className={labelStyles.icon} /> 135*/}
-                    {/*    </button>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <Favorite className={labelStyles.icon} /> 12*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
-                </div>
             </CardContent>
         </Card>
     );

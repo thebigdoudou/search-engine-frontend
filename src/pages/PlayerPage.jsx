@@ -145,7 +145,7 @@ class PlayerPage extends Component {
                     data: data,
                     imgURL: response.data['imgURL']
                 })
-                console.log(response.data['playerMatchDataList'])
+                console.log(response.data['imgURL'])
             })
             .catch(function (error) {
                 console.log(error);
