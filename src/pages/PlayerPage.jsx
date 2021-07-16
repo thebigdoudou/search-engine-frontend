@@ -22,6 +22,7 @@ import { Radar, RadarChart, PolarGrid, Tooltip, PolarAngleAxis, PolarRadiusAxis,
 import PlayerTable from "../components/PlayerTable";
 import TransferTable from "../components/transferTable";
 import InjureTable from "../components/InjureTable";
+import wordCloud from "../components/wordCloud"
 import transferPic from "../assets/images/transfer.svg";
 import injurePic from "../assets/images/injure.svg";
 import statPic from "../assets/images/stat.svg";
@@ -243,7 +244,9 @@ class PlayerPage extends Component {
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的实时关键词
                                     </Typography>
-
+                                    <div style={{height: '300px', width: '300px'}}>
+                                        <wordCloud/>
+                                    </div>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态
