@@ -20,7 +20,11 @@ import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
 import { Radar, RadarChart, PolarGrid, Tooltip, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import PlayerTable from "../components/PlayerTable";
+import TransferTable from "../components/transferTable";
 import InjureTable from "../components/InjureTable";
+import transferPic from "../assets/images/transfer.svg";
+import injurePic from "../assets/images/injure.svg";
+import statPic from "../assets/images/stat.svg";
 
 const style = theme => ({
     main: {
@@ -127,6 +131,7 @@ class PlayerPage extends Component {
         data: [],
         imgURL: "",
         matchData: [],
+        injureData: [],
         loading: true,
         catalog: -1,
         time: 220
@@ -144,19 +149,12 @@ class PlayerPage extends Component {
                 that.setState({
                     info: response.data['playerBaseInfo'],
                     data: data,
+                    matchData: response.data['playerMatchDataList'],
+                    transferData: response.data['playerTransferDataList'],
+                    injureData: response.data['playerInjuredDataList'],
                     imgURL: response.data['imgURL']
                 })
-                console.log(response.data['imgURL'])
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        await axios.get('/test/player/match/' + that.state.input)
-            .then(function (response) {
-                that.setState({
-                    matchData: response.data
-                })
-                console.log(response.data)
+                console.log(response.data['playerTransferDataList'])
             })
             .catch(function (error) {
                 console.log(error);
@@ -174,7 +172,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, data, matchData, imgURL } = this.state;
+        const { info, data, matchData, transferData, injureData, imgURL } = this.state;
 
         return (
             <div className={classes.main}>
@@ -188,18 +186,33 @@ class PlayerPage extends Component {
                                         <SearchResultItem data={{info: info, imgURL: imgURL}}/>
                                     </div>
                                     <div className={classes.statisticCard}>
-                                        <Divider orientation="vertical" flexItem/>
-                                        <Typography variant="h6" component="h5">
-                                            比赛数据
-                                        </Typography>
+                                        <Row>
+                                            <img src={statPic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5">
+                                                比赛数据
+                                            </Typography>
+                                        </Row>
                                         <PlayerTable data={matchData}/>
                                     </div>
+                                    <Divider/>
                                     <div className={classes.statisticCard}>
-                                        <Divider orientation="vertical" flexItem/>
-                                        <Typography variant="h6" component="h5">
-                                            伤病
-                                        </Typography>
-                                        <InjureTable data={matchData}/>
+                                        <Row>
+                                            <img src={transferPic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5">
+                                                转会
+                                            </Typography>
+                                        </Row>
+                                        <TransferTable data={transferData}/>
+                                    </div>
+                                    <Divider/>
+                                    <div className={classes.statisticCard}>
+                                        <Row>
+                                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5">
+                                                伤病
+                                            </Typography>
+                                        </Row>
+                                        <InjureTable data={injureData}/>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -228,9 +241,15 @@ class PlayerPage extends Component {
                                     <DarkRapListItem/>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        {info.name}的实时关键词
+                                    </Typography>
+
+                                    <Divider/>
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态
                                     </Typography>
                                     <DarkRapListItem/>
+                                    <Divider/>
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -12,6 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableCell from "@material-ui/core/TableCell";
+import transferPic from "../assets/images/transfer.svg"
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -31,7 +32,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export default function InjureTable(info) {
+export default function TransferTable(info) {
     let rows = info.data ? info.data : []
     return (
         <TabContext>
@@ -40,17 +41,17 @@ export default function InjureTable(info) {
                     <Table aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell align="center">俱乐部</StyledTableCell>
-                                <StyledTableCell align="center">病因</StyledTableCell>
                                 <StyledTableCell align="center">时间</StyledTableCell>
+                                <StyledTableCell align="center">转出俱乐部</StyledTableCell>
+                                <StyledTableCell align="center">转入俱乐部</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {rows.map((row) => (
                                 <StyledTableRow>
-                                    <StyledTableCell align="center">{row.club}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.injury}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.period}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.transferMonth}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.inClub}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.outClub}</StyledTableCell>
                                 </StyledTableRow>
                             ))}
                         </TableBody>
