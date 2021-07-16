@@ -20,6 +20,7 @@ import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
 import { Radar, RadarChart, PolarGrid, Tooltip, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import PlayerTable from "../components/PlayerTable";
+import InjureTable from "../components/InjureTable";
 
 const style = theme => ({
     main: {
@@ -192,6 +193,13 @@ class PlayerPage extends Component {
                                             比赛数据
                                         </Typography>
                                         <PlayerTable data={matchData}/>
+                                    </div>
+                                    <div className={classes.statisticCard}>
+                                        <Divider orientation="vertical" flexItem/>
+                                        <Typography variant="h6" component="h5">
+                                            伤病
+                                        </Typography>
+                                        <InjureTable data={matchData}/>
                                     </div>
                                 </Grid>
                             </Grid>
