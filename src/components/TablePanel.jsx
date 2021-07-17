@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,7 +27,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box p={3} style={index===1?{paddingBottom:'2px',paddingTop:'6px'}:{paddingTop:'0'}}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -106,45 +106,91 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+export default function TablePanel(props) {
+        const classes = useStyles();
+        const [value, setValue] = React.useState(0);
+        const [selectValue, setSelectValue] = React.useState('female');
+        const tabsStyles = twitterTabsStylesHook.useTabs();
+        const tabItemStyles = twitterTabsStylesHook.useTabItem();
 
-export default function SimpleTabs() {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-    const [selectValue, setSelectValue] = React.useState('female');
-    const tabsStyles = twitterTabsStylesHook.useTabs();
-    const tabItemStyles = twitterTabsStylesHook.useTabItem();
+        const handleChange = (event, newValue) => {
+            setValue(newValue);
+        };
+        const selectHandleChange = (event) => {
+            setSelectValue(event.target.value);
+            props.changeCatalog(event.target.value);
+        };
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    const selectHandleChange = (event) => {
-        setSelectValue(event.target.value);
-    };
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static" style={{backgroundColor:"rgb(255,255,255)",color:"rgb(0,0,0)"}}>
-                <Tabs value={value} classes={tabsStyles} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab style={{width:'15%'}} classes={tabItemStyles} label="搜索结果" {...a11yProps(0)} />
-                    <Tab style={{width:'15%'}} classes={tabItemStyles} label="高级筛选" {...a11yProps(1)} />
-                </Tabs>
-            </AppBar>
-            <AppBar position="static" style={{backgroundColor:"rgb(255,255,255)",color:"rgb(0,0,0)"}}>
-                <TabPanel value={value} index={1}>
-                    <FormControl component="fieldset" style={{display:'inline-block'}}>
-                        <div style={{display:'flex', alignItems:'center'}}>
-                            <FormLabel component="legend" style={{display:'inline-block',marginRight:'50px'}}>结果:</FormLabel>
-                            <RadioGroup aria-label="gender" name="gender1" value={selectValue} style={{display:'inline-block'}}onChange={selectHandleChange}>
-                                <FormControlLabel value="female" control={<StyledRadio />} label="全部" />
-                                <FormControlLabel value="male" control={<StyledRadio />} label="球员" />
-                                <FormControlLabel value="other" control={<StyledRadio />} label="球队" />
-                                <FormControlLabel value="disabled" control={<StyledRadio />} label="资讯" />
-                            </RadioGroup>
-                        </div>
-                    </FormControl>
-                </TabPanel>
-            </AppBar>
+        return (
+            <div className={classes.root}>
+                <AppBar position="static" style={{backgroundColor: "rgb(255,255,255)", color: "rgb(0,0,0)"}}>
+                    <Tabs value={value} classes={tabsStyles} onChange={handleChange} aria-label="simple tabs example">
+                        <Tab style={{width: '15%'}} classes={tabItemStyles} label="搜索结果" {...a11yProps(0)} />
+                        <Tab style={{width: '15%'}} classes={tabItemStyles} label="高级筛选" {...a11yProps(1)} />
+                    </Tabs>
+                </AppBar>
+                <AppBar position="static" style={{backgroundColor: "rgb(255,255,255)", color: "rgb(0,0,0)"}}>
+                    <TabPanel value={value} index={1}>
+                        <FormControl component="fieldset" style={{display: 'inline-block'}}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <FormLabel component="legend"
+                                           style={{display: 'inline-block', marginRight: '50px'}}>结果:</FormLabel>
+                                <RadioGroup aria-label="gender" name="gender1" value={selectValue}
+                                            style={{display: 'inline-block'}} onChange={selectHandleChange}>
+                                    <FormControlLabel value="all" control={<StyledRadio/>} label="全部"/>
+                                    <FormControlLabel value="player" control={<StyledRadio/>} label="球员"/>
+                                    <FormControlLabel value="club" control={<StyledRadio/>} label="球队"/>
+                                    <FormControlLabel value="news" control={<StyledRadio/>} label="资讯"/>
+                                </RadioGroup>
+                            </div>
+                        </FormControl>
+                    </TabPanel>
+                    <TabPanel value={selectValue + value} index={"player1"}>
+                        <FormControl component="fieldset" style={{display: 'inline-block'}}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <FormLabel component="legend"
+                                           style={{display: 'inline-block', marginRight: '50px'}}>结果</FormLabel>
+                                <RadioGroup aria-label="gender" name="gender1" value={selectValue}
+                                            style={{display: 'inline-block'}} onChange={selectHandleChange}>
+                                    <FormControlLabel value="all" control={<StyledRadio/>} label="全部"/>
+                                    <FormControlLabel value="player" control={<StyledRadio/>} label="球员"/>
+                                    <FormControlLabel value="club" control={<StyledRadio/>} label="球队"/>
+                                    <FormControlLabel value="news" control={<StyledRadio/>} label="资讯"/>
+                                </RadioGroup>
+                            </div>
+                        </FormControl>
+                    </TabPanel>
+                    <TabPanel value={selectValue + value} index={"club1"}>
+                        <FormControl component="fieldset" style={{display: 'inline-block'}}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <FormLabel component="legend"
+                                           style={{display: 'inline-block', marginRight: '50px'}}>国家:</FormLabel>
+                                <RadioGroup aria-label="gender" name="gender1" value={selectValue}
+                                            style={{display: 'inline-block'}}>
+                                    <FormControlLabel value="all" control={<StyledRadio/>} label="巴西"/>
+                                    <FormControlLabel value="player" control={<StyledRadio/>} label="阿根廷"/>
+                                    <FormControlLabel value="club" control={<StyledRadio/>} label="法国"/>
+                                    <FormControlLabel value="news" control={<StyledRadio/>} label="德国"/>
+                                </RadioGroup>
+                            </div>
+                        </FormControl>
+                    </TabPanel>
+                    <TabPanel value={selectValue + value} index={"news1"}>
+                        <FormControl component="fieldset" style={{display: 'inline-block'}}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <FormLabel component="legend"
+                                           style={{display: 'inline-block', marginRight: '50px'}}>排序：</FormLabel>
+                                <RadioGroup aria-label="gender" name="gender1" value={selectValue}
+                                            style={{display: 'inline-block'}}>
+                                    <FormControlLabel value="all" control={<StyledRadio/>} label="按相关度排序"/>
+                                    <FormControlLabel value="player" control={<StyledRadio/>} label="按时间排序"/>
+                                </RadioGroup>
+                            </div>
+                        </FormControl>
+                    </TabPanel>
+                </AppBar>
 
-        </div>
-    );
+            </div>
+        );
 }

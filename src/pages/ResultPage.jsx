@@ -7,7 +7,6 @@ import NavBar from '../components/NavBar';
 import Grid from '@material-ui/core/Grid';
 import Filter from "../components/Filter";
 import SideBar from "../components/SideBar";
-import SimpleTabs from "../components/TablePanel"
 import SearchResultItem from "../components/SearchResultItem";
 import SearchResult from "../components/SearchResult";
 import { Switch, Route } from 'react-router-dom';
@@ -43,6 +42,7 @@ import NationalResultCard from "../components/NationalResultCard";
 import InfoResultCard from "../components/InfoResultCard";
 import Pagination from "_material-ui-flat-pagination@3.2.1@material-ui-flat-pagination";
 import ItemCard from "../components/ItemCard";
+import TablePanel from "../components/TablePanel";
 
 const style = theme => ({
   main: {
@@ -162,7 +162,8 @@ class ResultPage extends Component {
     data: [],
     offset: 0,
     total: 0,
-    loading: true
+    loading: true,
+    api:0
   }
 
   componentDidMount() {
@@ -190,11 +191,24 @@ class ResultPage extends Component {
 
   fetchData = (query, page=1) => {
     const input = query.input;
-    const catalog = query.catalog || -1;
+    const catalog = query.catalog;
     const time = query.time || 0;
-    const url =Api.searchTeam+input;
+    let api=Api.searchAll;
+    if(catalog==="all"){
+      api =Api.searchAll;
+    }
+    else if(catalog==="player"){
+      api =Api.searchPlayer;
+    }
+    else if(catalog==="team"){
+      api =Api.searchTeam
+    }
+    else if(catalog==="news"){
+      api = Api.searchNews
+    }
+    let url = api + input;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
-
+    console.log(url);
     if(input) {
       fetch(url)
           .then(res => res.json())
@@ -223,8 +237,15 @@ class ResultPage extends Component {
   }
 
   changeCatalog = (catalog) => {
-    this.setState({catalog});
-    // console.log("catalog", catalog);
+    this.setState({
+      query:{
+        input:this.props.match.params.input,
+        time:this.state.time,
+        catalog:catalog
+      }
+    },() => {
+      this.fetchData(this.state.query, 1);
+    })
   }
 
   changeTime = (time) => {
@@ -237,7 +258,7 @@ class ResultPage extends Component {
     return (
 
       <div className={classes.main}>
-        <NavBar className={classes.navBar} />
+        <NavBar className={classes.navBar}/>
         <div className={classes.wrapper}>
           {/*<Grid container spacing={4} className={classes.content}>*/}
           {/*  <Grid item xs={12} sm={3} md={2} className={classes.sider}>*/}
@@ -265,7 +286,7 @@ class ResultPage extends Component {
           {/*<ScrollTop />*/}
           <Grid container spacing={10}>
             <Grid item xs={12}>
-              <SimpleTabs/>
+              <TablePanel changeCatalog={this.changeCatalog}/>
             </Grid>
           </Grid>
           <Grid container spacing={5}>
@@ -275,9 +296,9 @@ class ResultPage extends Component {
                     <Grid container xs={12}>
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                          <NationalResultCard key={index} data={{info: item, imgURL: item.imgURL,show:1}}/>
-                          {/*<SearchResultItem data={{info: item, imgURL: item.imgURL}}/>*/}
-                          {/*<InfoResultCard key={index} data={item}/>*/}
+                            {index<10?(item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL}}/>:
+                                item.type==2?<NationalResultCard data={{info: item.teamReturn, imgURL: item.teamReturn.imgURL,show:1}}/>:
+                                    <InfoResultCard data={item.newsReturn}/>):<div>1</div>}
                         </div>
                       </Grid>
                     </Grid>

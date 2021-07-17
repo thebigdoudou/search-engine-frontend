@@ -5,11 +5,11 @@ import HomePage from './pages/HomePage';
 import ResultPage from './pages/ResultPage';
 import PlayerPage from './pages/PlayerPage';
 import TeamPage from './pages/TeamPage';
-import {  MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {  ThemeProvider, createTheme } from '@material-ui/core/styles';
 
 // const font = "'Lato', sans-serif";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#757ce8',
@@ -41,7 +41,7 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
     <Router basename="/">
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -53,7 +53,7 @@ function App() {
         <Route path="/team/:input" component={TeamPage}/>
       </Switch>
     </Router>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 }
 

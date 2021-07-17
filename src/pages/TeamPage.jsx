@@ -17,6 +17,9 @@ import TableHead from "_@material-ui_core@4.12.1@@material-ui/core/TableHead";
 import TableBody from "_@material-ui_core@4.12.1@@material-ui/core/TableBody";
 import TableContainer from "_@material-ui_core@4.12.1@@material-ui/core/TableContainer";
 import TabPanel from "_@material-ui_lab@4.0.0-alpha.60@@material-ui/lab/TabPanel";
+import statPic from "../assets/images/stat.svg";
+import trophy from "../assets/images/trophy.svg"
+import {Row} from "_@mui-treasury_components@1.10.1@@mui-treasury/components/flex";
 
 
 
@@ -86,6 +89,8 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const data2 = [{"id":201,"teamId":50001756,"honor":"欧洲冠军联赛","years":"2014/2015,2010/2011,2008/2009,2005/2006,1991/1992"},{"id":202,"teamId":50001756,"honor":"世界俱乐部杯","years":"2015 Japan,2011 Japan,2009 UAE"},{"id":203,"teamId":50001756,"honor":"欧洲超级杯","years":"2015/2016,2011/2012,2009/2010,1997/1998,1992/1993"},{"id":204,"teamId":50001756,"honor":"西班牙足球甲级联赛","years":"2018/2019,2017/2018,2015/2016,2014/2015,2012/2013,2010/2011,2009/2010,2008/2009,2005/2006,2004/2005,1998/1999,1997/1998,1993/1994,1992/1993,1991/1992,1990/1991,1984/1985,1973/1974,1959/1960,1958/1959,1952/1953,1951/1952,1948/1949,1947/1948,1944/1945,1929"},{"id":205,"teamId":50001756,"honor":"西班牙国王杯","years":"2020/2021,2017/2018,2016/2017,2015/2016,2014/2015,2011/2012,2008/2009,1997/1998,1996/1997,1989/1990,1987/1988,1982/1983,1980/1981,1977/1978,1971,1968,1963,1959,1957,1953,1952,1951,1942,1928,1926,1925,1922,1920,1913,1912,1910"},{"id":206,"teamId":50001756,"honor":"西班牙超级杯","years":"2018/2019,2016/2017,2013/2014,2011/2012,2010/2011,2009/2010,2006/2007,2005/2006,1996/1997,1994/1995,1992/1993,1991/1992,1983/1984,1953/1954,1952/1953* Automatically awarded to double winners,1948/1949,1945/1946"},{"id":207,"teamId":50001756,"honor":"加泰杯","years":"2013/2014"},{"id":208,"teamId":50001756,"honor":"欧洲优胜者杯","years":"1996/1997,1988/1989,1981/1982,1978/1979"},{"id":209,"teamId":50001756,"honor":"甘伯杯","years":"2020,2019,2018,2017,2016"},{"id":210,"teamId":50001756,"honor":"加泰罗尼亚超级杯","years":"2018"},{"id":211,"teamId":50001756,"honor":"奥迪杯","years":"2011"}]
+
 class TeamPage extends Component {
     state = {
         input: this.props.match.params.input,
@@ -142,10 +147,10 @@ class TeamPage extends Component {
                                         <NationalResultCard data={{info: info, imgURL: imgURL , show:0}}/>
                                     </div>
                                     <div className={classes.statisticCard}>
-                                        <Divider orientation="vertical" flexItem/>
-                                        <Typography variant="h6" component="h5" >
-                                            比赛数据
-                                        </Typography>
+                                        <Row>
+                                            <img src={statPic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5" >比赛数据</Typography>
+                                        </Row>
                                         <TabContext>
                                             <TabPanel >
                                                 <TableContainer component={Paper} >
@@ -171,11 +176,12 @@ class TeamPage extends Component {
                                             </TabPanel >
                                         </TabContext>
                                     </div>
+                                    <Divider/>
                                     <div className={classes.statisticCard}>
-                                        <Divider orientation="vertical" flexItem/>
-                                        <Typography variant="h6" component="h5" >
-                                            荣誉记录
-                                        </Typography>
+                                        <Row>
+                                            <img src={trophy} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5" >荣誉记录</Typography>
+                                        </Row>
                                         <TabContext>
                                             <TabPanel >
                                                 <TableContainer component={Paper} >
@@ -189,8 +195,8 @@ class TeamPage extends Component {
                                                         <TableBody>
                                                             {rows1.map((row) => (
                                                                 <StyledTableRow >
-                                                                    <StyledTableCell align="center">{row.honor}</StyledTableCell>
-                                                                    <StyledTableCell>{row.years}</StyledTableCell>
+                                                                    <StyledTableCell style={{width:'26%'}}>🏆&nbsp;{row.honor}✖️{row.years.split(',').length}</StyledTableCell>
+                                                                    <StyledTableCell style={{wordBreak:"break-all" }} >{row.years.replaceAll(',','\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t')}</StyledTableCell>
                                                                 </StyledTableRow>
                                                             ))}
                                                         </TableBody>

@@ -2,7 +2,7 @@
   "name": "techhub-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost/knowaball",
+  "homepage": "http://localhost",
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
@@ -44,5 +44,5 @@
     "@mui-treasury/components": "^1.10.1",
     "clsx": "^1.1.1"
   },
-  "proxy": "http://172.20.10.9:8080"
+  "proxy": "http://192.168.43.90:8080"
 }
