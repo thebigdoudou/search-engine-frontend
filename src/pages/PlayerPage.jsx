@@ -150,6 +150,8 @@ const graphOptions = {
         arrowStrikethrough: false,
         // font: '12px arial #ff0000',
         scaling: {
+            min: 1,
+            max: 10,
             label: true
         },
         smooth: {
@@ -161,8 +163,14 @@ const graphOptions = {
         font: {
             size: 10
         },
+        color: {
+            hover: {
+                border: '#D2E5FF',
+                background: '#D2E5FF'
+            }
+        },
         shape: "dot",
-        size: 20,
+        size: 15,
         scaling: {
             type: "incomingAndOutgoingConnections",
             min: 10,
@@ -175,6 +183,7 @@ const graphOptions = {
         }
     },
     interaction:{
+        hover: true,
         zoomView: false
     }
 };
@@ -343,12 +352,12 @@ class PlayerPage extends Component {
                                                 知识图谱
                                             </Typography>
                                         </Row>
-                                        <div style={{ height: "800px" }}>
+                                        <div style={{ height: "1100px" }}>
                                             <Graph
                                                 graph={graph}
                                                 options={graphOptions}
                                                 events={events}
-                                                style={{ height: "800px", fontFamily: 'sans-serif', textAlign: 'center' }}
+                                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
                                             />
                                         </div>
                                     </div>
