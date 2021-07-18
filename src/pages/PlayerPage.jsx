@@ -85,7 +85,7 @@ const options = {
     enableTooltip: true,
     deterministic: false,
     fontFamily: "impact",
-    fontSizes: [20, 60],
+    fontSizes: [20, 50],
     fontStyle: "normal",
     fontWeight: "normal",
     padding: 1,
@@ -96,74 +96,92 @@ const options = {
     transitionDuration: 1000
 };
 
-const graph = {
-    nodes: [
-        { id: 1, label: "DOH", group: "keyword", color: "red" },
-        { id: 2, label: "health agency", group: "attribute" },
-        { id: 3, label: "PH", group: "keyword" },
-        { id: 4, label: "imposed", group: "relationship" },
-        { id: 5, label: "ECQ", group: "keyword" },
-        { id: 6, label: "coverage", group: "attribute" },
-        { id: 7, label: "duration", group: "attribute" },
-        { id: 8, label: "agency", group: "attribute" },
-        { id: 9, label: "luzon", group: "term" },
-        { id: 10, label: "1 month", group: "term" },
-        { id: 11, label: "IATF", group: "term" },
-        { id: 12, label: "affected", group: "relationship" },
-        { id: 13, label: "covid", group: "keyword" },
-        { id: 14, label: "subclass", group: "relationship" },
-        { id: 15, label: "Corona virus", group: "keyword" }
-    ],
-    edges: [
-        { from: 1, to: 2 },
-        { from: 2, to: 3 },
-        { from: 3, to: 12 },
-        { from: 12, to: 13 },
-        { from: 13, to: 14 },
-        { from: 14, to: 15 },
-        { from: 3, to: 4 },
-        { from: 4, to: 5 },
-        { from: 5, to: 6 },
-        { from: 5, to: 7 },
-        { from: 5, to: 8 },
-        { from: 6, to: 9 },
-        { from: 7, to: 10 },
-        { from: 8, to: 11 }
-    ]
-};
-
 const graphOptions = {
     groups: {
-        keyword: {
-            color: { background: "#ffa3a3", border: "#ffa3a3" },
-            shape: "circle",
+        self: {
+            color: { background: "#00FA9A", border: "#00FA9A" },
+            // shape: "circle",
             scaling: { min: 20 }
         },
-        relationship: {
-            color: { background: "#a9d2a9", border: "#a9d2a9" },
-            shape: "box"
-        },
-        attribute: {
-            color: { background: "lightblue", border: "lightblue" },
-            shape: "box"
-        },
-        term: {
-            color: { background: "#f1d78b", border: "#f1d78b" },
+        teammate: {
+            color: { background: "#ffa3a3", border: "#ffa3a3" },
             shapeProperties: { borderDashes: true },
-            shape: "box"
+            // shape: "box",
+        },
+        relation: {
+            color: { background: "#a9d2a9", border: "#a9d2a9" },
+            shapeProperties: { borderDashes: true },
+            // shape: "ellipse"
+        },
+        team: {
+            color: { background: "#98F5FF", border: "#98F5FF" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        oldTeam: {
+            color: { background: "#98F5FF", border: "#98F5FF" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        injure: {
+            color: { background: "#FF6347", border: "#FF6347" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        honor: {
+            color: { background: "#FFD700", border: "#FFD700" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
         }
     },
     layout: {
         hierarchical: false
     },
     edges: {
-        color: "#000000"
+        width: 2,
+        font: { align: "bottom", strokeWidth: 3, strokeColor: "#ffffff" },
+        color: {
+            color: "#cccccc",
+            highlight: "#aabbee",
+            hover: "#aaaaaa",
+            inherit: "both",
+            opacity: 1
+        },
+        arrowStrikethrough: false,
+        // font: '12px arial #ff0000',
+        scaling: {
+            label: true
+        },
+        smooth: {
+            type: "continuous",
+            forceDirection: "horizontal"
+        }
+    },
+    nodes: {
+        font: {
+            size: 10
+        },
+        shape: "dot",
+        size: 20,
+        scaling: {
+            type: "incomingAndOutgoingConnections",
+            min: 10,
+            max: 60,
+            label: {
+                enabled: true,
+                min: 20,
+                max: 32
+            }
+        }
+    },
+    interaction:{
+        zoomView: false
     }
 };
 
 const events = {
     select: function(event) {
-        var { nodes, edges } = event;
+        let { nodes, edges } = event;
         console.log("Selected nodes:");
         console.log(nodes);
         console.log("Selected edges:");
@@ -217,6 +235,7 @@ class PlayerPage extends Component {
         matchData: [],
         injureData: [],
         hotWord: [],
+        graph: {nodes: [], edges: []},
         loading: true,
         catalog: -1,
         time: 220
@@ -239,7 +258,6 @@ class PlayerPage extends Component {
                     injureData: response.data['playerInjuredDataList'],
                     imgURL: response.data['imgURL']
                 })
-                console.log(response.data['playerTransferDataList'])
             })
             .catch(function (error) {
                 console.log(error);
@@ -249,7 +267,16 @@ class PlayerPage extends Component {
                 that.setState({
                     hotWord: response.data
                 })
-                console.log(response.data['playerTransferDataList'])
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        await axios.get('/player/kg/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    graph: response.data
+                })
+                console.log(response.data)
             })
             .catch(function (error) {
                 console.log(error);
@@ -267,7 +294,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { input, info, data, matchData, transferData, injureData, imgURL, hotWord } = this.state;
+        const { input, info, data, matchData, transferData, injureData, imgURL, hotWord, graph } = this.state;
 
         return (
             <div className={classes.main}>
@@ -313,15 +340,15 @@ class PlayerPage extends Component {
                                         <Row>
                                             <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
                                             <Typography variant="h6" component="h5">
-                                                关系网络
+                                                知识图谱
                                             </Typography>
                                         </Row>
-                                        <div>
+                                        <div style={{ height: "800px" }}>
                                             <Graph
                                                 graph={graph}
                                                 options={graphOptions}
                                                 events={events}
-                                                style={{ height: "640px", fontFamily: 'sans-serif', textAlign: 'center' }}
+                                                style={{ height: "800px", fontFamily: 'sans-serif', textAlign: 'center' }}
                                             />
                                         </div>
                                     </div>
