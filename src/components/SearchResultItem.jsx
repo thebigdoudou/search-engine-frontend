@@ -119,20 +119,6 @@ const ReviewCard2Demo = React.memo(function(prams) {
                     >
                         Read more <ArrowForwardIos className={labelStyles.icon} />
                     </Link1>
-                    {/*<div*/}
-                    {/*    className={cx(*/}
-                    {/*        flexStyles.rightChild,*/}
-                    {/*        flexStyles.parent,*/}
-                    {/*        gutterStyles.parent*/}
-                    {/*    )}*/}
-                    {/*>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <ModeComment className={labelStyles.icon} /> 135*/}
-                    {/*    </button>*/}
-                    {/*    <button type={'button'} className={labelStyles.link}>*/}
-                    {/*        <Favorite className={labelStyles.icon} /> 12*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
                 </div>
             </CardContent>
         </Card>

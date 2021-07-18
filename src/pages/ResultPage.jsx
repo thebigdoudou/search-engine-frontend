@@ -25,9 +25,6 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import { Column, Item, Row } from '@mui-treasury/components/flex';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Icon1 from '../assets/images/1.png'
 import Icon2 from '../assets/images/2.png'
 import Icon3 from '../assets/images/3.png'
@@ -216,14 +213,14 @@ class ResultPage extends Component {
             console.log(json);
             this.setState({
               data: json.totalDataList,
-              total: json.totalNum,
+              total: json.searchInfo.totalNum,
               loading: false
             })
           })
     }
     setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 1000);
+    }, 100);
   }
 
   changePage = (offset) => {
@@ -244,7 +241,9 @@ class ResultPage extends Component {
     }
     this.fetchData(query, 1);
     this.setState({
-      query
+      query,
+      page: 1,
+      offset: 0,
     })
   }
 
@@ -254,7 +253,8 @@ class ResultPage extends Component {
   }
   render() {
     const {classes} = this.props;
-    const { input, catalog, time,data } = this.state;
+    const {data,total } = this.state;
+
     return (
 
       <div className={classes.main}>
@@ -294,7 +294,7 @@ class ResultPage extends Component {
               { data.map((item, index) => (
                   <Grid container xs={12}>
                     <Grid container xs={12}>
-                      <Grid item xs>
+                      <Grid item  xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
                           {item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL}}/>:''}
                           {item.type==2?<NationalResultCard data={{info: item.teamReturn, imgURL: item.teamReturn.imgURL,show:1}}/>:''}
@@ -311,6 +311,20 @@ class ResultPage extends Component {
                     </Grid>
                   </Grid>
               ))}
+              { total<5?(
+                  <Grid container xs={12}>
+                    <Grid container xs={12}>
+                      <Grid item  xs>
+                        <div className={classes.card} style={{marginBottom:'20px',marginTop:'20px'}}/>
+                      </Grid>
+                    </Grid>
+                    <Grid container xs={12}>
+                      <Grid item  xs>
+                        <div className={classes.card} style={{marginBottom:'20px',marginTop:'20px'}}/>
+                      </Grid>
+                    </Grid>
+                  </Grid>):''
+              }
             </Grid>
             <Grid item xs>
               <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
@@ -345,31 +359,40 @@ class ResultPage extends Component {
                   </Typography>
                   <Column>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon1} className={classes.rankIcon} />精
+                      <Avatar src={Icon1} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2150725.html'}>前长沙金德主帅日瓦蒂诺维奇去世</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon2} className={classes.rankIcon} />准
+                      <Avatar src={Icon2} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2150618.html'}>天津球迷向卡达尔送去鲜花</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon3} className={classes.rankIcon} />抓
+                      <Avatar src={Icon3} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2150966.html'}>大连人女足2021女甲联赛名单</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon4} className={classes.rankIcon} />住
+                      <Avatar src={Icon4} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2151002.html'}>集锦丨友谊赛：帕德博恩3-1门兴</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon5} className={classes.rankIcon} />一
+                      <Avatar src={Icon5} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2151107.html'}>米兰为凯西续约提出“超级报价”</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon6} className={classes.rankIcon} />个
+                      <Avatar src={Icon6} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2151070.html'}>基耶利尼与凯恩拥抱致敬</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon7} className={classes.rankIcon} />很
+                      <Avatar src={Icon7} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2151162.html'}>明格萨：奥运会的目标是为金牌而战</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon8} className={classes.rankIcon} />痛
+                      <Avatar src={Icon8} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2150904.html'}>巴萨不考虑引进拉姆塞，球员的工资太高</a>
                     </Row>
                     <Row className={classes.columnRow}>
-                      <Avatar src={Icon9} className={classes.rankIcon} />点
+                      <Avatar src={Icon9} className={classes.rankIcon} />
+                      <a style={{textDecoration:'none'}} href={'https://www.dongqiudi.com/articles/2150120.html'}>C罗将和尤文谈续约</a>
                     </Row>
                   </Column>
                   <Divider style={{marginTop:'20px',marginBottom:'20px'}}/>
@@ -397,7 +420,7 @@ class ResultPage extends Component {
           <Pagination
               limit={10}
               offset={this.state.offset}
-              total={this.state.total}
+              total={total}
               onClick={(event, offset) => this.changePage(offset)}
               otherPageColor="default"
               currentPageColor="secondary"
