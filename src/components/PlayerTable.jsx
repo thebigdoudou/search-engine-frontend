@@ -76,7 +76,7 @@ export default class PlayerTable extends Component {
             <TabContext value={value}>
                 <Tabs
                     variant={'fullWidth'}
-                    // classes={twitterTabsStylesHook.useTabs()}
+                    indicatorColor="primary"
                     value={value}
                     onChange={this.handleChange}
                 >
