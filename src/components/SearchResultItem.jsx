@@ -74,6 +74,7 @@ const ReviewCard2Demo = React.memo(function(prams) {
     console.log(prams)
     const data = prams['info']['info'];
     const imgURL = prams['info']['imgURL'];
+    const show = prams['info']['show']
     return (
         <Card className={styles.card} elevation={0}>
             <CardMedia
@@ -112,13 +113,14 @@ const ReviewCard2Demo = React.memo(function(prams) {
                     </Column>
                 </Row>
                 <div className={flexStyles.parent}>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <Link1
-                        className={cx(labelStyles.primaryLink, styles.textFooter)}
-                        href={"/player/"+data.id}
-                    >
-                        Read more <ArrowForwardIos className={labelStyles.icon} />
-                    </Link1>
+                    {show?<div className={flexStyles.parent}>
+                        <Link1
+                            className={cx(labelStyles.primaryLink, styles.textFooter)}
+                            href={"/player/"+data.id}
+                        >
+                            Read more <ArrowForwardIos className={labelStyles.icon} />
+                        </Link1>
+                    </div>:""}
                 </div>
             </CardContent>
         </Card>

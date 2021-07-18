@@ -25,6 +25,7 @@ import InjureTable from "../components/InjureTable";
 import transferPic from "../assets/images/transfer.svg";
 import injurePic from "../assets/images/injure.svg";
 import statPic from "../assets/images/stat.svg";
+import kgraph from "../assets/images/tupu.svg"
 import ReactWordcloud from "react-wordcloud";
 import Graph from "react-graph-vis";
 
@@ -317,7 +318,7 @@ class PlayerPage extends Component {
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.infoCard}>
-                                        <SearchResultItem data={{info: info, imgURL: imgURL}}/>
+                                        <SearchResultItem data={{info: info, imgURL: imgURL, show:0}}/>
                                     </div>
                                     <div className={classes.statisticCard}>
                                         <Row>
@@ -399,7 +400,7 @@ class PlayerPage extends Component {
                     <Divider/>
                     <div className={classes.statisticCard}>
                         <Row>
-                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                            <img src={kgraph} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
                             <Typography variant="h6" component="h5">
                                 知识图谱
                             </Typography>

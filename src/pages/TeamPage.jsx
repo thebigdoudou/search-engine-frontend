@@ -19,6 +19,7 @@ import TableContainer from "_@material-ui_core@4.12.1@@material-ui/core/TableCon
 import TabPanel from "_@material-ui_lab@4.0.0-alpha.60@@material-ui/lab/TabPanel";
 import statPic from "../assets/images/stat.svg";
 import trophy from "../assets/images/trophy.svg"
+import kgraph from "../assets/images/tupu.svg"
 import {Column, Item, Row} from "_@mui-treasury_components@1.10.1@@mui-treasury/components/flex";
 import {useDynamicAvatarStyles} from "_@mui-treasury_styles@1.13.1@@mui-treasury/styles/avatar/dynamic";
 import Avatar from "_@material-ui_core@4.12.1@@material-ui/core/Avatar";
@@ -390,7 +391,7 @@ class TeamPage extends Component {
                                     </div>
                                     <div className={classes.statisticCard}>
                                         <Row>
-                                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <img src={kgraph} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
                                             <Typography variant="h6" component="h5">
                                                 知识图谱
                                             </Typography>

@@ -115,7 +115,7 @@ const ReviewCard2Demo = React.memo(function(prams)  {
                     >
                         Read more <ArrowForwardIos className={labelStyles.icon} />
                     </Link1>
-                </div>:<div></div>}
+                </div>:""}
             </CardContent>
         </Card>
     );

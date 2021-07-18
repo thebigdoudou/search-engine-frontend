@@ -296,7 +296,7 @@ class ResultPage extends Component {
                     <Grid container xs={12}>
                       <Grid item  xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                          {item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL}}/>:''}
+                          {item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL,show:1}}/>:''}
                           {item.type==2?<NationalResultCard data={{info: item.teamReturn, imgURL: item.teamReturn.imgURL,show:1}}/>:''}
                           {item.type==3?<InfoResultCard data={item.newsReturn}/>:''}
                         </div>
