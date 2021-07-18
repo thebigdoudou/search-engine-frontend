@@ -161,7 +161,7 @@ const graphOptions = {
     },
     nodes: {
         font: {
-            size: 10
+            size: 14
         },
         color: {
             hover: {
@@ -323,7 +323,7 @@ class PlayerPage extends Component {
                                                 比赛数据
                                             </Typography>
                                         </Row>
-                                        <PlayerTable data={matchData}/>
+                                        <PlayerTable id={input}/>
                                     </div>
                                     <Divider/>
                                     <div className={classes.statisticCard}>
@@ -383,11 +383,6 @@ class PlayerPage extends Component {
                                     </div>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
-                                        相关人物
-                                    </Typography>
-                                    <DarkRapListItem/>
-                                    <Divider/>
-                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的实时关键词
                                     </Typography>
                                     <div style={{height: '300px', width: '100%'}}>
@@ -397,6 +392,11 @@ class PlayerPage extends Component {
                                             words={hotWord}
                                         />
                                     </div>
+                                    <Divider/>
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        相关人物
+                                    </Typography>
+                                    <DarkRapListItem/>
                                     <Divider/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态

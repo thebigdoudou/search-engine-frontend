@@ -29,6 +29,8 @@ import {
     InfoTitle
 } from "_@mui-treasury_components@1.10.1@@mui-treasury/components/info";
 import {useD01InfoStyles} from "_@mui-treasury_styles@1.13.1@@mui-treasury/styles/info/d01";
+import injurePic from "../assets/images/injure.svg";
+import Graph from "react-graph-vis";
 
 
 
@@ -116,8 +118,108 @@ const options = {
     spiral: "archimedean",
     transitionDuration: 1000
 };
-const size = [500, 300];
-const words = [{"text":"欧洲杯","value":130},{"text":"金靴","value":50},{"text":"球员","value":50},{"text":"进球","value":30},{"text":"决赛","value":30},{"text":"本届","value":30},{"text":"凯恩","value":20},{"text":"历史","value":20},{"text":"金球奖","value":20},{"text":"赔率","value":20},{"text":"当选","value":20},{"text":"最佳","value":20},{"text":"希克","value":20},{"text":"出场","value":20},{"text":"美洲杯","value":20}]
+
+const graphOptions = {
+    groups: {
+        self: {
+            color: { background: "#00FA9A", border: "#00FA9A" },
+            // shape: "circle",
+            scaling: { min: 20 }
+        },
+        teammate: {
+            color: { background: "#ffa3a3", border: "#ffa3a3" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box",
+        },
+        relation: {
+            color: { background: "#a9d2a9", border: "#a9d2a9" },
+            shapeProperties: { borderDashes: true },
+            // shape: "ellipse"
+        },
+        team: {
+            color: { background: "#98F5FF", border: "#98F5FF" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        oldTeam: {
+            color: { background: "#98F5FF", border: "#98F5FF" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        injure: {
+            color: { background: "#FF6347", border: "#FF6347" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        },
+        honor: {
+            color: { background: "#FFD700", border: "#FFD700" },
+            shapeProperties: { borderDashes: true },
+            // shape: "box"
+        }
+    },
+    layout: {
+        hierarchical: false
+    },
+    edges: {
+        width: 2,
+        font: { align: "bottom", strokeWidth: 3, strokeColor: "#ffffff" },
+        color: {
+            color: "#cccccc",
+            highlight: "#aabbee",
+            hover: "#aaaaaa",
+            inherit: "both",
+            opacity: 1
+        },
+        arrowStrikethrough: false,
+        // font: '12px arial #ff0000',
+        scaling: {
+            min: 1,
+            max: 10,
+            label: true
+        },
+        smooth: {
+            type: "continuous",
+            forceDirection: "horizontal"
+        }
+    },
+    nodes: {
+        font: {
+            size: 10
+        },
+        color: {
+            hover: {
+                border: '#D2E5FF',
+                background: '#D2E5FF'
+            }
+        },
+        shape: "dot",
+        size: 15,
+        scaling: {
+            type: "incomingAndOutgoingConnections",
+            min: 10,
+            max: 60,
+            label: {
+                enabled: true,
+                min: 20,
+                max: 32
+            }
+        }
+    },
+    interaction:{
+        hover: true,
+        zoomView: false
+    }
+};
+
+const events = {
+    select: function(event) {
+        let { nodes, edges } = event;
+        console.log("Selected nodes:");
+        console.log(nodes);
+        console.log("Selected edges:");
+        console.log(edges);
+    }
+};
 
 function DarkRapListItem() {
     const avatarStyles = useDynamicAvatarStyles({ size: 70 });
@@ -266,6 +368,22 @@ class TeamPage extends Component {
                                             </TabPanel >
                                         </TabContext>
                                     </div>
+                                    {/*<div className={classes.statisticCard}>*/}
+                                    {/*    <Row>*/}
+                                    {/*        <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>*/}
+                                    {/*        <Typography variant="h6" component="h5">*/}
+                                    {/*            知识图谱*/}
+                                    {/*        </Typography>*/}
+                                    {/*    </Row>*/}
+                                    {/*    <div style={{ height: "1100px" }}>*/}
+                                    {/*        <Graph*/}
+                                    {/*            graph={graph}*/}
+                                    {/*            options={graphOptions}*/}
+                                    {/*            events={events}*/}
+                                    {/*            style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}*/}
+                                    {/*        />*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                 </Grid>
                             </Grid>
                         </Grid>
