@@ -4,20 +4,14 @@ import cx from 'clsx';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import Link1 from '@material-ui/core/Link';
-import {Link} from 'react-router-dom';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Divider from '@material-ui/core/Divider';
 import Rating from '@material-ui/lab/Rating';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
-import ModeComment from '@material-ui/icons/ModeComment';
-import Favorite from '@material-ui/icons/Favorite';
 import Chip from '@material-ui/core/Chip';
 import { Row, Item, Column } from '@mui-treasury/components/flex';
-import { usePushingGutterStyles } from '@mui-treasury/styles/gutter/pushing';
 import { useLabelIconStyles } from '@mui-treasury/styles/icon/label';
 import { useRowFlexStyles } from '@mui-treasury/styles/flex/row';
-import LinkIcon from "_@material-ui_icons@4.11.2@@material-ui/icons/Link";
 
 const useStyles = makeStyles(({ spacing, palette }) => ({
     card: {
@@ -86,12 +80,16 @@ const ReviewCard2Demo = React.memo(function(prams) {
                 <Box mb={1}>
                     <Chip  size="small" label="球员" style={{marginRight:'8px'}}/>
                     <h3 dangerouslySetInnerHTML={{__html:data.name}} className={styles.heading}/>
-                    <Rating
-                        name={'rating'}
-                        value={2}
-                        className={styles.rating}
-                        size={'small'}
-                    />
+                    {
+                        show ? <div/> : <Rating
+                            name={'rating'}
+                            max={10}
+                            value={prams['info']['score']}
+                            className={styles.rating}
+                            size={'small'}
+                            readOnly={true}
+                        />
+                    }
                 </Box>
                 <Row >
                     <Column className={styles.body} style={{width:'30%'}}>

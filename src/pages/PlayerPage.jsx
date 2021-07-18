@@ -245,6 +245,7 @@ class PlayerPage extends Component {
         input: this.props.match.params.input,
         info: {},
         data: [],
+        score: 0,
         imgURL: "",
         matchData: [],
         injureData: [],
@@ -261,12 +262,16 @@ class PlayerPage extends Component {
         await axios.get('/player/getAll/' + that.state.input)
             .then(function (response) {
                 let data = []
+                let score = 0
                 for(let i = 0; i < 6; i++) {
+                    score += response.data['playerBaseInfo'][items2[i]]
                     data.push({item: items1[i], value: response.data['playerBaseInfo'][items2[i]], fullMark: 100})
                 }
+                score /= 60
                 that.setState({
                     info: response.data['playerBaseInfo'],
                     data: data,
+                    score: score,
                     transferData: response.data['playerTransferDataList'],
                     injureData: response.data['playerInjuredDataList'],
                     imgURL: response.data['imgURL']
@@ -307,7 +312,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { input, info, data, transferData, injureData, imgURL, hotWord, graph } = this.state;
+        const { input, info, data, transferData, injureData, imgURL, hotWord, graph, score } = this.state;
 
         return (
             <div className={classes.main}>
@@ -318,7 +323,7 @@ class PlayerPage extends Component {
                             <Grid container xs={12}>
                                 <Grid item xs>
                                     <div className={classes.infoCard}>
-                                        <SearchResultItem data={{info: info, imgURL: imgURL, show:0}}/>
+                                        <SearchResultItem data={{info: info, imgURL: imgURL, show: 0, score: score}}/>
                                     </div>
                                     <div className={classes.statisticCard}>
                                         <Row>
