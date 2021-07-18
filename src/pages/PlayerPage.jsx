@@ -262,7 +262,6 @@ class PlayerPage extends Component {
                 that.setState({
                     info: response.data['playerBaseInfo'],
                     data: data,
-                    matchData: response.data['playerMatchDataList'],
                     transferData: response.data['playerTransferDataList'],
                     injureData: response.data['playerInjuredDataList'],
                     imgURL: response.data['imgURL']
@@ -303,7 +302,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { input, info, data, matchData, transferData, injureData, imgURL, hotWord, graph } = this.state;
+        const { input, info, data, transferData, injureData, imgURL, hotWord, graph } = this.state;
 
         return (
             <div className={classes.main}>

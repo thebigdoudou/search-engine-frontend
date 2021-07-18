@@ -136,17 +136,27 @@ const graphOptions = {
             shapeProperties: { borderDashes: true },
             // shape: "ellipse"
         },
-        team: {
+        教练: {
             color: { background: "#98F5FF", border: "#98F5FF" },
             shapeProperties: { borderDashes: true },
-            // shape: "box"
         },
-        oldTeam: {
-            color: { background: "#98F5FF", border: "#98F5FF" },
+        前锋: {
+            color: { background: "#87CEFF", border: "#87CEFF" },
             shapeProperties: { borderDashes: true },
-            // shape: "box"
         },
-        injure: {
+        中场: {
+            color: { background: "#90EE90", border: "#90EE90" },
+            shapeProperties: { borderDashes: true },
+        },
+        后卫: {
+            color: { background: "#FF83FA", border: "#FF83FA" },
+            shapeProperties: { borderDashes: true },
+        },
+        门将: {
+            color: { background: "#FFF8DC", border: "#FFF8DC" },
+            shapeProperties: { borderDashes: true },
+        },
+        rival: {
             color: { background: "#FF6347", border: "#FF6347" },
             shapeProperties: { borderDashes: true },
             // shape: "box"
@@ -261,6 +271,7 @@ class TeamPage extends Component {
         info: {},
         teamRelatedPeopleList: [],
         teamHonorRecordList:[],
+        graph: {nodes: [], edges: []},
         imgURL: "",
         loading: true,
         catalog: -1,
@@ -281,6 +292,15 @@ class TeamPage extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        await axios.get('/team/kg/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    graph: response.data
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -294,7 +314,7 @@ class TeamPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, imgURL,hotWord } = this.state;
+        const { info, imgURL, graph } = this.state;
         let rows = this.state.teamRelatedPeopleList;
         let rows1 = this.state.teamHonorRecordList;
 
@@ -368,22 +388,22 @@ class TeamPage extends Component {
                                             </TabPanel >
                                         </TabContext>
                                     </div>
-                                    {/*<div className={classes.statisticCard}>*/}
-                                    {/*    <Row>*/}
-                                    {/*        <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>*/}
-                                    {/*        <Typography variant="h6" component="h5">*/}
-                                    {/*            知识图谱*/}
-                                    {/*        </Typography>*/}
-                                    {/*    </Row>*/}
-                                    {/*    <div style={{ height: "1100px" }}>*/}
-                                    {/*        <Graph*/}
-                                    {/*            graph={graph}*/}
-                                    {/*            options={graphOptions}*/}
-                                    {/*            events={events}*/}
-                                    {/*            style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}*/}
-                                    {/*        />*/}
-                                    {/*    </div>*/}
-                                    {/*</div>*/}
+                                    <div className={classes.statisticCard}>
+                                        <Row>
+                                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5">
+                                                知识图谱
+                                            </Typography>
+                                        </Row>
+                                        <div style={{ height: "1100px" }}>
+                                            <Graph
+                                                graph={graph}
+                                                options={graphOptions}
+                                                events={events}
+                                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
+                                            />
+                                        </div>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </Grid>

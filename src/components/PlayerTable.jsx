@@ -66,6 +66,11 @@ export default class PlayerTable extends Component {
 
     render() {
         const {value} = this.state
+        let emptyCaption;
+        if(this.state.rows.length === 0) {
+            emptyCaption = <caption style={{textAlign: 'center'}}>暂无数据</caption>
+        }
+        else emptyCaption = <div/>
 
         return (
             <TabContext value={value}>
@@ -115,6 +120,7 @@ export default class PlayerTable extends Component {
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
+                            {emptyCaption}
                         </Table>
                     </TableContainer>
                 </TabPanel>
@@ -149,6 +155,7 @@ export default class PlayerTable extends Component {
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
+                            {emptyCaption}
                         </Table>
                     </TableContainer>
                 </TabPanel>
@@ -185,6 +192,7 @@ export default class PlayerTable extends Component {
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
+                            {emptyCaption}
                         </Table>
                     </TableContainer>
                 </TabPanel>
@@ -219,6 +227,7 @@ export default class PlayerTable extends Component {
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
+                            {emptyCaption}
                         </Table>
                     </TableContainer>
                 </TabPanel>
