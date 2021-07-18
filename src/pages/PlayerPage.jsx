@@ -74,6 +74,10 @@ const style = theme => ({
     statisticCard: {
         padding: theme.spacing(3)
     },
+    kgCard: {
+        padding: theme.spacing(5),
+        marginTop: '-75px'
+    },
 })
 
 const callbacks = {
@@ -344,22 +348,6 @@ class PlayerPage extends Component {
                                         </Row>
                                         <InjureTable data={injureData}/>
                                     </div>
-                                    <div className={classes.statisticCard}>
-                                        <Row>
-                                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
-                                            <Typography variant="h6" component="h5">
-                                                知识图谱
-                                            </Typography>
-                                        </Row>
-                                        <div style={{ height: "1100px" }}>
-                                            <Graph
-                                                graph={graph}
-                                                options={graphOptions}
-                                                events={events}
-                                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
-                                            />
-                                        </div>
-                                    </div>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -406,6 +394,25 @@ class PlayerPage extends Component {
                             </Card>
                         </Grid>
                     </Grid>
+                </div>
+                <div className={classes.kgCard}>
+                    <Divider/>
+                    <div className={classes.statisticCard}>
+                        <Row>
+                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                            <Typography variant="h6" component="h5">
+                                知识图谱
+                            </Typography>
+                        </Row>
+                        <Card style={{ height: "1000px", marginTop: '30px' }}>
+                            <Graph
+                                graph={graph}
+                                options={graphOptions}
+                                events={events}
+                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
+                            />
+                        </Card>
+                    </div>
                 </div>
                 <footer className={classes.footer} >
                     <Typography variant="body2" component="p" style={{marginTop: 5}}>
