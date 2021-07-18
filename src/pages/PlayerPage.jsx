@@ -26,6 +26,7 @@ import transferPic from "../assets/images/transfer.svg";
 import injurePic from "../assets/images/injure.svg";
 import statPic from "../assets/images/stat.svg";
 import ReactWordcloud from "react-wordcloud";
+import Graph from "react-graph-vis";
 
 const style = theme => ({
     main: {
@@ -75,42 +76,16 @@ const style = theme => ({
     },
 })
 
-// function getCallback(callback) {
-//     return function (word, event) {
-//         const isActive = callback !== "onWordMouseOut";
-//         const element = event.target;
-//         const text = select(element);
-//         text
-//             // .on("click", () => {
-//             //     if (isActive) {
-//             //         window.open(`https://duckduckgo.com/?q=${word.text}`, "_blank");
-//             //     }
-//             // })
-//             .transition()
-//             .attr("background", "white")
-//             .attr("font-size", isActive ? "300%" : "100%")
-//             .attr("text-decoration", isActive ? "underline" : "none");
-//     };
-// }
-//
-// const callbacks = {
-//     getWordColor: (word) => (word.value > 50 ? "orange" : "purple"),
-//     getWordTooltip: (word) =>
-//         `The word "${word.text}" appears ${word.value} times.`,
-//     onWordClick: getCallback("onWordClick"),
-//     onWordMouseOut: getCallback("onWordMouseOut"),
-//     onWordMouseOver: getCallback("onWordMouseOver")
-// };
-
 const callbacks = {
-    onWordClick: console.log,
-    onWordMouseOver: console.log,
-    getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? "good" : "bad"}]`,
-}
+    getWordTooltip: (word) =>
+        `The word "${word.text}" appears ${word.value} times.`,
+};
 const options = {
     colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
     enableTooltip: true,
-    fontSizes: [30, 60],
+    deterministic: false,
+    fontFamily: "impact",
+    fontSizes: [20, 60],
     fontStyle: "normal",
     fontWeight: "normal",
     padding: 1,
@@ -120,8 +95,81 @@ const options = {
     spiral: "archimedean",
     transitionDuration: 1000
 };
-const size = [500, 300];
-const words = [{"text":"欧洲杯","value":130},{"text":"金靴","value":50},{"text":"球员","value":50},{"text":"进球","value":30},{"text":"决赛","value":30},{"text":"本届","value":30},{"text":"凯恩","value":20},{"text":"历史","value":20},{"text":"金球奖","value":20},{"text":"赔率","value":20},{"text":"当选","value":20},{"text":"最佳","value":20},{"text":"希克","value":20},{"text":"出场","value":20},{"text":"美洲杯","value":20}]
+
+const graph = {
+    nodes: [
+        { id: 1, label: "DOH", group: "keyword", color: "red" },
+        { id: 2, label: "health agency", group: "attribute" },
+        { id: 3, label: "PH", group: "keyword" },
+        { id: 4, label: "imposed", group: "relationship" },
+        { id: 5, label: "ECQ", group: "keyword" },
+        { id: 6, label: "coverage", group: "attribute" },
+        { id: 7, label: "duration", group: "attribute" },
+        { id: 8, label: "agency", group: "attribute" },
+        { id: 9, label: "luzon", group: "term" },
+        { id: 10, label: "1 month", group: "term" },
+        { id: 11, label: "IATF", group: "term" },
+        { id: 12, label: "affected", group: "relationship" },
+        { id: 13, label: "covid", group: "keyword" },
+        { id: 14, label: "subclass", group: "relationship" },
+        { id: 15, label: "Corona virus", group: "keyword" }
+    ],
+    edges: [
+        { from: 1, to: 2 },
+        { from: 2, to: 3 },
+        { from: 3, to: 12 },
+        { from: 12, to: 13 },
+        { from: 13, to: 14 },
+        { from: 14, to: 15 },
+        { from: 3, to: 4 },
+        { from: 4, to: 5 },
+        { from: 5, to: 6 },
+        { from: 5, to: 7 },
+        { from: 5, to: 8 },
+        { from: 6, to: 9 },
+        { from: 7, to: 10 },
+        { from: 8, to: 11 }
+    ]
+};
+
+const graphOptions = {
+    groups: {
+        keyword: {
+            color: { background: "#ffa3a3", border: "#ffa3a3" },
+            shape: "circle",
+            scaling: { min: 20 }
+        },
+        relationship: {
+            color: { background: "#a9d2a9", border: "#a9d2a9" },
+            shape: "box"
+        },
+        attribute: {
+            color: { background: "lightblue", border: "lightblue" },
+            shape: "box"
+        },
+        term: {
+            color: { background: "#f1d78b", border: "#f1d78b" },
+            shapeProperties: { borderDashes: true },
+            shape: "box"
+        }
+    },
+    layout: {
+        hierarchical: false
+    },
+    edges: {
+        color: "#000000"
+    }
+};
+
+const events = {
+    select: function(event) {
+        var { nodes, edges } = event;
+        console.log("Selected nodes:");
+        console.log(nodes);
+        console.log("Selected edges:");
+        console.log(edges);
+    }
+};
 
 function DarkRapListItem() {
     const avatarStyles = useDynamicAvatarStyles({ size: 70 });
@@ -168,6 +216,7 @@ class PlayerPage extends Component {
         imgURL: "",
         matchData: [],
         injureData: [],
+        hotWord: [],
         loading: true,
         catalog: -1,
         time: 220
@@ -195,6 +244,16 @@ class PlayerPage extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        await axios.get('/player/hotWord/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    hotWord: response.data
+                })
+                console.log(response.data['playerTransferDataList'])
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -208,7 +267,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, data, matchData, transferData, injureData, imgURL } = this.state;
+        const { input, info, data, matchData, transferData, injureData, imgURL, hotWord } = this.state;
 
         return (
             <div className={classes.main}>
@@ -250,6 +309,22 @@ class PlayerPage extends Component {
                                         </Row>
                                         <InjureTable data={injureData}/>
                                     </div>
+                                    <div className={classes.statisticCard}>
+                                        <Row>
+                                            <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                                            <Typography variant="h6" component="h5">
+                                                关系网络
+                                            </Typography>
+                                        </Row>
+                                        <div>
+                                            <Graph
+                                                graph={graph}
+                                                options={graphOptions}
+                                                events={events}
+                                                style={{ height: "640px", fontFamily: 'sans-serif', textAlign: 'center' }}
+                                            />
+                                        </div>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -279,12 +354,11 @@ class PlayerPage extends Component {
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的实时关键词
                                     </Typography>
-                                    <div style={{height: '300px', width: '500px'}}>
+                                    <div style={{height: '300px', width: '100%'}}>
                                         <ReactWordcloud
                                             callbacks={callbacks}
                                             options={options}
-                                            size={size}
-                                            words={words}
+                                            words={hotWord}
                                         />
                                     </div>
                                     <Divider/>
