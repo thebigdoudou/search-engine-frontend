@@ -84,7 +84,7 @@ const ReviewCard2Demo = React.memo(function(prams) {
             <CardContent className={styles.content}>
                 <Box mb={1}>
                     <Chip  size="small" label="球员" style={{marginRight:'8px'}}/>
-                    <h3 className={styles.heading}>{data.name} </h3>
+                    <h3 dangerouslySetInnerHTML={{__html:data.name}} className={styles.heading}/>
                     <Rating
                         name={'rating'}
                         value={2}
@@ -94,34 +94,18 @@ const ReviewCard2Demo = React.memo(function(prams) {
                 </Box>
                 <Row >
                     <Column className={styles.body} style={{width:'30%'}}>
-                        <Item className={styles.textItem}>
-                            俱乐部：{data.club}
-                        </Item>
-                        <Item  className={styles.textItem}>
-                            国籍：{data.country}
-                        </Item>
-                        <Item  className={styles.textItem}>
-                            身高：{data.height}
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"俱乐部："+data.club}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"国家："+data.country}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"身高："+data.height}} className={styles.textItem}/>
                     </Column>
                     <Column className={styles.body} style={{marginRight:'20%'}}>
-                        <Item className={styles.textItem}>
-                            位置：{data.role}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            年龄：{data.age}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            体重：{data.weight}
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"位置："+data.role}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"年龄："+data.age}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"体重："+data.weight}} className={styles.textItem}/>
                     </Column>
                     <Column className={styles.body}>
-                        <Item className={styles.textItem}>
-                            号码：{data.number}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            生日：{data.birthday}
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"号码："+data.number}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"生日："+data.birthday}} className={styles.textItem}/>
                         <Item className={styles.textItem}>
                             惯用脚：{data.foot?"左脚":"右脚"}
                         </Item>

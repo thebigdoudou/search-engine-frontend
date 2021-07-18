@@ -50,6 +50,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     },
     body: {
         fontSize: 15,
+        width:'100%',
         color: palette.grey[500],
     },
     divider: {
@@ -86,21 +87,15 @@ const ReviewCard2Demo = React.memo(function(info) {
             <CardContent className={styles.content}>
                 <Box mb={1}>
                     <Chip  size="small" label="资讯" style={{marginRight:'8px'}}/>
-                    <a  href={data.url} className={styles.heading}>{data.title}</a>
+                    <a  dangerouslySetInnerHTML={{__html:data.title}} href={data.url} className={styles.heading}/>
                 </Box>
                 <Row >
                     <Column className={styles.body} >
                         <Row>
-                            <Item style={{width:'40%'}}>
-                                作者：{data.author}
-                            </Item>
-                            <Item className={styles.textItem}>
-                                标签：{tag}
-                            </Item>
+                            <Item dangerouslySetInnerHTML={{__html:"作者："+data.author}} className={styles.textItem} style={{width:'30%'}}/>
+                            <Item dangerouslySetInnerHTML={{__html:"标签："+tag}}  className={styles.textItem}/>
                         </Row>
-                        <Item  className={styles.textItem}>
-                            &emsp;&emsp;{data.content.length>123?data.content.substring(0,123)+'...':data.content}
-                        </Item>
+                        <Item  dangerouslySetInnerHTML={{__html:data.content.length>123?data.content.substring(0,123)+'...':data.content}}  className={styles.textItem}/>
                     </Column>
                 </Row>
             </CardContent>

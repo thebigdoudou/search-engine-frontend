@@ -19,7 +19,16 @@ import TableContainer from "_@material-ui_core@4.12.1@@material-ui/core/TableCon
 import TabPanel from "_@material-ui_lab@4.0.0-alpha.60@@material-ui/lab/TabPanel";
 import statPic from "../assets/images/stat.svg";
 import trophy from "../assets/images/trophy.svg"
-import {Row} from "_@mui-treasury_components@1.10.1@@mui-treasury/components/flex";
+import {Column, Item, Row} from "_@mui-treasury_components@1.10.1@@mui-treasury/components/flex";
+import {useDynamicAvatarStyles} from "_@mui-treasury_styles@1.13.1@@mui-treasury/styles/avatar/dynamic";
+import Avatar from "_@material-ui_core@4.12.1@@material-ui/core/Avatar";
+import {
+    Info,
+    InfoCaption,
+    InfoSubtitle,
+    InfoTitle
+} from "_@mui-treasury_components@1.10.1@@mui-treasury/components/info";
+import {useD01InfoStyles} from "_@mui-treasury_styles@1.13.1@@mui-treasury/styles/info/d01";
 
 
 
@@ -89,7 +98,60 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const data2 = [{"id":201,"teamId":50001756,"honor":"欧洲冠军联赛","years":"2014/2015,2010/2011,2008/2009,2005/2006,1991/1992"},{"id":202,"teamId":50001756,"honor":"世界俱乐部杯","years":"2015 Japan,2011 Japan,2009 UAE"},{"id":203,"teamId":50001756,"honor":"欧洲超级杯","years":"2015/2016,2011/2012,2009/2010,1997/1998,1992/1993"},{"id":204,"teamId":50001756,"honor":"西班牙足球甲级联赛","years":"2018/2019,2017/2018,2015/2016,2014/2015,2012/2013,2010/2011,2009/2010,2008/2009,2005/2006,2004/2005,1998/1999,1997/1998,1993/1994,1992/1993,1991/1992,1990/1991,1984/1985,1973/1974,1959/1960,1958/1959,1952/1953,1951/1952,1948/1949,1947/1948,1944/1945,1929"},{"id":205,"teamId":50001756,"honor":"西班牙国王杯","years":"2020/2021,2017/2018,2016/2017,2015/2016,2014/2015,2011/2012,2008/2009,1997/1998,1996/1997,1989/1990,1987/1988,1982/1983,1980/1981,1977/1978,1971,1968,1963,1959,1957,1953,1952,1951,1942,1928,1926,1925,1922,1920,1913,1912,1910"},{"id":206,"teamId":50001756,"honor":"西班牙超级杯","years":"2018/2019,2016/2017,2013/2014,2011/2012,2010/2011,2009/2010,2006/2007,2005/2006,1996/1997,1994/1995,1992/1993,1991/1992,1983/1984,1953/1954,1952/1953* Automatically awarded to double winners,1948/1949,1945/1946"},{"id":207,"teamId":50001756,"honor":"加泰杯","years":"2013/2014"},{"id":208,"teamId":50001756,"honor":"欧洲优胜者杯","years":"1996/1997,1988/1989,1981/1982,1978/1979"},{"id":209,"teamId":50001756,"honor":"甘伯杯","years":"2020,2019,2018,2017,2016"},{"id":210,"teamId":50001756,"honor":"加泰罗尼亚超级杯","years":"2018"},{"id":211,"teamId":50001756,"honor":"奥迪杯","years":"2011"}]
+const callbacks = {
+    onWordClick: console.log,
+    onWordMouseOver: console.log,
+    getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? "good" : "bad"}]`,
+}
+const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: true,
+    fontSizes: [30, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    rotations: 3,
+    rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000
+};
+const size = [500, 300];
+const words = [{"text":"欧洲杯","value":130},{"text":"金靴","value":50},{"text":"球员","value":50},{"text":"进球","value":30},{"text":"决赛","value":30},{"text":"本届","value":30},{"text":"凯恩","value":20},{"text":"历史","value":20},{"text":"金球奖","value":20},{"text":"赔率","value":20},{"text":"当选","value":20},{"text":"最佳","value":20},{"text":"希克","value":20},{"text":"出场","value":20},{"text":"美洲杯","value":20}]
+
+function DarkRapListItem() {
+    const avatarStyles = useDynamicAvatarStyles({ size: 70 });
+    return (
+        <Column gap={2}>
+            <Row>
+                <Item>
+                    <Avatar
+                        variant={'rounded'}
+                        classes={avatarStyles}
+                    />
+                </Item>
+                <Info useStyles={useD01InfoStyles}>
+                    <InfoCaption>3d • #triphop #rap</InfoCaption>
+                    <InfoTitle>Humility (feat. George Benson)</InfoTitle>
+                    <InfoSubtitle>Gorillaz</InfoSubtitle>
+                </Info>
+            </Row>
+            <Row mt={2}>
+                <Item>
+                    <Avatar
+                        variant={'rounded'}
+                        classes={avatarStyles}
+                    />
+                </Item>
+                <Info useStyles={useD01InfoStyles}>
+                    <InfoCaption>28d • #hiphop #rap</InfoCaption>
+                    <InfoTitle>Old Town Road</InfoTitle>
+                    <InfoSubtitle>Unknown</InfoSubtitle>
+                </Info>
+            </Row>
+        </Column>
+    );
+}
 
 class TeamPage extends Component {
     state = {
@@ -98,7 +160,6 @@ class TeamPage extends Component {
         teamRelatedPeopleList: [],
         teamHonorRecordList:[],
         imgURL: "",
-        matchData: [],
         loading: true,
         catalog: -1,
         time: 220
@@ -131,7 +192,7 @@ class TeamPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, data, matchData, imgURL } = this.state;
+        const { info, imgURL,hotWord } = this.state;
         let rows = this.state.teamRelatedPeopleList;
         let rows1 = this.state.teamHonorRecordList;
 
@@ -211,30 +272,16 @@ class TeamPage extends Component {
                         <Grid item xs>
                             <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
                                 <CardContent >
-                                    {/*<Typography variant="h6" component="h5" style={{marginBottom:"15px"}}>*/}
-                                    {/*    {info.name}的能力六方图*/}
-                                    {/*</Typography>*/}
-                                    {/*<div style={{width: '335px', height: '335px', marginBottom: '30px'}}>*/}
-                                    {/*    <ResponsiveContainer width="100%" height="100%">*/}
-                                    {/*        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>*/}
-                                    {/*            <Tooltip />*/}
-                                    {/*            <PolarGrid />*/}
-                                    {/*            <PolarAngleAxis dataKey="item" />*/}
-                                    {/*            <PolarRadiusAxis/>*/}
-                                    {/*            <Radar name={info.name} dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />*/}
-                                    {/*        </RadarChart>*/}
-                                    {/*    </ResponsiveContainer>*/}
-                                    {/*</div>*/}
-                                    {/*<Divider/>*/}
-                                    {/*<Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>*/}
-                                    {/*    相关人物*/}
-                                    {/*</Typography>*/}
-                                    {/*<DarkRapListItem/>*/}
-                                    {/*<Divider/>*/}
-                                    {/*<Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>*/}
-                                    {/*    {info.name}的最新动态*/}
-                                    {/*</Typography>*/}
-                                    {/*<DarkRapListItem/>*/}
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        相关人物
+                                    </Typography>
+                                    <DarkRapListItem/>
+                                    <Divider/>
+                                    <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
+                                        {info.name}的最新动态
+                                    </Typography>
+                                    <DarkRapListItem/>
+                                    <Divider/>
                                 </CardContent>
                             </Card>
                         </Grid>

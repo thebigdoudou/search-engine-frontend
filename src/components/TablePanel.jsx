@@ -140,7 +140,7 @@ export default function TablePanel(props) {
                                             style={{display: 'inline-block'}} onChange={selectHandleChange}>
                                     <FormControlLabel value="all" control={<StyledRadio/>} label="全部"/>
                                     <FormControlLabel value="player" control={<StyledRadio/>} label="球员"/>
-                                    <FormControlLabel value="club" control={<StyledRadio/>} label="球队"/>
+                                    <FormControlLabel value="team" control={<StyledRadio/>} label="球队"/>
                                     <FormControlLabel value="news" control={<StyledRadio/>} label="资讯"/>
                                 </RadioGroup>
                             </div>
@@ -155,13 +155,13 @@ export default function TablePanel(props) {
                                             style={{display: 'inline-block'}} onChange={selectHandleChange}>
                                     <FormControlLabel value="all" control={<StyledRadio/>} label="全部"/>
                                     <FormControlLabel value="player" control={<StyledRadio/>} label="球员"/>
-                                    <FormControlLabel value="club" control={<StyledRadio/>} label="球队"/>
+                                    <FormControlLabel value="team" control={<StyledRadio/>} label="球队"/>
                                     <FormControlLabel value="news" control={<StyledRadio/>} label="资讯"/>
                                 </RadioGroup>
                             </div>
                         </FormControl>
                     </TabPanel>
-                    <TabPanel value={selectValue + value} index={"club1"}>
+                    <TabPanel value={selectValue + value} index={"team1"}>
                         <FormControl component="fieldset" style={{display: 'inline-block'}}>
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <FormLabel component="legend"
@@ -170,7 +170,7 @@ export default function TablePanel(props) {
                                             style={{display: 'inline-block'}}>
                                     <FormControlLabel value="all" control={<StyledRadio/>} label="巴西"/>
                                     <FormControlLabel value="player" control={<StyledRadio/>} label="阿根廷"/>
-                                    <FormControlLabel value="club" control={<StyledRadio/>} label="法国"/>
+                                    <FormControlLabel value="team" control={<StyledRadio/>} label="法国"/>
                                     <FormControlLabel value="news" control={<StyledRadio/>} label="德国"/>
                                 </RadioGroup>
                             </div>

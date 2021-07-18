@@ -87,42 +87,26 @@ const ReviewCard2Demo = React.memo(function(prams)  {
                 <Box mb={1}>
                     {show?<Chip  size="small" label="球队" style={{marginRight:'8px'}}/>:
                         <Chip  size="small" label="球队" style={{marginRight:'8px',marginBottom:'10px'}}/>}
-                    <h3 className={styles.heading}>{data.name}</h3>
-                    <h3 className={styles.rating}>{data.englishName}</h3>
+                    <h3 dangerouslySetInnerHTML={{__html:data.name}} className={styles.heading}/>
+                    <h3 dangerouslySetInnerHTML={{__html:data.englishName}} className={styles.rating}/>
                 </Box>
                 <Row>
                     <Column className={styles.body} style={{width:'30%'}}>
-                        <Item className={styles.textItem}>
-                            成立：{data.birthYear}
-                        </Item>
-                        <Item  className={styles.textItem}>
-                            主场：{data.stadium}
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"成立："+data.birthYear}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"主场："+data.stadium}} className={styles.textItem}/>
                     </Column>
                     <Column className={styles.body} style={{width:'30%'}}>
-                        <Item className={styles.textItem}>
-                            国家：{data.country}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            容纳：{data.audience}人
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"国家："+data.country}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"容纳："+data.audience}} className={styles.textItem}/>
                     </Column>
                     <Column className={styles.body} style={{marginRight:'0'}}>
-                        <Item className={styles.textItem}>
-                            城市：{data.city}
-                        </Item>
-                        <Item className={styles.textItem}>
-                            电话：{data.phone}
-                        </Item>
+                        <Item dangerouslySetInnerHTML={{__html:"城市："+data.city}} className={styles.textItem}/>
+                        <Item dangerouslySetInnerHTML={{__html:"电话："+data.phone}} className={styles.textItem}/>
                     </Column>
                 </Row>
                 <Row className={styles.body}>
-                    <Item  className={styles.textItem} style={{width:"60%"}}>
-                        地址：{data.address}
-                    </Item>
-                    <Item className={styles.textItem}>
-                        邮箱：{data.email}
-                    </Item>
+                    <Item dangerouslySetInnerHTML={{__html:"地址："+data.address}} className={styles.textItem} style={{width:"60%"}}/>
+                    <Item dangerouslySetInnerHTML={{__html:"邮箱："+data.email}} className={styles.textItem}/>
                 </Row>
                 {show?<div className={flexStyles.parent}>
                     <Link1

@@ -43,6 +43,7 @@ import InfoResultCard from "../components/InfoResultCard";
 import Pagination from "_material-ui-flat-pagination@3.2.1@material-ui-flat-pagination";
 import ItemCard from "../components/ItemCard";
 import TablePanel from "../components/TablePanel";
+import axios from "axios";
 
 const style = theme => ({
   main: {
@@ -156,14 +157,13 @@ class ResultPage extends Component {
     query:{
       input: this.props.match.params.input,
       time: 0,
-      catalog: -1,
+      catalog: "all",
     },
     page: 1,
     data: [],
     offset: 0,
     total: 0,
     loading: true,
-    api:0
   }
 
   componentDidMount() {
@@ -206,7 +206,7 @@ class ResultPage extends Component {
     else if(catalog==="news"){
       api = Api.searchNews
     }
-    let url = api + input;
+    let url = api + input+"/"+page;
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
     console.log(url);
     if(input) {
@@ -214,11 +214,11 @@ class ResultPage extends Component {
           .then(res => res.json())
           .then((json) => {
             console.log(json);
-              this.setState({
-                data: json,
-                total: json.length,
-                loading: false
-              })
+            this.setState({
+              data: json.totalDataList,
+              total: json.totalNum,
+              loading: false
+            })
           })
     }
     setTimeout(() => {
@@ -233,18 +233,18 @@ class ResultPage extends Component {
       page: page,
       loading: true
     });
-    // this.fetchData(this.state.query, page);
+    this.fetchData(this.state.query, page);
   }
 
   changeCatalog = (catalog) => {
+    const query={
+      input:this.props.match.params.input,
+      time:this.state.time,
+      catalog:catalog
+    }
+    this.fetchData(query, 1);
     this.setState({
-      query:{
-        input:this.props.match.params.input,
-        time:this.state.time,
-        catalog:catalog
-      }
-    },() => {
-      this.fetchData(this.state.query, 1);
+      query
     })
   }
 
@@ -254,7 +254,7 @@ class ResultPage extends Component {
   }
   render() {
     const {classes} = this.props;
-    const { input, catalog, time } = this.state;
+    const { input, catalog, time,data } = this.state;
     return (
 
       <div className={classes.main}>
@@ -291,14 +291,14 @@ class ResultPage extends Component {
           </Grid>
           <Grid container spacing={5}>
             <Grid container xs={8}>
-              { this.state.data.map((item, index) => (
+              { data.map((item, index) => (
                   <Grid container xs={12}>
                     <Grid container xs={12}>
                       <Grid item xs>
                         <div className={classes.card} style={index?{marginBottom:'20px'}:{marginBottom:'20px',marginTop:'10px'}}>
-                            {index<10?(item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL}}/>:
-                                item.type==2?<NationalResultCard data={{info: item.teamReturn, imgURL: item.teamReturn.imgURL,show:1}}/>:
-                                    <InfoResultCard data={item.newsReturn}/>):<div>1</div>}
+                          {item.type==1?<SearchResultItem data={{info: item.playerReturn, imgURL: item.playerReturn.imgURL}}/>:''}
+                          {item.type==2?<NationalResultCard data={{info: item.teamReturn, imgURL: item.teamReturn.imgURL,show:1}}/>:''}
+                          {item.type==3?<InfoResultCard data={item.newsReturn}/>:''}
                         </div>
                       </Grid>
                     </Grid>
