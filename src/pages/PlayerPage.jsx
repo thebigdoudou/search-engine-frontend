@@ -211,7 +211,7 @@ const PersonItem = ({ src, name, type, id }) => {
         <Item>
             <Avatar classes={avatarStyles} src={src} />
             {
-                type === 1 ? <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/player/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div> : <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/team/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div>
+                type === 1 ? <div style={{marginTop:"8px",textAlign:'center'}}><a style={{textDecoration:'none'}} href={"/player/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div> : <div style={{marginTop:"8px",textAlign:'center'}}><a style={{textDecoration:'none'}} href={"/team/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div>
             }
         </Item>
     );
@@ -249,7 +249,7 @@ function NewsList(prams) {
                             />
                         </Item>
                         <Info useStyles={useTrendInfoStyles}>
-                            <InfoTitle style={{alignItems: 'center'}}><a href={item.urls}>{item.titles}</a></InfoTitle>
+                            <InfoTitle style={{alignItems: 'center'}}><a style={{textDecoration:'none'}} href={item.urls}>{item.titles}</a></InfoTitle>
                         </Info>
                     </Row>
                 ))
