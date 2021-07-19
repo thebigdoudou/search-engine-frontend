@@ -82,6 +82,10 @@ const style = theme => ({
     statisticCard: {
         padding: theme.spacing(3)
     },
+    kgCard: {
+        padding: theme.spacing(5),
+        marginTop: '-75px'
+    },
 })
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -319,6 +323,16 @@ class TeamPage extends Component {
         let rows = this.state.teamRelatedPeopleList;
         let rows1 = this.state.teamHonorRecordList;
 
+        let emptyCaption, emptyCaption1;
+        if(rows.length === 0) {
+            emptyCaption = <caption style={{textAlign: 'center'}}>暂无数据</caption>
+        }
+        else emptyCaption = <div/>
+        if(rows1.length === 0) {
+            emptyCaption1 = <caption style={{textAlign: 'center'}}>暂无数据</caption>
+        }
+        else emptyCaption1 = <div/>
+
         return (
             <div className={classes.main}>
                 <NavBar1 className={classes.navBar} />
@@ -355,6 +369,7 @@ class TeamPage extends Component {
                                                                 </StyledTableRow>
                                                             ))}
                                                         </TableBody>
+                                                        {emptyCaption}
                                                     </Table>
                                                 </TableContainer>
                                             </TabPanel >
@@ -384,26 +399,11 @@ class TeamPage extends Component {
                                                                 </StyledTableRow>
                                                             ))}
                                                         </TableBody>
+                                                        {emptyCaption1}
                                                     </Table>
                                                 </TableContainer>
                                             </TabPanel >
                                         </TabContext>
-                                    </div>
-                                    <div className={classes.statisticCard}>
-                                        <Row>
-                                            <img src={kgraph} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
-                                            <Typography variant="h6" component="h5">
-                                                知识图谱
-                                            </Typography>
-                                        </Row>
-                                        <div style={{ height: "1100px" }}>
-                                            <Graph
-                                                graph={graph}
-                                                options={graphOptions}
-                                                events={events}
-                                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
-                                            />
-                                        </div>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -425,6 +425,25 @@ class TeamPage extends Component {
                             </Card>
                         </Grid>
                     </Grid>
+                </div>
+                <div className={classes.kgCard}>
+                    <Divider/>
+                    <div className={classes.statisticCard}>
+                        <Row>
+                            <img src={kgraph} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
+                            <Typography variant="h6" component="h5">
+                                知识图谱
+                            </Typography>
+                        </Row>
+                        <Card style={{ height: "1000px", marginTop: '30px' }}>
+                            <Graph
+                                graph={graph}
+                                options={graphOptions}
+                                events={events}
+                                style={{ height: "100%", width: "100%", fontFamily: 'sans-serif', textAlign: 'center' }}
+                            />
+                        </Card>
+                    </div>
                 </div>
                 <footer className={classes.footer} >
                     <Typography variant="body2" component="p" style={{marginTop: 5}}>

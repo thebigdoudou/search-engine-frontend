@@ -64,8 +64,8 @@ const style = theme => ({
 
     },
     line: {
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5),
     },
     infoCard: {
         padding: theme.spacing(3),
@@ -334,7 +334,7 @@ class PlayerPage extends Component {
                                         </Row>
                                         <PlayerTable id={input}/>
                                     </div>
-                                    <Divider/>
+                                    <Divider className={classes.line}/>
                                     <div className={classes.statisticCard}>
                                         <Row>
                                             <img src={transferPic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
@@ -344,7 +344,7 @@ class PlayerPage extends Component {
                                         </Row>
                                         <TransferTable data={transferData}/>
                                     </div>
-                                    <Divider/>
+                                    <Divider className={classes.line}/>
                                     <div className={classes.statisticCard}>
                                         <Row>
                                             <img src={injurePic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
@@ -374,7 +374,7 @@ class PlayerPage extends Component {
                                             </RadarChart>
                                         </ResponsiveContainer>
                                     </div>
-                                    <Divider/>
+                                    <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的实时关键词
                                     </Typography>
@@ -385,24 +385,23 @@ class PlayerPage extends Component {
                                             words={hotWord}
                                         />
                                     </div>
-                                    <Divider/>
+                                    <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         相关人物
                                     </Typography>
                                     <DarkRapListItem/>
-                                    <Divider/>
+                                    <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态
                                     </Typography>
                                     <DarkRapListItem/>
-                                    <Divider/>
                                 </CardContent>
                             </Card>
                         </Grid>
                     </Grid>
                 </div>
                 <div className={classes.kgCard}>
-                    <Divider/>
+                    <Divider className={classes.line}/>
                     <div className={classes.statisticCard}>
                         <Row>
                             <img src={kgraph} style={{marginRight: '10px', height: '32px', width: '32px'}}/>

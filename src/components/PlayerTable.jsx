@@ -12,6 +12,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableCell from "@material-ui/core/TableCell";
 import axios from "axios";
+// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Area } from '@ant-design/charts';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -31,10 +33,17 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const legendConfig = {position: 'bottom'}
+
 export default class PlayerTable extends Component {
     state = {
         value: "0",
-        rows: []
+        rows: [],
+        statistics: {},
+        opacity: {
+            得分: 1,
+            助攻: 1
+        },
     }
 
     componentDidMount() {
@@ -51,23 +60,64 @@ export default class PlayerTable extends Component {
     }
 
     handleChange = (event, newValue) => {
-        const that = this
-        axios.get('/player/match/' + that.props.id + '/' + newValue)
-            .then(function (response) {
-                that.setState({
-                    rows: response.data,
-                    value: newValue
+        if(newValue !== '4') {
+            const that = this
+            axios.get('/player/match/' + that.props.id + '/' + newValue)
+                .then(function (response) {
+                    that.setState({
+                        rows: response.data,
+                        value: newValue,
+                        statistics: {}
+                    })
                 })
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+        else {
+            const that = this
+            axios.get('/player/match/' + that.props.id + '/0')
+                .then(function (response) {
+                    let data = response.data, stat = []
+                    data.forEach(function (item) {
+                        stat.push({贡献: '进球', value: item.goal, season: item.season})
+                        stat.push({贡献: '助攻', value: item.assist, season: item.season})
+                    })
+                    stat.reverse()
+                    that.setState({
+                        statistics: stat,
+                        value: newValue,
+                        rows: []
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    };
+
+    handleMouseEnter = (o) => {
+        const { dataKey } = o;
+        const { opacity } = this.state;
+
+        this.setState({
+            opacity: { ...opacity, [dataKey]: 0.5 },
+        });
+    };
+
+    handleMouseLeave = (o) => {
+        const { dataKey } = o;
+        const { opacity } = this.state;
+
+        this.setState({
+            opacity: { ...opacity, [dataKey]: 1 },
+        });
     };
 
     render() {
-        const {value} = this.state
+        const {value, rows, statistics} = this.state
         let emptyCaption;
-        if(this.state.rows.length === 0) {
+        if(rows.length === 0) {
             emptyCaption = <caption style={{textAlign: 'center'}}>暂无数据</caption>
         }
         else emptyCaption = <div/>
@@ -75,19 +125,17 @@ export default class PlayerTable extends Component {
         return (
             <TabContext value={value}>
                 <Tabs
-                    variant={'fullWidth'}
+                    variant="fullWidth"
+                    textColor="primary"
                     indicatorColor="primary"
                     value={value}
                     onChange={this.handleChange}
                 >
-                    {/*<Tab classes={twitterTabsStylesHook.useTabItem()} label={'总计'} value="1"/>*/}
-                    {/*<Tab classes={twitterTabsStylesHook.useTabItem()} label={'联赛'} value="2"/>*/}
-                    {/*<Tab classes={twitterTabsStylesHook.useTabItem()} label={'杯赛'} value="3"/>*/}
-                    {/*<Tab classes={twitterTabsStylesHook.useTabItem()} label={'国家队'} value="4"/>*/}
                     <Tab label={'总计'} value="0"/>
                     <Tab label={'联赛'} value="1"/>
                     <Tab label={'杯赛'} value="2"/>
                     <Tab label={'国家队'} value="3"/>
+                    <Tab label={'数据分析'} value="4"/>
                 </Tabs>
                 <TabPanel value="0">
                     <TableContainer component={Paper}>
@@ -105,7 +153,7 @@ export default class PlayerTable extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.rows.map((row) => (
+                                {rows.map((row) => (
                                     <StyledTableRow key={row.season}>
                                         <StyledTableCell component="th" scope="row" align="center">
                                             {row.season}
@@ -140,7 +188,7 @@ export default class PlayerTable extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.rows.map((row) => (
+                                {rows.map((row) => (
                                     <StyledTableRow key={row.season}>
                                         <StyledTableCell component="th" scope="row" align="center">
                                             {row.season}
@@ -176,7 +224,7 @@ export default class PlayerTable extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.rows.map((row) => (
+                                {rows.map((row) => (
                                     <StyledTableRow key={row.season}>
                                         <StyledTableCell component="th" scope="row" align="center">
                                             {row.season}
@@ -212,7 +260,7 @@ export default class PlayerTable extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.rows.map((row) => (
+                                {rows.map((row) => (
                                     <StyledTableRow key={row.season}>
                                         <StyledTableCell component="th" scope="row" align="center">
                                             {row.season}
@@ -230,6 +278,36 @@ export default class PlayerTable extends Component {
                             {emptyCaption}
                         </Table>
                     </TableContainer>
+                </TabPanel>
+                <TabPanel value="4">
+                    {/*<AreaChart*/}
+                    {/*    width={800}*/}
+                    {/*    height={400}*/}
+                    {/*    data={statistics}*/}
+                    {/*    margin={{*/}
+                    {/*        top: 10,*/}
+                    {/*        right: 30,*/}
+                    {/*        left: 0,*/}
+                    {/*        bottom: 0,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <CartesianGrid strokeDasharray="3 3" />*/}
+                    {/*    <XAxis dataKey="season" />*/}
+                    {/*    <YAxis />*/}
+                    {/*    <Tooltip />*/}
+                    {/*    <Area type="monotone" dataKey="得分" stackId="1" stroke="#8884d8" fill="#8884d8" />*/}
+                    {/*    <Area type="monotone" dataKey="助攻" stackId="1" stroke="#82ca9d" fill="#82ca9d" />*/}
+                    {/*    /!*<Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" />*!/*/}
+                    {/*    <Legend onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} />*/}
+                    {/*</AreaChart>*/}
+                    <Area
+                        data = {statistics}
+                        xField = 'season'
+                        smooth = {true}
+                        yField = 'value'
+                        seriesField = '贡献'
+                        legend ={legendConfig}
+                    />
                 </TabPanel>
             </TabContext>
         );

@@ -33,6 +33,12 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function InjureTable(info) {
     let rows = info.data ? info.data : []
+    let emptyCaption;
+    if(rows.length === 0) {
+        emptyCaption = <caption style={{textAlign: 'center'}}>暂无数据</caption>
+    }
+    else emptyCaption = <div/>
+
     return (
         <TabContext>
             <TabPanel>
@@ -54,6 +60,7 @@ export default function InjureTable(info) {
                                 </StyledTableRow>
                             ))}
                         </TableBody>
+                        {emptyCaption}
                     </Table>
                 </TableContainer>
             </TabPanel>
