@@ -347,7 +347,7 @@ class TeamPage extends Component {
                                     <div className={classes.statisticCard}>
                                         <Row>
                                             <img src={statPic} style={{marginRight: '10px', height: '32px', width: '32px'}}/>
-                                            <Typography variant="h6" component="h5" >比赛数据</Typography>
+                                            <Typography variant="h6" component="h5" >俱乐部阵容</Typography>
                                         </Row>
                                         <TabContext>
                                             <TabPanel >
@@ -395,7 +395,9 @@ class TeamPage extends Component {
                                                             {rows1.map((row) => (
                                                                 <StyledTableRow >
                                                                     <StyledTableCell style={{width:'26%'}}>🏆&nbsp;{row.honor}✖️{row.years.split(',').length}</StyledTableCell>
-                                                                    <StyledTableCell style={{wordBreak:"break-all" }} >{row.years.replaceAll(',','\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t\0\t')}</StyledTableCell>
+                                                                    <StyledTableCell style={{wordBreak:"break-all" }} >{row.years.split(',').map((year) => (
+                                                                        <span style={{width: 100, display: 'inline-block'}}>{year}</span>
+                                                                    ))}</StyledTableCell>
                                                                 </StyledTableRow>
                                                             ))}
                                                         </TableBody>

@@ -17,7 +17,7 @@ import {
     InfoCaption,
 } from '@mui-treasury/components/info';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
-import { useD01InfoStyles } from '@mui-treasury/styles/info/d01'
+import { useTrendInfoStyles } from '@mui-treasury/styles/info/trend'
 import { Radar, RadarChart, PolarGrid, Tooltip, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import PlayerTable from "../components/PlayerTable";
 import TransferTable from "../components/transferTable";
@@ -28,6 +28,8 @@ import statPic from "../assets/images/stat.svg";
 import kgraph from "../assets/images/tupu.svg"
 import ReactWordcloud from "react-wordcloud";
 import Graph from "react-graph-vis";
+import { Link } from 'react-router-dom';
+import Box from "@material-ui/core/Box";
 
 const style = theme => ({
     main: {
@@ -203,36 +205,55 @@ const events = {
     }
 };
 
-function DarkRapListItem() {
-    const avatarStyles = useDynamicAvatarStyles({ size: 70 });
+const PersonItem = ({ src, name, type, id }) => {
+    const avatarStyles = useDynamicAvatarStyles({ size: 85});
+    return (
+        <Item>
+            <Avatar classes={avatarStyles} src={src} />
+            {
+                type === 1 ? <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/player/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div> : <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/team/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div>
+            }
+        </Item>
+    );
+}
+
+function AboutList(prams) {
+    const about = prams.about ? prams.about : []
+    const avatarStyles = useDynamicAvatarStyles({ size: 40 });
+    return (
+        <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
+            {
+                about.map((item) => (
+                    <Box>
+                        <PersonItem name={item.name} src={item.img_url} type={item.type} id={item.id}/>
+                    </Box>
+                ))
+            }
+        </Box>
+    );
+}
+
+function NewsList(prams) {
+    const news = prams.news
+    const avatarStyles = useDynamicAvatarStyles({ size: 40 });
     return (
         <Column gap={2}>
-            <Row>
-                <Item>
-                    <Avatar
-                        variant={'rounded'}
-                        classes={avatarStyles}
-                    />
-                </Item>
-                <Info useStyles={useD01InfoStyles}>
-                    <InfoCaption>3d • #triphop #rap</InfoCaption>
-                    <InfoTitle>Humility (feat. George Benson)</InfoTitle>
-                    <InfoSubtitle>Gorillaz</InfoSubtitle>
-                </Info>
-            </Row>
-            <Row mt={2}>
-                <Item>
-                    <Avatar
-                        variant={'rounded'}
-                        classes={avatarStyles}
-                    />
-                </Item>
-                <Info useStyles={useD01InfoStyles}>
-                    <InfoCaption>28d • #hiphop #rap</InfoCaption>
-                    <InfoTitle>Old Town Road</InfoTitle>
-                    <InfoSubtitle>Unknown</InfoSubtitle>
-                </Info>
-            </Row>
+            {
+                news.map((item) => (
+                    <Row>
+                        <Item>
+                            <Avatar
+                                variant={'rounded'}
+                                classes={avatarStyles}
+                                src={item.img_urls}
+                            />
+                        </Item>
+                        <Info useStyles={useTrendInfoStyles}>
+                            <InfoTitle style={{alignItems: 'center'}}><a href={item.urls}>{item.titles}</a></InfoTitle>
+                        </Info>
+                    </Row>
+                ))
+            }
         </Column>
     );
 }
@@ -253,6 +274,7 @@ class PlayerPage extends Component {
         graph: {nodes: [], edges: []},
         loading: true,
         catalog: -1,
+        news: [],
         time: 220
     }
 
@@ -270,6 +292,7 @@ class PlayerPage extends Component {
                 score /= 60
                 that.setState({
                     info: response.data['playerBaseInfo'],
+                    about: response.data['recommendList'],
                     data: data,
                     score: score,
                     transferData: response.data['playerTransferDataList'],
@@ -294,7 +317,15 @@ class PlayerPage extends Component {
                 that.setState({
                     graph: response.data
                 })
-                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        await axios.get('/player/news/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    news: response.data
+                })
             })
             .catch(function (error) {
                 console.log(error);
@@ -312,7 +343,7 @@ class PlayerPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { input, info, data, transferData, injureData, imgURL, hotWord, graph, score } = this.state;
+        const { input, info, data, transferData, injureData, imgURL, hotWord, graph, score, news, about } = this.state;
 
         return (
             <div className={classes.main}>
@@ -387,14 +418,14 @@ class PlayerPage extends Component {
                                     </div>
                                     <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
-                                        相关人物
+                                        相关搜索
                                     </Typography>
-                                    <DarkRapListItem/>
+                                    <AboutList about={about}/>
                                     <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态
                                     </Typography>
-                                    <DarkRapListItem/>
+                                    <NewsList news={news}/>
                                 </CardContent>
                             </Card>
                         </Grid>
