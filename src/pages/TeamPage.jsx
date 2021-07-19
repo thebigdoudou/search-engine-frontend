@@ -32,6 +32,8 @@ import {
 import {useD01InfoStyles} from "_@mui-treasury_styles@1.13.1@@mui-treasury/styles/info/d01";
 import injurePic from "../assets/images/injure.svg";
 import Graph from "react-graph-vis";
+import {useTrendInfoStyles} from "@mui-treasury/styles/info/trend";
+import Box from "@material-ui/core/Box";
 
 
 
@@ -236,36 +238,58 @@ const events = {
     }
 };
 
-function DarkRapListItem() {
-    const avatarStyles = useDynamicAvatarStyles({ size: 70 });
+const PersonItem = ({ src, name, type, id }) => {
+    const avatarStyles = useDynamicAvatarStyles({ size: 85});
     return (
-        <Column gap={2}>
-            <Row>
-                <Item>
-                    <Avatar
-                        variant={'rounded'}
-                        classes={avatarStyles}
-                    />
-                </Item>
-                <Info useStyles={useD01InfoStyles}>
-                    <InfoCaption>3d • #triphop #rap</InfoCaption>
-                    <InfoTitle>Humility (feat. George Benson)</InfoTitle>
-                    <InfoSubtitle>Gorillaz</InfoSubtitle>
-                </Info>
-            </Row>
-            <Row mt={2}>
-                <Item>
-                    <Avatar
-                        variant={'rounded'}
-                        classes={avatarStyles}
-                    />
-                </Item>
-                <Info useStyles={useD01InfoStyles}>
-                    <InfoCaption>28d • #hiphop #rap</InfoCaption>
-                    <InfoTitle>Old Town Road</InfoTitle>
-                    <InfoSubtitle>Unknown</InfoSubtitle>
-                </Info>
-            </Row>
+        <Item>
+            <Avatar classes={avatarStyles} src={src} />
+            {
+                type === 1 ? <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/player/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div> : <div style={{marginTop:"8px",textAlign:'center'}}><a href={"/team/" + id}>{name.length>6?name.toString().substring(0,5)+"...":name}</a></div>
+            }
+        </Item>
+    );
+}
+
+function AboutList(prams) {
+    const about = prams.about ? prams.about : []
+    const avatarStyles = useDynamicAvatarStyles({ size: 40 });
+    return (
+        <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
+            {
+                about.map((item) => (
+                    <Box>
+                        <PersonItem name={item.name} src={item.img_url} type={item.type} id={item.id}/>
+                    </Box>
+                ))
+            }
+        </Box>
+    );
+}
+
+function NewsList(prams) {
+    const news = prams.news
+    const avatarStyles = useDynamicAvatarStyles({ size: 40 });
+    return (
+        <Column gap={3}>
+            {
+                news.map((item) => (
+                    <div>
+                    <Row>
+                        <Item>
+                            <Avatar
+                                variant={'rounded'}
+                                classes={avatarStyles}
+                                src={item.img_urls}
+                            />
+                        </Item>
+                        <Info useStyles={useTrendInfoStyles}>
+                            <InfoTitle style={{alignItems: 'center'}}><a style={{textDecoration: 'none'}} href={item.urls}>{item.titles}</a></InfoTitle>
+                        </Info>
+                    </Row>
+                    <Divider/>
+                    </div>
+                ))
+            }
         </Column>
     );
 }
@@ -277,6 +301,8 @@ class TeamPage extends Component {
         teamRelatedPeopleList: [],
         teamHonorRecordList:[],
         graph: {nodes: [], edges: []},
+        news: [],
+        about: [],
         imgURL: "",
         loading: true,
         catalog: -1,
@@ -289,6 +315,7 @@ class TeamPage extends Component {
             .then(function (response) {
                 that.setState({
                     info: response.data['teamBaseInfo'],
+                    about: response.data['recommendList'],
                     teamRelatedPeopleList:response.data['teamRelatedPeopleList'],
                     teamHonorRecordList:response.data['teamHonorRecordList'],
                     imgURL: response.data['imgURL']
@@ -301,6 +328,15 @@ class TeamPage extends Component {
             .then(function (response) {
                 that.setState({
                     graph: response.data
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        await axios.get('/team/news/' + that.state.input)
+            .then(function (response) {
+                that.setState({
+                    news: response.data
                 })
             })
             .catch(function (error) {
@@ -319,7 +355,7 @@ class TeamPage extends Component {
 
     render() {
         const {classes} = this.props;
-        const { info, imgURL, graph } = this.state;
+        const { info, imgURL, graph, news, about } = this.state;
         let rows = this.state.teamRelatedPeopleList;
         let rows1 = this.state.teamHonorRecordList;
 
@@ -414,15 +450,14 @@ class TeamPage extends Component {
                             <Card className={classes.additionalInfo} style={{paddingTop:'6px',paddingLeft:'6px'}}>
                                 <CardContent >
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
-                                        相关人物
+                                        相关搜索
                                     </Typography>
-                                    <DarkRapListItem/>
-                                    <Divider/>
+                                    <AboutList about={about}/>
+                                    <Divider className={classes.line}/>
                                     <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                                         {info.name}的最新动态
                                     </Typography>
-                                    <DarkRapListItem/>
-                                    <Divider/>
+                                    <NewsList news={news}/>
                                 </CardContent>
                             </Card>
                         </Grid>
