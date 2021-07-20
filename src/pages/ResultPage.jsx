@@ -148,16 +148,53 @@ const PersonItem = ({ src, name}) => {
   );
 }
 
+function AboutList(prams) {
+  const about = prams.prams
+  const about1=[],about2=[];
+  for (var i = 0 ; i <= 5 ;i++) {
+    if(i<3){
+      about1.push(Array.from(about)[i]);
+    }
+    else{
+      about2.push(Array.from(about)[i]);
+    }
+  }
+
+  return (
+      <div>
+        <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
+          {
+            about1.map((item) => (
+                <Box>
+                  <PersonItem name={item.name} src={item.img_url} />
+                </Box>
+            ))
+          }
+        </Box>
+        <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
+          {
+            about2.map((item) => (
+                <Box>
+                  <PersonItem name={item.name} src={item.img_url} />
+                </Box>
+            ))
+          }
+        </Box>
+      </div>
+  );
+}
+
 // const data1=[{"id":50001756,"url":"https://dongqiudi.com/team/50001756.html","birthYear":1899,"country":"西班牙","city":"巴塞罗那","stadium":"诺坎普球场","audience":99787,"phone":"+34 (902) 189900","email":"oab@club.fcbarcelona.com","name":"巴塞罗那","englishName":"Barcelona","address":"Avenida de Arístides Maillol"}]
 class ResultPage extends Component {
   state = {
     query:{
-      input: this.props.match.params.input,
+      detail: this.props.match.params.input,
       time: 0,
       catalog: "all",
     },
     page: 1,
-    data: [],
+    recommendList: [],
+    totalDataList: [],
     offset: 0,
     total: 0,
     loading: true,
@@ -187,7 +224,7 @@ class ResultPage extends Component {
   }
 
   fetchData = (query, page=1) => {
-    const input = query.input;
+    const detail = query.detail;
     const catalog = query.catalog;
     const time = query.time || 0;
     let api=Api.searchAll;
@@ -203,21 +240,20 @@ class ResultPage extends Component {
     else if(catalog==="news"){
       api = Api.searchNews
     }
-    let url = api + input+"/"+page;
+    let url = api + detail + "/"+page;
+    console.log(url)
     // const url = `http://10.214.213.43:9999/search?key=${input}&catalog=${catalog}&page=${page}&size=${pageSize}&delta=${time}`;
-    console.log(url);
-    if(input) {
-      fetch(url)
-          .then(res => res.json())
-          .then((json) => {
-            console.log(json);
-            this.setState({
-              data: json.totalDataList,
-              total: json.searchInfo.totalNum,
-              loading: false
-            })
+
+    fetch(url)
+        .then(res => res.json())
+        .then((json) => {
+          this.setState({
+            totalDataList: json.totalDataList,
+            recommendList: json.recommendList,
+            total: json.searchInfo.totalNum,
+            loading: false
           })
-    }
+        })
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 100);
@@ -233,12 +269,32 @@ class ResultPage extends Component {
     this.fetchData(this.state.query, page);
   }
 
-  changeCatalog = (catalog) => {
-    const query={
-      input:this.props.match.params.input,
-      time:this.state.time,
-      catalog:catalog
+  changeCatalog = (prams) => {
+    let catalog, detail = this.props.match.params.input
+    let input = this.props.match.params.input
+    if(prams.type === "0") {
+      catalog = "all"
+      detail = input
     }
+    else if(prams.type === "1") {
+      catalog = "player"
+      detail = input + "/" + prams.player.foot + "/" + prams.player.role + "/" + prams.player.country + "/" + prams.player.age + "/" + prams.player.sort
+    }
+    else if(prams.type === "2") {
+      catalog = "team"
+      detail = input + "/" + prams.team.country
+    }
+    else if(prams.type === "3") {
+      catalog = "news"
+      detail = input + "/" + prams.news.sort
+    }
+    const query={
+      time: this.state.time,
+      catalog: catalog,
+      detail: detail
+    }
+    console.log(input)
+    console.log(detail)
     this.fetchData(query, 1);
     this.setState({
       query,
@@ -253,37 +309,12 @@ class ResultPage extends Component {
   }
   render() {
     const {classes} = this.props;
-    const {data,total } = this.state;
-
+    const {totalDataList,recommendList,total } = this.state;
     return (
 
       <div className={classes.main}>
         <NavBar className={classes.navBar}/>
         <div className={classes.wrapper}>
-          {/*<Grid container spacing={4} className={classes.content}>*/}
-          {/*  <Grid item xs={12} sm={3} md={2} className={classes.sider}>*/}
-          {/*    /!*<SideBar input={input} changeCatalog={this.changeCatalog} />*!/*/}
-          {/*  </Grid>*/}
-          {/*  <Grid item xs={12} sm={6} md={7}>*/}
-          {/*    <Switch>*/}
-          {/*      <Route path="/search/query/:input"*/}
-          {/*        render={() => <SearchResult query={{"input": input, "catalog": catalog, "time": time }}/>}*/}
-          {/*      />*/}
-          {/*      <Route path="/search/tags/all" component={TagList} />*/}
-          {/*      <Route path="/search/tags/:tag" component={TagResult} />*/}
-          {/*    </Switch>*/}
-          {/*  </Grid>*/}
-          {/*  <Grid item xs={12} sm={3} md={3} className={classes.sider}>*/}
-          {/*    { this.props.location.pathname.indexOf("tags") < 0 &&*/}
-          {/*      <Filter changeTime={this.changeTime} />*/}
-          {/*    }*/}
-          {/*    <Typography variant="subtitle1" component="h2" style={{color: '#7D7D7D', margin:'25px 0'}}>*/}
-          {/*      <CloudCircle /> 标签词云*/}
-          {/*    </Typography>*/}
-          {/*    <TagCloud />*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-          {/*<ScrollTop />*/}
           <Grid container spacing={10}>
             <Grid item xs={12}>
               <TablePanel changeCatalog={this.changeCatalog}/>
@@ -291,7 +322,7 @@ class ResultPage extends Component {
           </Grid>
           <Grid container spacing={5}>
             <Grid container xs={8}>
-              { data.map((item, index) => (
+              { totalDataList.map((item, index) => (
                   <Grid container xs={12}>
                     <Grid container xs={12}>
                       <Grid item  xs>
@@ -332,28 +363,29 @@ class ResultPage extends Component {
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px"}}>
                      其他人还搜
                   </Typography>
-                  <Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>
-                    <Box>
-                      <PersonItem name={'里卡多·洛佩斯'} src={'https://i.pravatar.cc/300?img=10'} />
-                    </Box>
-                    <Box >
-                      <PersonItem name={'阿瑙托维奇'}src={'https://i.pravatar.cc/300?img=20'} />
-                    </Box>
-                    <Box>
-                      <PersonItem name={'卡尔德克'} src={'https://i.pravatar.cc/300?img=30'} />
-                    </Box>
-                  </Box>
-                  <Box style={{display:'flex', justifyContent:'space-between'}}>
-                    <Box>
-                      <PersonItem name={'里卡多洛佩'} src={'https://i.pravatar.cc/300?img=10'} />
-                    </Box>
-                    <Box >
-                      <PersonItem name={'阿瑙托维奇'}src={'https://i.pravatar.cc/300?img=20'} />
-                    </Box>
-                    <Box>
-                      <PersonItem name={'卡尔德克'} src={'https://i.pravatar.cc/300?img=30'} />
-                    </Box>
-                  </Box>
+                  {recommendList.length !== 0?<AboutList prams={recommendList}/>:''}
+                  {/*<Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>*/}
+                  {/*  <Box>*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[0].name} src={(Array.from(recommendList))[0].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*  <Box >*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[1].name} src={(Array.from(recommendList))[1].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*  <Box>*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[2].name} src={(Array.from(recommendList))[2].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*</Box>*/}
+                  {/*<Box style={{display:'flex', justifyContent:'space-between'}}>*/}
+                  {/*  <Box>*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[3].name} src={(Array.from(recommendList))[3].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*  <Box >*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[4].name} src={(Array.from(recommendList))[4].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*  <Box>*/}
+                  {/*    <PersonItem name={(Array.from(recommendList))[5].name} src={(Array.from(recommendList))[5].img_url} />*/}
+                  {/*  </Box>*/}
+                  {/*</Box>*/}
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                     最新资讯
                   </Typography>

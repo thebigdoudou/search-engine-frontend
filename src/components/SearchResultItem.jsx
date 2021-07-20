@@ -65,7 +65,6 @@ const ReviewCard2Demo = React.memo(function(prams) {
     const styles = useStyles();
     const labelStyles = useLabelIconStyles({ linked: true });
     const flexStyles = useRowFlexStyles();
-    console.log(prams)
     const data = prams['info']['info'];
     const imgURL = prams['info']['imgURL'];
     const show = prams['info']['show']
@@ -106,7 +105,7 @@ const ReviewCard2Demo = React.memo(function(prams) {
                         <Item dangerouslySetInnerHTML={{__html:"号码："+data.number}} className={styles.textItem}/>
                         <Item dangerouslySetInnerHTML={{__html:"生日："+data.birthday}} className={styles.textItem}/>
                         <Item className={styles.textItem}>
-                            惯用脚：{data.foot?"左脚":"右脚"}
+                            惯用脚：{data.foot?"右脚":"左脚"}
                         </Item>
                     </Column>
                 </Row>
