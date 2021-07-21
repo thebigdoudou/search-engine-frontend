@@ -99,16 +99,16 @@ class TablePanel extends Component {
 
     state = {
         tabValue: 0,
-        type: 0,
+        type: "all",
         player: {
-            foot: -1,
+            foot: "all",
             role: "all",
             country: "all",
-            age: -1,
-            sort: -1
+            age: "-1",
+            sort: "-1"
         },
         news: {
-            sort: -1
+            sort: "-1"
         },
         team: {
             country: "all"
@@ -233,10 +233,6 @@ class TablePanel extends Component {
         return (
             <div className={classes.root}>
                 <AppBar position="static" style={{backgroundColor: "rgb(255,255,255)", color: "rgb(0,0,0)"}}>
-                    {/*<Tabs value={tabValue} classes={tabsStyles} onChange={this.handleTabChange} aria-label="simple tabs example">*/}
-                    {/*    <Tab style={{width: '15%'}} classes={tabItemStyles} label="搜索结果" {...a11yProps(0)} />*/}
-                    {/*    <Tab style={{width: '15%'}} classes={tabItemStyles} label="高级筛选" {...a11yProps(1)} />*/}
-                    {/*</Tabs>*/}
                     <Tabs indicatorColor="primary" value={tabValue} onChange={this.handleTabChange} aria-label="simple tabs example">
                         <Tab style={{width: '15%'}} label="搜索结果" {...a11yProps(0)} />
                         <Tab style={{width: '15%'}} label="高级筛选" {...a11yProps(1)} />
@@ -250,24 +246,24 @@ class TablePanel extends Component {
                                            style={{display: 'inline-block', marginRight: '50px'}}>结果</FormLabel>
                                 <RadioGroup aria-label="gender" name="gender1" value={type}
                                             style={{display: 'inline-block'}} onChange={this.selectHandleChange}>
-                                    <FormControlLabel value={0} control={<Radio color="primary" />} label="全部"/>
-                                    <FormControlLabel value={1} control={<Radio color="primary" />} label="球员"/>
-                                    <FormControlLabel value={2} control={<Radio color="primary" />} label="球队"/>
-                                    <FormControlLabel value={3} control={<Radio color="primary" />} label="资讯"/>
+                                    <FormControlLabel value="all" control={<Radio color="primary" />} label="全部"/>
+                                    <FormControlLabel value="player"control={<Radio color="primary" />} label="球员"/>
+                                    <FormControlLabel value="team" control={<Radio color="primary" />} label="球队"/>
+                                    <FormControlLabel value="news" control={<Radio color="primary" />} label="资讯"/>
                                 </RadioGroup>
                             </div>
                         </FormControl>
                     </TabPanel>
-                    <TabPanel value={parseInt(type) + parseInt(4 * tabValue)} index={5}>
+                    <TabPanel value={type + tabValue} index="player1">
                         <FormControl component="fieldset" style={{display: 'inline-block'}}>
                             <div style={{display: 'flex', alignItems: 'center',marginBottom:'8px'}}>
                                 <FormLabel component="legend"
                                            style={{display: 'inline-block', marginRight: '35px'}}>惯用脚</FormLabel>
                                 <RadioGroup aria-label="gender" name="gender1" value={player.foot}
                                             style={{display: 'inline-block'}} onChange={this.footChange}>
-                                    <FormControlLabel value={-1} control={<Radio color="primary" />} label="全部"/>
-                                    <FormControlLabel value={0} control={<Radio color="primary" />} label="左脚"/>
-                                    <FormControlLabel value={1} control={<Radio color="primary" />} label="右脚"/>
+                                    <FormControlLabel value={"all"} control={<Radio color="primary" />} label="全部"/>
+                                    <FormControlLabel value={"left"} control={<Radio color="primary" />} label="左脚"/>
+                                    <FormControlLabel value={"right"} control={<Radio color="primary" />} label="右脚"/>
                                 </RadioGroup>
                             </div>
                             <div style={{display: 'flex', alignItems: 'center',marginBottom:'8px'}}>
@@ -313,7 +309,7 @@ class TablePanel extends Component {
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <FormLabel component="legend"
                                            style={{display: 'inline-block', marginRight: '50px'}}>排序</FormLabel>
-                                <RadioGroup aria-label="gender" name="gender1" value={type}
+                                <RadioGroup aria-label="gender" name="gender1" value={player.sort}
                                             style={{display: 'inline-block'}} onChange={this.playerSortChange}>
                                     <FormControlLabel value="-1" control={<Radio color="primary" />} label="按相关度排序"/>
                                     <FormControlLabel value="0" control={<Radio color="primary" />} label="按年龄排序"/>
@@ -321,7 +317,7 @@ class TablePanel extends Component {
                             </div>
                         </FormControl>
                     </TabPanel>
-                    <TabPanel value={parseInt(type) + parseInt(4 * tabValue)} index={6}>
+                    <TabPanel value={type + tabValue} index="team1">
                         <FormControl component="fieldset" style={{display: 'inline-block',width:"100%"}}>
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <FormLabel component="legend"
@@ -341,7 +337,7 @@ class TablePanel extends Component {
                             </div>
                         </FormControl>
                     </TabPanel>
-                    <TabPanel value={parseInt(type) + parseInt(4 * tabValue)} index={7}>
+                    <TabPanel value={type + tabValue} index={"news1"}>
                         <FormControl component="fieldset" style={{display: 'inline-block'}}>
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <FormLabel component="legend"

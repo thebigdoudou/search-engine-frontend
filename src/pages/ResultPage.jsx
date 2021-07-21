@@ -8,12 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Filter from "../components/Filter";
 import SideBar from "../components/SideBar";
 import SearchResultItem from "../components/SearchResultItem";
-import SearchResult from "../components/SearchResult";
-import { Switch, Route } from 'react-router-dom';
-import TagList from '../components/TagList';
-import TagResult from '../components/TagResult';
-import TagCloud from '../components/TagCloud';
-import ScrollTop from '../components/ScrollTop';
+import Button from '@material-ui/core/Button';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import Card from "@material-ui/core/Card";
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -189,7 +185,6 @@ class ResultPage extends Component {
   state = {
     query:{
       detail: this.props.match.params.input,
-      time: 0,
       catalog: "all",
     },
     page: 1,
@@ -198,6 +193,8 @@ class ResultPage extends Component {
     offset: 0,
     total: 0,
     loading: true,
+    question:'',
+    answer:''
   }
 
   componentDidMount() {
@@ -211,7 +208,6 @@ class ResultPage extends Component {
       this.setState({
         query:{
           input:nextProps.match.params.input,
-          time:this.state.time,
           catalog:this.state.catalog
         },
         page: 1,
@@ -226,7 +222,6 @@ class ResultPage extends Component {
   fetchData = (query, page=1) => {
     const detail = query.detail;
     const catalog = query.catalog;
-    const time = query.time || 0;
     let api=Api.searchAll;
     if(catalog==="all"){
       api =Api.searchAll;
@@ -272,19 +267,20 @@ class ResultPage extends Component {
   changeCatalog = (prams) => {
     let catalog, detail = this.props.match.params.input
     let input = this.props.match.params.input
-    if(prams.type === "0") {
+    if(prams.type === "all") {
       catalog = "all"
       detail = input
     }
-    else if(prams.type === "1") {
+    else if(prams.type === "player") {
       catalog = "player"
-      detail = input + "/" + prams.player.foot + "/" + prams.player.role + "/" + prams.player.country + "/" + prams.player.age + "/" + prams.player.sort
+      const footValue = prams.player.foot==="all"?-1:prams.player.foot==="left"?0:1;
+      detail = input + "/" + footValue + "/" + prams.player.role + "/" + prams.player.country + "/" + prams.player.age + "/" + prams.player.sort
     }
-    else if(prams.type === "2") {
+    else if(prams.type === "team") {
       catalog = "team"
       detail = input + "/" + prams.team.country
     }
-    else if(prams.type === "3") {
+    else if(prams.type === "news") {
       catalog = "news"
       detail = input + "/" + prams.news.sort
     }
@@ -303,13 +299,25 @@ class ResultPage extends Component {
     })
   }
 
-  changeTime = (time) => {
-    this.setState({time});
-    // console.log("time", time);
+  changeQuestion = (e) => {
+    this.setState({question:e.target.value});
   }
+  getAnswer = (e) => {
+    const that = this
+    setTimeout(()=>{axios.get('/autoAnswer/'+this.state.question)
+        .then(function (response) {
+          that.setState({
+            answer:response.data
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });},1800);
+  }
+
   render() {
     const {classes} = this.props;
-    const {totalDataList,recommendList,total } = this.state;
+    const {totalDataList,recommendList,total,question,answer } = this.state;
     return (
 
       <div className={classes.main}>
@@ -364,28 +372,6 @@ class ResultPage extends Component {
                      其他人还搜
                   </Typography>
                   {recommendList.length !== 0?<AboutList prams={recommendList}/>:''}
-                  {/*<Box style={{display:'flex', justifyContent:'space-between' ,marginBottom:'20px'}}>*/}
-                  {/*  <Box>*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[0].name} src={(Array.from(recommendList))[0].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*  <Box >*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[1].name} src={(Array.from(recommendList))[1].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*  <Box>*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[2].name} src={(Array.from(recommendList))[2].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*</Box>*/}
-                  {/*<Box style={{display:'flex', justifyContent:'space-between'}}>*/}
-                  {/*  <Box>*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[3].name} src={(Array.from(recommendList))[3].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*  <Box >*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[4].name} src={(Array.from(recommendList))[4].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*  <Box>*/}
-                  {/*    <PersonItem name={(Array.from(recommendList))[5].name} src={(Array.from(recommendList))[5].img_url} />*/}
-                  {/*  </Box>*/}
-                  {/*</Box>*/}
                   <Typography variant="h6" component="h5" style={{marginBottom:"15px",marginTop:'30px'}}>
                     最新资讯
                   </Typography>
@@ -433,16 +419,29 @@ class ResultPage extends Component {
                       className={classes.textField}
                       label="你问"
                       variant="outlined"
+                      value={question}
+                      onChange={this.changeQuestion}
                       fullWidth={true}
                       id="mui-theme-provider-outlined-input"
                   />
                   <TextField
                       className={classes.textField}
                       label="我答"
+                      value={answer}
                       variant="outlined"
                       fullWidth={true}
                       id="mui-theme-provider-outlined-input"
                   />
+                  <Button
+                      variant="contained"
+                      color="default"
+                      className={classes.button}
+                      onClick={this.getAnswer}
+                      startIcon={<KeyboardVoiceIcon />}
+                      style={{marginLeft:"74%"}}
+                  >
+                    提问
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>

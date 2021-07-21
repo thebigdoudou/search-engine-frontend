@@ -32,15 +32,23 @@ class SearchBar extends Component {
             catalog: 0, //catalog index, first is 0
             showMsg: false,
             msg: "",
-            complete:[]
+            complete:["巴塞罗那","皇家马德里","C罗","拜仁慕尼黑","内马尔","姆巴佩","曼城","德布劳内","尤文图斯","莱万多夫斯基"]
         }
     };
     handleInputChange = (event,newInputValue) => {
         const that = this
         if(newInputValue===''){
-            this.setState({
-                complete:[],
-            })
+            axios.get('/getHotWords')
+                .then(function (response) {
+                    console.log(response.data)
+                    that.setState({
+                        complete: response.data,
+                        input:newInputValue
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
         else{
             axios.get('/search/suggest/all/' +newInputValue)
@@ -90,7 +98,7 @@ class SearchBar extends Component {
     }
     render() {
         const { input, showMsg, msg, complete} = this.state;
-        let options = complete.map((option) => option.keyword);
+        let options = input!==""?complete.map((option) => option.keyword):complete;
         return (
             <div >
                 {showMsg && <MessageBar show={showMsg} msg={msg} handleClose={this.handleClose} />}
