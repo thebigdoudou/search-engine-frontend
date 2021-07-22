@@ -207,7 +207,7 @@ class ResultPage extends Component {
     (this.props.match.params.input !== nextProps.match.params.input)) {
       this.setState({
         query:{
-          input:nextProps.match.params.input,
+          detail:nextProps.match.params.input,
           catalog:this.state.catalog
         },
         page: 1,
@@ -265,7 +265,8 @@ class ResultPage extends Component {
   }
 
   changeCatalog = (prams) => {
-    let catalog, detail = this.props.match.params.input
+    let catalog="all";
+    let detail = this.props.match.params.input
     let input = this.props.match.params.input
     if(prams.type === "all") {
       catalog = "all"
@@ -352,6 +353,11 @@ class ResultPage extends Component {
               ))}
               { total<5?(
                   <Grid container xs={12}>
+                    <Grid container xs={12}>
+                      <Grid item  xs>
+                        <div className={classes.card} style={{marginBottom:'20px',marginTop:'20px'}}/>
+                      </Grid>
+                    </Grid>
                     <Grid container xs={12}>
                       <Grid item  xs>
                         <div className={classes.card} style={{marginBottom:'20px',marginTop:'20px'}}/>

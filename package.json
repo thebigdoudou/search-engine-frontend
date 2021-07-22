@@ -47,5 +47,5 @@
     "@mui-treasury/components": "^1.10.1",
     "clsx": "^1.1.1"
   },
-  "proxy": "http://172.20.10.2:8080"
+  "proxy": "http://10.192.216.11:8080"
 }

@@ -32,7 +32,7 @@ class SearchBar extends Component {
             catalog: 0, //catalog index, first is 0
             showMsg: false,
             msg: "",
-            complete:["巴塞罗那","皇家马德里","C罗","拜仁慕尼黑","内马尔","姆巴佩","曼城","德布劳内","尤文图斯","莱万多夫斯基"]
+            complete:["巴巴","巴塞罗那","皇家马德里","C罗","拜仁慕尼黑","内马尔","姆巴佩","曼城","德布劳内","尤文图斯"]
         }
     };
     handleInputChange = (event,newInputValue) => {

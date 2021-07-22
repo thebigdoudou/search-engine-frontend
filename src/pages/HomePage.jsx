@@ -91,7 +91,7 @@ class HomePage extends React.Component {
           </div>
           <footer className={classes.footer} >
             <Typography variant="body2" component="p">
-              Copyright © <a href={'https://github.com/Cheungki/KnowABall'} style={{color: 'white'}}>G07</a> @Zhejiang University. All Rights Reserved.
+              Copyright © <a href={'https://github.com/Cheungki/KnowABall/tree/backend'} style={{color: 'white'}}>G07</a> @Zhejiang University. All Rights Reserved.
               {/*<InfoCircleOutlined />*/}
             </Typography>
           </footer>
